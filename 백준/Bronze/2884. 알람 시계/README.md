@@ -38,3 +38,36 @@
 
  <p>첫째 줄에 상근이가 창영이의 방법을 사용할 때, 설정해야 하는 알람 시간을 출력한다. (입력과 같은 형태로 출력하면 된다.)</p>
 
+ ---
+
+ 
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int h = Integer.parseInt(st.nextToken());
+	    int m = Integer.parseInt(st.nextToken());
+	    
+	    if(m-45 < 0) { // 0분 밑으로 내려갈 때
+	        if(h == 0) h = 23; // 00시 일때.
+	        else h--; // 00시가 아닐때
+	        m = 60 + (m - 45); 
+	    } else { 
+	        m -= 45;
+	    }
+	    
+	    System.out.print(h + " " + m);
+	    
+	}
+}   
+
+
+```
+
