@@ -36,3 +36,42 @@
 
  <p>첫째 줄에 게임의 상금을 출력 한다.</p>
 
+---
+
+리팩토링
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int a = Integer.parseInt(st.nextToken());
+	    int b = Integer.parseInt(st.nextToken());
+	    int c = Integer.parseInt(st.nextToken());
+	    
+	    int res = 0;
+	    
+	    if(a == b && b == c) {
+	        res += 10000 + a*1000;    
+	    }
+	    else if(a == b || b == c || c == a) {
+	        if(a==b) res += 1000 + a*100;
+	        else res += 1000 + c*100; // 리팩토링 부분, a==b를 제외하고 나머지 케이스는 모두 c*100해도 상관없음
+	    } else {
+	        res += Math.max(a,Math.max(b,c))*100;
+	    }
+	    
+	    System.out.print(res);
+	
+	    
+	}
+}   
+
+
+```
