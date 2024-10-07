@@ -30,3 +30,42 @@
 
  <p>첫째 줄에 종료되는 시각의 시와 분을 공백을 사이에 두고 출력한다. (단, 시는 0부터 23까지의 정수, 분은 0부터 59까지의 정수이다. 디지털 시계는 23시 59분에서 1분이 지나면 0시 0분이 된다.)</p>
 
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int h = Integer.parseInt(st.nextToken());
+	    int m = Integer.parseInt(st.nextToken());
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int a = (m + n) / 60;
+	    
+	    if(a > 0) {
+	        if(h + a > 23) h = (h + a) - 24; // ex) h+a = 26이면, 26-24를 해줘서 02시를 만든다.
+	        else h += a; // 24시 이상이 아니라면, a를 더해준다.
+	        m = (m + n) % 60; // 분침은 한 번에 처리
+	    } else { // '시'는 바뀌지 않으니 '분'에만 더해준다.
+	        m += n; 
+	    }
+	    
+	    System.out.print(h + " " + m);
+	    
+	}
+}   
+
+
+```
+
+케이스 분류에 신경 잘 써야한다.
+
+if(h + a > 23)이 핵심
