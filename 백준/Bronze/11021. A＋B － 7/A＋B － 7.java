@@ -15,7 +15,8 @@ class Main {
 	        int a = Integer.parseInt(st.nextToken());
 	        int b = Integer.parseInt(st.nextToken());
 	        
-	        sb.append("Case #" + (i+1) + ": " + (a+b)).append("\n");
+	        String str = String.format("Case #%d: %d",i+1, a+b);
+	        sb.append(str).append('\n');
 	    }
 	    
 	    System.out.print(sb);
