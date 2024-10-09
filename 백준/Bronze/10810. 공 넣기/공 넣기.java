@@ -16,11 +16,11 @@ class Main {
 	    for(int i=0; i<M; i++) {
 	        st = new StringTokenizer(br.readLine());
 	        
-	        int a = Integer.parseInt(st.nextToken());
-	        int b = Integer.parseInt(st.nextToken());
+	        int a = Integer.parseInt(st.nextToken()) - 1;
+	        int b = Integer.parseInt(st.nextToken()) - 1;
 	        int k = Integer.parseInt(st.nextToken());
 	        
-	        for(int j=a-1; j<b; j++) arr[j] = k;
+	        for(int j=a; j<=b; j++) arr[j] = k;
 	    }
 	    
 	    StringBuilder sb = new StringBuilder();
