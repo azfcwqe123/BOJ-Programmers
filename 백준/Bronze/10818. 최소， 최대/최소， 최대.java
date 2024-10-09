@@ -15,8 +15,8 @@ class Main {
 	    
 	    while(st.hasMoreTokens()) {
 	        int m = Integer.parseInt(st.nextToken());
-	        if(max < m) max = m;
-	        if(min > m) min = m;
+	        max = Math.max(max, m);
+	        min = Math.min(min, m);
 	    }
 	    
 	    System.out.print(min + " " + max);
