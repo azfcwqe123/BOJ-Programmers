@@ -1,6 +1,6 @@
 # [Bronze V] 사분면 고르기 - 14681 
 
-[문제 링크](https://www.acmicpc.net/problem/14681) 
+[문제 링크](https://www.acmicpc.net/problem/14681)  
 
 ### 성능 요약
 
