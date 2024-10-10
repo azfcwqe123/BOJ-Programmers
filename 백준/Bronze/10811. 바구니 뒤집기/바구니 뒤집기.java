@@ -20,8 +20,8 @@ class Main {
 	    for(int i=0; i<m; i++) {
 	        st = new StringTokenizer(br.readLine());
 	        
-	        int a = Integer.parseInt(st.nextToken()) - 1;
-	        int b = Integer.parseInt(st.nextToken()) - 1;
+	        int a = Integer.parseInt(st.nextToken()) - 1; // 범위 조심하자
+	        int b = Integer.parseInt(st.nextToken()) - 1; // 범위 조심하자
 	        
 	        swap(arr, a, b);
 	    }
@@ -33,7 +33,10 @@ class Main {
 	}
 	
 	static void swap(int[] arr, int a, int b) {
-        
+
+	// int n = (b-a) / 2 + 1;
+	// while(n--> 0)와 같은 방식도 가능하지만, a<b 조건으로 놓는게 더 직관적이다.
+
         while(a < b) {
             int tmp = arr[a];
             arr[a] = arr[b];
