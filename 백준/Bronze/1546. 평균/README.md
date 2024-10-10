@@ -30,3 +30,84 @@
 
  <p>첫째 줄에 새로운 평균을 출력한다. 실제 정답과 출력값의 절대오차 또는 상대오차가 10<sup>-2</sup> 이하이면 정답이다.</p>
 
+---
+
+리팩토링 전
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int[] arr = new int[n];
+	    
+	    int max = -1;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    for(int i=0; i<n; i++) {
+	        arr[i] = Integer.parseInt(st.nextToken());
+	        
+	        max = Math.max(max, arr[i]);
+	    }
+	    
+	    double ans = 0;
+	    
+	    for(int i=0; i<n; i++) {
+	        ans += (double) arr[i] / max * 100;    
+	    }
+	    
+	    System.out.print(ans / n);
+        
+	}
+	
+}   
+
+
+
+```
+
+---
+
+리팩토링 후
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int max = -1;
+	    double sum = 0;
+	    
+	    for(int i=0; i<n; i++) {
+	        int k = Integer.parseInt(st.nextToken());
+	        
+	        max = Math.max(max, k);
+	       
+	        sum += k;
+	    }
+	    
+	    
+	    System.out.print(((sum / max) * 100.0) / n); // 핵심
+        
+	}
+	
+}   
+
+```
+
+굳이 배열을 만들 필요 없고, 나눗셈 원리만 잘 파악해서 한 번에 계산해버리면 된다.
