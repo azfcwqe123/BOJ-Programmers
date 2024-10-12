@@ -30,3 +30,71 @@
 
  <p>첫째 줄에 상수의 대답을 출력한다.</p>
 
+---
+
+첫번째 풀이, StringBuilder 메서드 이용
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int a = Integer.parseInt(new StringBuilder(st.nextToken()).reverse().toString());
+	    int b = Integer.parseInt(new StringBuilder(st.nextToken()).reverse().toString());
+	    
+	    System.out.print(a>b ? a : b);
+	    
+	}
+	
+}   
+
+
+
+```
+
+---
+
+두번째 풀이, 직접 숫자를 바꾸기
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    String str1 = st.nextToken();
+	    String str2 = st.nextToken();
+	    
+	    char[] a = new char[3];
+	    char[] b = new char[3];
+	    
+	    // 핵심 코드 
+	    int k = 0;
+	    for(int i=2; i>=0; i--) {
+	        a[i] = str1.charAt(k);
+	        b[i] = str2.charAt(k);
+	        k++;
+	    }
+	    
+	    // char 배열을 String형으로 전환
+	    String c = new String(a);
+	    String d = new String(b);
+	    
+	    System.out.print(Integer.parseInt(c) > Integer.parseInt(d) ? Integer.parseInt(c) : Integer.parseInt(d)); 
+	    
+	}
+	
+}   
+
+
+
+```
