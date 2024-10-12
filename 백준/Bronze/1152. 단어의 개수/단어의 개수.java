@@ -6,11 +6,9 @@ class Main {
 	 
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	    String str = br.readLine().trim();
+	    StringTokenizer st = new StringTokenizer(br.readLine());
 	    
-	    if(str.length() == 0) System.out.print(0);
-	    else System.out.print(str.split(" ").length);
-	    
+	    System.out.print(st.countTokens());
 	    
 	}
 	
