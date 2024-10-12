@@ -28,3 +28,82 @@
 
  <p>각 테스트 케이스에 대해 P를 출력한다.</p>
 
+---
+
+첫번째 풀이 3중 반복문
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    while(n-- > 0) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        int k = Integer.parseInt(st.nextToken());
+	        String str = st.nextToken();
+	        
+	        for(int i=0; i<str.length(); i++) {
+	            for(int j=0; j<k; j++) {
+	                sb.append(str.charAt(i));
+	            }
+	        }
+	        
+	        sb.append("\n");
+	        
+	    }
+	    
+	    System.out.print(sb);
+	    
+	}
+	
+}   
+
+```
+
+---
+
+두번째 풀이, repeat() 사용
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    while(n-- > 0) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        int k = Integer.parseInt(st.nextToken());
+	        String str = st.nextToken();
+
+             // str.chatAt(i)로 얻은 char형을 String.valueOf()을 통해 문자열로 바꿔준 뒤, repeat() 메서드 사용
+	        for(int i=0; i<str.length(); i++) {
+	            sb.append(String.valueOf(str.charAt(i)).repeat(k));
+	        }
+	        
+	        sb.append("\n");
+	        
+	    }
+	    
+	    System.out.print(sb);
+	    
+	}
+	
+}   
+
+```
