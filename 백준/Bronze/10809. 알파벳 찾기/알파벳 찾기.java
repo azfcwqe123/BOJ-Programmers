@@ -13,7 +13,8 @@ class Main {
 	    for(int i=0; i<26; i++) {
 	        arr[i] = -1;
 	    }
-	    
+
+		// arr[str.charAt(i) - 65]도 가능
 	    for(int i=0; i<str.length(); i++) {
 	        if(arr[str.charAt(i) - 'a'] == -1 ) arr[str.charAt(i) - 'a'] = i;
 	    }
