@@ -75,3 +75,111 @@
 
  <p>입력으로 주어진 단어가 몇 개의 크로아티아 알파벳으로 이루어져 있는지 출력한다.</p>
 
+ ---
+
+첫번째 풀이, 조건문으로 일일이 따지면서 들어가기, 104ms
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    char[] arr = br.readLine().toCharArray();
+	    
+	    int cnt = 0;
+	    
+	    for(int i=0; i<arr.length; i++) {
+	        
+	        if(arr[i] == 'c') {
+	            if(i+1 < arr.length && (arr[i+1] == '=' || arr[i+1] == '-')) {
+	                cnt++;
+	                i++;
+	            }
+	            
+	            else cnt++;
+	        }
+	        
+	        else if(arr[i] == 'd') {
+	            if(i+1 < arr.length && arr[i+1] == 'z') { // 배열범위를 먼저 체크해줘야 한다. 그렇지 않으면 런타임에러 발생 가능성이 있다.
+	                if(i+2 < arr.length && arr[i+2] == '=') {
+	                    cnt++;
+	                    i+=2;
+	                } else { // dz인 경우
+	                    cnt++;
+	                }
+	            }
+	            
+	            else if(i+1 < arr.length && arr[i+1] == '-') {
+	                cnt++;
+	                i++;
+	            }
+	            
+	            else cnt++;
+	        }
+	        
+	        else if(arr[i] == 'l' || arr[i] == 'n' ) {
+	            if(i+1 < arr.length && arr[i+1] == 'j') {
+	                cnt++;
+	                i++;
+	            }
+	            
+	            else cnt++;
+	        }
+	        
+	        else if(arr[i] == 's' || arr[i] == 'z') {
+	            if(i+1 < arr.length && arr[i+1] == '=') {
+	                cnt++;
+	                i++;
+	            }
+	            
+	            else cnt++;
+	        }
+	        
+	        else cnt++;
+	        
+	    }
+	    
+	    System.out.print(cnt);
+	    
+	}
+	
+}   
+
+
+
+```
+
+---
+
+replace() 사용, 104ms
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    String str = br.readLine();
+	    
+	    String[] arr = {"c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="};
+	    
+	    for(int i=0; i<arr.length; i++) { // 배열에 있는 요소들을 문자열과 일일이 대조시켜본다.
+	        if(str.contains(arr[i])) str = str.replace(arr[i], "*");
+	    }
+	    
+	    System.out.print(str.length());
+	    
+	}
+	
+}   
+
+
+
+```
+
