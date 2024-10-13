@@ -32,3 +32,62 @@
 
  <p>첫째 줄에 입력에서 주어진 순서대로 몇 개의 피스를 더하거나 빼야 되는지를 출력한다. 만약 수가 양수라면 동혁이는 그 개수 만큼 피스를 더해야 하는 것이고, 음수라면 제거해야 하는 것이다.</p>
 
+---
+
+첫번째 풀이(148ms)
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int a = 1 - Integer.parseInt(st.nextToken());
+	    int b = 1 - Integer.parseInt(st.nextToken());
+	    int c = 2 - Integer.parseInt(st.nextToken());
+	    int d = 2 - Integer.parseInt(st.nextToken());
+	    int e = 2 - Integer.parseInt(st.nextToken());
+	    int f = 8 - Integer.parseInt(st.nextToken());
+	    
+	    System.out.print(a + " " + b + " " + c + " " + d + " " + e + " " + f);
+	    
+
+	}
+	
+}   
+
+
+
+```
+
+---
+
+리팩터링 후 (112ms)
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int[] chess = {1, 1, 2, 2, 2, 8};
+	    
+	    for(int i=0; i<6; i++) {
+	        System.out.print(chess[i] - Integer.parseInt(st.nextToken()) + " ");
+	    }
+	    
+	}
+	
+}   
+
+
+
+```
