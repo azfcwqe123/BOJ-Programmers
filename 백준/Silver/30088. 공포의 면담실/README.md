@@ -32,3 +32,48 @@
 
  <p>모든 부서의 퇴근하는 데 걸리는 시간의 합의 최솟값을 분 단위로 출력한다.</p>
 
+ ---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int[] arr = new int[n+1];
+	    int[] sum = new int[n+1]; // 누적합을 풀때는 배열의 크기에 1을 더해준다.
+	    
+	    for(int i=1; i<=n; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        int m = Integer.parseInt(st.nextToken());
+	        
+	        for(int j=0; j<m; j++) {
+	            arr[i] += Integer.parseInt(st.nextToken());    
+	        }
+	    }
+	    
+	    Arrays.sort(arr); // 이 그리디 알고리즘 문제는 배열을 정렬해서 오름차순으로 만들고 풀어야 수월함
+	    
+	    long ans = 0; // 10,000,000명의 직원들이 100분씩만 일해도 int 범위의값을 초과해버리기 때문에 long 자료형을 써야함.
+	    for(int i=1; i<=n; i++) {
+	        sum[i] = sum[i-1] + arr[i];
+	        ans += sum[i]; // 이어지는 누적값들을 다 더한다.
+	    }
+	    
+	    System.out.print(ans);
+	    
+	}
+	
+}   
+
+
+
+```
+ 
+
