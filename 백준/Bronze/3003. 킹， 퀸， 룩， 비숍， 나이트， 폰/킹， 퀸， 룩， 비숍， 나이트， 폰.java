@@ -8,16 +8,12 @@ class Main {
 	    
 	    StringTokenizer st = new StringTokenizer(br.readLine());
 	    
-	    int a = 1 - Integer.parseInt(st.nextToken());
-	    int b = 1 - Integer.parseInt(st.nextToken());
-	    int c = 2 - Integer.parseInt(st.nextToken());
-	    int d = 2 - Integer.parseInt(st.nextToken());
-	    int e = 2 - Integer.parseInt(st.nextToken());
-	    int f = 8 - Integer.parseInt(st.nextToken());
+	    int[] chess = {1, 1, 2, 2, 2, 8};
 	    
-	    System.out.print(a + " " + b + " " + c + " " + d + " " + e + " " + f);
+	    for(int i=0; i<6; i++) {
+	        System.out.print(chess[i] - Integer.parseInt(st.nextToken()) + " ");
+	    }
 	    
-
 	}
 	
 }   
