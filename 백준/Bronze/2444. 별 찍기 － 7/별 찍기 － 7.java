@@ -11,34 +11,17 @@ class Main {
 	    
 	    
 	    for(int i=0; i<n-1; i++) {
-	        
-	        for(int j=n-i-1; j>=1; j--) {
-	            sb.append(" ");
-	        }
-	        
-	        for(int k=0; k<i*2+1; k++) {
-	            sb.append("*");
-	        }
-	        
+	        sb.append(" ".repeat(n-1-i));
+	        sb.append("*".repeat(2*i+1));
 	        sb.append("\n");
 	    }
 	    
-	    for(int i=0; i<n*2-1; i++) {
-	        sb.append("*");
-	    }
-	    sb.append("\n");
+	    sb.append("*".repeat(2*n-1)).append("\n");
 	    
 	    for(int i=0; i<n-1; i++) {
-	        
-	        for(int j=0; j<=i; j++) {
-	            sb.append(" ");
-	        }
-	        
-	        for(int k=0; k<2*(n-1)-1 -i*2; k++) {
-	            sb.append("*");
-	        }
+	        sb.append(" ".repeat(i+1));
+	        sb.append("*".repeat(2*(n-1)-1-2*i));
 	        sb.append("\n");
-	        
 	    }
 	    
 	    System.out.print(sb);
