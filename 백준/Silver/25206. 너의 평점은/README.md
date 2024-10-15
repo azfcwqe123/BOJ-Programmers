@@ -79,3 +79,117 @@
 
 <p>정답과의 절대오차 또는 상대오차가 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msup><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-script style="vertical-align: 0.393em;"><mjx-texatom size="s" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c34"></mjx-c></mjx-mn></mjx-texatom></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>10</mn><mrow data-mjx-texclass="ORD"><mo>−</mo><mn>4</mn></mrow></msup></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">\(10^{-4}\)</span></mjx-container> 이하이면 정답으로 인정한다.</p>
 
+---
+
+첫번째 풀이, if문 사용
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    public static int cnt = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    double a = 0;
+	    double b = 0;
+	        
+	    for(int i=0; i<20; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        String str = st.nextToken();
+	        double score = Double.parseDouble(st.nextToken());
+	        String grade = st.nextToken();
+	        
+	        if(!(grade.equals("P"))) { // P는 계산에서 배제시켜버린다.
+	            
+	            if(grade.equals("A+")) {
+	                a += 4.5 * score;
+	            } else if(grade.equals("A0")) {
+	                a += 4.0 * score;
+	            } else if(grade.equals("B+")) {
+	                a += 3.5 * score;
+	            } else if(grade.equals("B0")) {
+	                a += 3.0 * score;
+	            } else if(grade.equals("C+")) {
+	                a += 2.5 * score;
+	            } else if(grade.equals("C0")) {
+	                a += 2.0 * score;
+	            } else if(grade.equals("D+")) {
+	                a += 1.5 * score;
+	            } else if(grade.equals("D0")) {
+	                a += 1.0 * score;
+	            } else if(grade.equals("F")) {
+	                a += 0.0 * score;
+	            }
+	            
+	            b += score;
+
+	            }
+	            
+	        }
+	        
+	        System.out.print(String.format("%6f",(a/b)));
+	        
+	    }
+	    
+	}
+	
+
+
+
+```
+
+---
+
+두번째 풀이, 배열 사용
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    public static int cnt = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    String[] A = {"A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F"}; // P는 계산에서 배제시켜버린다.
+	    double[] B = {4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.0};
+	        
+	    double sum1 = 0;
+	    double sum2 = 0;
+	    
+	    for(int i=0; i<20; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        String str = st.nextToken();
+	        double score = Double.parseDouble(st.nextToken());
+	        String grade = st.nextToken();
+	        
+	        for(int j=0; j<A.length; j++) { // 등급 배열에 속해있는지 체크한다.
+	            if(A[j].equals(grade)) { // 속해있다면
+	                sum1 += B[j] * score; // 해당 등급에 맞는 학점을 계산한다.
+	                sum2 += score;
+	                break; // 다음 과목으로 넘어간다.
+	            }   
+	        }
+	        
+	    }
+	        
+	   System.out.print(String.format("%6f", (sum1 / sum2)));
+	        
+	        
+	}
+	    
+}
+	
+
+
+
+```
