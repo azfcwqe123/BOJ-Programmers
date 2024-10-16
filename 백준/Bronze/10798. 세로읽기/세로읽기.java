@@ -9,19 +9,16 @@ class Main {
 	 
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	    char[][] arr = new char[5][15];
+	    String[] arr = new String[5];
 	    
-	    int max_length = 0;
+	    int max_length = -1;
 	    
 	    for(int i=0; i<5; i++) {
-	        StringTokenizer st = new StringTokenizer(br.readLine());
-	
-	        String str = st.nextToken();
-	        max_length = Math.max(max_length, str.length());
 	        
-	        for(int j=0; j<str.length(); j++) {
-	            arr[i][j] = str.charAt(j);    
-	        }
+	        String str = br.readLine();
+	        max_length = Math.max(max_length,str.length());
+	        
+	        arr[i] = str;
 	    }
 	    
 	    StringBuilder sb = new StringBuilder();
@@ -29,13 +26,16 @@ class Main {
 	    for(int i=0; i<max_length; i++) {
 	        
 	        for(int j=0; j<5; j++) {
-	            if(arr[j][i] == '\u0000') continue;
-	            sb.append(arr[j][i]);        
-	        }
+	            
+	            if(i < arr[j].length()) {
+	                sb.append(arr[j].charAt(i));
+	            }
+	        }   
+	        
 	    }
 	    
 	    System.out.print(sb);
-	        
+	    
 	}
 	    
 }
