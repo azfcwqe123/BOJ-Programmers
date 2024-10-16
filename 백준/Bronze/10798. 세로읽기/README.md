@@ -46,3 +46,156 @@ P 5 h 3 k x</pre>
 
  <p>영석이가 세로로 읽은 순서대로 글자들을 출력한다. 이때, 글자들을 공백 없이 연속해서 출력한다. </p>
 
+---
+
+1. char 배열의 초기값, 최고 길이를 구한 메모리 절약 방법
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    public static int cnt = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    char[][] arr = new char[5][15];
+	    
+	    int max_length = 0; // 메모리 절약을 위해 max_length 설정
+	    
+	    for(int i=0; i<5; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	
+	        String str = st.nextToken();
+	        max_length = Math.max(max_length, str.length());
+	        
+	        for(int j=0; j<str.length(); j++) {
+	            arr[i][j] = str.charAt(j);    
+	        }
+	    }
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    for(int i=0; i<max_length; i++) {
+	        
+	        for(int j=0; j<5; j++) {
+	            if(arr[j][i] == '\u0000') continue; // char 배열의 초기값은 '\u0000'
+	            sb.append(arr[j][i]);        
+	        }
+	    }
+	    
+	    System.out.print(sb);
+	        
+	}
+	    
+}
+	
+
+
+
+```
+
+---
+
+2. String 배열로 풀려고 한 문제, 런타임 에러.
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    public static int cnt = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    String[] arr = new String[5];
+	    
+	    int max_length = -1;
+	    
+	    for(int i=0; i<5; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        String str = st.nextToken();
+	        max_length = Math.max(max_length,str.length());
+	        
+	        arr[i] = str;
+	    }
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    for(int i=0; i<max_length; i++) {
+	        
+	        for(int j=0; j<5; j++) {
+	            if(arr[j].charAt(i) == '\u0000') continue; // 런타임 에러 발생. String 길이의 범위를 벗어난 문자열을 .charAt() 했을때 일어난 문제
+	            
+	            sb.append(arr[j].charAt(i));
+	        }   
+	        
+	    }
+	    
+	    System.out.print(sb);
+	    
+	}
+	    
+}
+	
+
+
+
+```
+
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    public static int cnt = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    String[] arr = new String[5];
+	    
+	    int max_length = -1;
+	    
+	    for(int i=0; i<5; i++) {
+	        
+	        String str = br.readLine();
+	        max_length = Math.max(max_length,str.length());
+	        
+	        arr[i] = str;
+	    }
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    for(int i=0; i<max_length; i++) {
+	        
+	        for(int j=0; j<5; j++) {
+	            
+	            if(i < arr[j].length()) { // 현재 문자열의 위치가 String 문자열 길이보다 작을때 추가.
+	                sb.append(arr[j].charAt(i));
+	            }
+	        }   
+	        
+	    }
+	    
+	    System.out.print(sb);
+	    
+	}
+	    
+}
+	
+
+
+
+```
+
+
