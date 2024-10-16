@@ -78,7 +78,7 @@ class Main {
 	    
 	    StringBuilder sb = new StringBuilder();
 	    
-	    for(int i=0; i<max_length; i++) {
+	    for(int i=0; i<max_length; i++) { // 핵심코드
 	        
 	        for(int j=0; j<5; j++) {
 	            if(arr[j][i] == '\u0000') continue; // char 배열의 초기값은 '\u0000'
