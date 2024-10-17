@@ -30,3 +30,44 @@
 
  <p>첫째 줄에 10진법 수 N을 B진법으로 출력한다.</p>
 
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int N = Integer.parseInt(st.nextToken());
+	    int B = Integer.parseInt(st.nextToken());
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    while(N > 0) { 몫이 살아있을때까지 실행
+	       
+	       if(N % B < 10) { // 나머지가 10보다 작으면 숫자 그대로 출력
+	           sb.append((char) (N % B + '0'));
+	       } else { // 나머지가 10 이상이면 문자로 변환해야됨. 10진법을 넘어가는 진법은 A:10, B:11 등으로 나타내야함.
+	           sb.append((char) ((N % B) - 10 + 'A'));
+	       }
+	       
+	       N /= B; // 다음 몫으로 실행
+	    } 
+	    
+	    System.out.println(sb.reverse());
+	}
+	    
+}
+	
+
+
+
+```
+
+![11005](https://github.com/user-attachments/assets/71da1ed0-cdff-411c-b071-8df022bfacd8)
