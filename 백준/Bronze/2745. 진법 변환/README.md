@@ -75,5 +75,5 @@ class Main {
 
 ```
 
-![2745](https://github.com/user-attachments/assets/f8db8a32-eafb-497c-bff0-5810562dfa81)
+![2745](https://github.com/user-attachments/assets/a2d8b0f7-9f32-4f5c-ab4c-52fa80897c2e)
 
