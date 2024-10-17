@@ -32,3 +32,48 @@
 
  <p>첫째 줄에 B진법 수 N을 10진법으로 출력한다.</p>
 
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    String N = st.nextToken();
+	    int B = Integer.parseInt(st.nextToken());
+	    int exponent = 0;
+	    int res = 0;
+	    
+	    for(int i=N.length()-1; i>=0; i--) {
+	        char ch = N.charAt(i);
+	        int k = 0;
+	        
+	        if(ch >= '0' && ch <= '9') {
+	            k = ch - '0';
+	        } else {
+	            k = ch - 55; // k = ch - '55'는 불가능. 단일 문자 리터럴만 가능하다. 여러 문자로 된 리터럴은 불가능(ex. '12')
+	        }
+	        
+	        res += k * Math.pow(B,exponent++);
+	    }
+	    
+	    System.out.print(res);
+	    
+	    
+	}
+	    
+}
+	
+
+
+```
+
+![2745](https://github.com/user-attachments/assets/f8db8a32-eafb-497c-bff0-5810562dfa81)
+
