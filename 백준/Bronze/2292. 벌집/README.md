@@ -28,3 +28,8 @@
 
  <p>입력으로 주어진 방까지 최소 개수의 방을 지나서 갈 때 몇 개의 방을 지나는지 출력한다.</p>
 
+ ---
+
+ ![2292](https://github.com/user-attachments/assets/d2283e2e-b8e7-4319-a0fd-9e7a6d55e284)
+
+
