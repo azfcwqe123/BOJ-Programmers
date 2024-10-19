@@ -9,13 +9,9 @@ class Main {
 	    
 	    int n = Integer.parseInt(br.readLine());
 	    
-	    int sum = 2;
+	    int ans = (int) Math.pow((Math.pow(2,n) + 1),2);
 	    
-	    for(int i=1; i<=n; i++) {
-	        sum += (int) Math.pow(2,i-1);
-	    }
-	    
-	    System.out.print(sum*sum);
+	    System.out.print(ans);
 	}
 	    
 }
