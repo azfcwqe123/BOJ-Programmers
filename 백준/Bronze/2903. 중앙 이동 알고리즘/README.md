@@ -56,3 +56,7 @@
 
  <p>첫째 줄에 과정을 N번 거친 후 점의 수를 출력한다.</p>
 
+---
+
+![KakaoTalk_20241019_185124002](https://github.com/user-attachments/assets/dad7a2c2-d09c-45ed-bc1a-08659d0f6ae5)
+
