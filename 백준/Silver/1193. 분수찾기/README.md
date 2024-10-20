@@ -83,3 +83,7 @@
 
  <p>첫째 줄에 분수를 출력한다.</p>
 
+---
+
+![1193](https://github.com/user-attachments/assets/2d616a11-c4e9-4cc4-942f-168028990054)
+
