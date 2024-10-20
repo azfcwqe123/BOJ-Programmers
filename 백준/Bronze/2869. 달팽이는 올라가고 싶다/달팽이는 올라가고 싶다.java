@@ -15,7 +15,7 @@ class Main {
 	    
 	    int ans = (V-A)/(A-B);
 	    
-	    if((V-A)%(B-A) == 0) {
+	    if((V-A)%(A-B) == 0) {
 	        ans++;
 	    } else ans+=2;
 	    
