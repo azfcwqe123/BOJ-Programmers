@@ -30,3 +30,80 @@
 
  <p>첫째 줄에 달팽이가 나무 막대를 모두 올라가는데 며칠이 걸리는지 출력한다.</p>
 
+---
+
+시간 초과 나온 코드. 시간 제한이 0.25초라서 반복문으로 구하면 안 됨.
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int A = Integer.parseInt(st.nextToken());
+	    int B = Integer.parseInt(st.nextToken());
+	    int V = Integer.parseInt(st.nextToken());
+	    
+	    int cnt = 0;
+	    int sum = 0;
+	    
+	    while(true) {
+	        sum += A;
+	        
+	        if(sum >= V) {
+	           System.out.print(++cnt);
+	           return;
+	        }
+	            
+	        sum -= B;
+	        
+	        cnt++;
+	    }
+	    
+ 	    
+	}
+	    
+}
+	
+
+
+
+```
+
+---
+
+수학적으로 푼 코드
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int A = Integer.parseInt(st.nextToken());
+	    int B = Integer.parseInt(st.nextToken());
+	    int V = Integer.parseInt(st.nextToken());
+	    
+	    int ans = (V-A)/(A-B); // 나중에 한번에 A로 올라갈 수 있는지 판단하기 위해 목적지에서 A만큼 빼준다.
+	    
+	    if((V-A)%(A-B) == 0) { // V-A에서 하루에 갈 수 있는 거리를 나눴을때, 0이 나오면 하루만 더 A만큼 가면되니 하루를 더해준다.
+	        ans++;
+	    } else ans+=2; // 나머지가 나온다면 2일을 더 가야한다. 
+	    
+	    System.out.print(ans);
+ 	    
+	}
+	    
+}
+
+```
