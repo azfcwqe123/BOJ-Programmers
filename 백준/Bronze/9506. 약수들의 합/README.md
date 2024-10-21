@@ -57,7 +57,7 @@ class Main {
 	        
 	        int n = Integer.parseInt(br.readLine());
 	        
-	        if(n == -1) { // -1을 입력하면 종료료
+	        if(n == -1) { // -1을 입력하면 종료
 	            break;
 	        }
 	        
@@ -82,7 +82,7 @@ class Main {
 	                if(n % i == 0 && cnt > 1) { // 완전수의 약수가 맞고, cnt > 1일때 약수와 '+' 문자를 추가함.
 	                    sb.append(i + " + ");
 	                    cnt--; // cnt 카운트 줄이기
-	                } else if(n % i == 0 && cnt == 1) { // 완전수의 약수가 맞고, cnt == 1일때(마지막 약수는 '+'을 더하면 안 됨) 약수만 추가함함
+	                } else if(n % i == 0 && cnt == 1) { // 완전수의 약수가 맞고, cnt == 1일때(마지막 약수는 '+'을 더하면 안 됨) 약수만 추가함
 	                    sb.append(i);
 	                }
 	                
