@@ -12,26 +12,22 @@ class Main {
 	    int N = Integer.parseInt(st.nextToken());
 	    int K = Integer.parseInt(st.nextToken());
 	    
-	    int tmp = 0;
 	    int cnt = 0;
 	    
 	    for(int i=N; i>=1; i--) {
 	        
 	        if(N % i == 0) {
-	            tmp = N / i;
 	            cnt++;
 	            
 	            if(cnt == K) {
-	                System.out.print(tmp);
+	                System.out.print(N / i);
 	                return;
 	            }
 	        }
 	        
 	    }
 	    
-	    if(cnt < K) {
-	        System.out.print(0);
-	    }
+	    System.out.print(0);
  	    
 	}
 	    
