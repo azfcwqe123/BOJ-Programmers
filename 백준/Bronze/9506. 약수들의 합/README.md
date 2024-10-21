@@ -38,3 +38,171 @@
 
 <p>n이 완전수가 아니라면 n is NOT perfect. 를 출력한다.</p>
 
+---
+
+
+첫번째 풀이
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    
+	    while(true) {
+	        
+	        int n = Integer.parseInt(br.readLine());
+	        
+	        if(n == -1) { // -1이 입력되면 종료
+	            break;
+	        }
+	        
+	        int sum = 0; // 완전수인지 확인하기 위한 변수
+	        int cnt = 0; // '+' 문자를 넣는 범위를 판단하기 위한 변수
+	        
+	        StringBuilder sb = new StringBuilder();
+
+	        for(int i=1; i<n; i++) { // 완전수인지 확인하는 반복문
+	            if(n % i == 0) {
+	                sum += i;    
+	                cnt++;
+	            }
+	        }
+	        
+	        
+	        if(sum == n) { // 완전수라면
+	            
+	            sb.append(n + " = ");
+	            for(int i=1; i<n; i++) {
+	                
+	                if(n % i == 0 && cnt > 1) {
+	                    sb.append(i + " + ");
+	                    cnt--;
+	                } else if(n % i == 0 && cnt == 1) { // 마지막 약수는 '+'을 넣지 않는다.
+	                    sb.append(i);
+	                }
+	                
+	            }
+	        } else { // 완전수가 아니라면
+	            sb.append(n + " is NOT perfect.");
+	        }
+            
+            System.out.println(sb);
+	        
+	    }
+ 	    
+	}
+	    
+}
+	
+```
+---
+
+두번째 풀이, 첫번째 풀이 리팩토링
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    
+	    while(true) {
+	        
+	        int n = Integer.parseInt(br.readLine());
+	        
+	        if(n == -1) break;
+	        
+	        int sum = 0;
+	        
+	        for(int i=1; i<n; i++) {
+	            if(n % i == 0) sum += i;
+	        }
+	        
+	        StringBuilder sb = new StringBuilder();
+	        
+	        if(sum == n) {
+	            sb.append(n + " = 1 "); // 1은 모든 수의 약수이니, 미리 포함 시키면 cnt을 사용할 필요 없게 됨. !! 
+	            
+	            for(int i=2; i<n; i++) {
+	                if(n % i == 0) sb.append("+ " + i + " ");
+	            }
+	            
+	        } else sb.append(n + " is NOT perfect.");
+	        
+	        
+	        System.out.println(sb);
+	
+	        
+	    }
+ 	    
+	}
+	    
+}	
+
+```
+
+---
+
+세번째 풀이, ArrayList 사용
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    
+	    while(true) {
+	        
+	        int n = Integer.parseInt(br.readLine());
+	        
+	        if(n == -1) break;
+	        
+	        int sum = 0;
+	        
+	        List<Integer> list = new ArrayList<>();
+	        
+	        for(int i=1; i<n; i++) {
+	            if(n % i == 0) {
+	                sum += i;
+	                list.add(i);
+	            }
+	        }
+	        
+	        StringBuilder sb = new StringBuilder();
+	        
+	        if(sum == n) {
+	            sb.append(n + " = 1");
+	            for(int i=1; i<list.size(); i++) {
+	               sb.append(" + " + list.get(i));         
+	            }
+	            
+	        } else {
+	            sb.append(n + " is NOT perfect.");
+	        }
+	        
+	        System.out.println(sb);
+	
+	        
+	    }
+ 	    
+	}
+	    
+}
+	
+
+
+
+```
