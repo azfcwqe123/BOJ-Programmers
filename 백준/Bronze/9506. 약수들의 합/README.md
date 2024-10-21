@@ -38,3 +38,68 @@
 
 <p>n이 완전수가 아니라면 n is NOT perfect. 를 출력한다.</p>
 
+---
+
+첫번째 풀이
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    
+	    while(true) {
+	        
+	        int n = Integer.parseInt(br.readLine());
+	        
+	        if(n == -1) { // -1을 입력하면 종료료
+	            break;
+	        }
+	        
+	        int sum = 0; // 완전수인지 확인하기 위한 변수
+	        int cnt = 0; // '+' 문자를 붙이는 범위를 나누기 위해 약수의 카운트를 세는 변수
+	        
+	        StringBuilder sb = new StringBuilder();
+
+	        for(int i=1; i<n; i++) { // 완전수인지 확인
+	            if(n % i == 0) {
+	                sum += i;    
+	                cnt++;
+	            }
+	        }
+	        
+	        
+	        if(sum == n) { // 완전수가 맞다면
+	            
+	            sb.append(n + " = ");
+	            for(int i=1; i<n; i++) {
+	                
+	                if(n % i == 0 && cnt > 1) { // 완전수의 약수가 맞고, cnt > 1일때 약수와 '+' 문자를 추가함.
+	                    sb.append(i + " + ");
+	                    cnt--; // cnt 카운트 줄이기
+	                } else if(n % i == 0 && cnt == 1) { // 완전수의 약수가 맞고, cnt == 1일때(마지막 약수는 '+'을 더하면 안 됨) 약수만 추가함함
+	                    sb.append(i);
+	                }
+	                
+	            }
+	        } else { // 완전수가 아니라면 
+	            sb.append(n + " is NOT perfect.");
+	        }
+            
+            System.out.println(sb);
+	        
+	    }
+ 	    
+	}
+	    
+}
+	
+
+```
+
+---
