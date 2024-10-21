@@ -41,3 +41,96 @@
 
  <p>첫째 줄에 N의 약수들 중 K번째로 작은 수를 출력한다. 만일 N의 약수의 개수가 K개보다 적어서 K번째 약수가 존재하지 않을 경우에는 0을 출력하시오.</p>
 
+---
+
+첫번쨰 풀이
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int N = Integer.parseInt(st.nextToken());
+	    int K = Integer.parseInt(st.nextToken());
+	    
+	    int tmp = 0;
+	    int cnt = 0;
+	    
+	    for(int i=N; i>=1; i--) {
+	        
+	        if(N % i == 0) {
+	            tmp = N / i;
+	            cnt++;
+	            
+	            if(cnt == K) {
+	                System.out.print(tmp);
+	                return;
+	            }
+	        }
+	        
+	    }
+	    
+	    if(cnt < K) {
+	        System.out.print(0);
+	    }
+ 	    
+	}
+	    
+}
+	
+
+
+
+```
+
+---
+
+두번째 풀이, 리팩토링 
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int N = Integer.parseInt(st.nextToken());
+	    int K = Integer.parseInt(st.nextToken());
+	    
+	    int cnt = 0;
+	    
+	    for(int i=N; i>=1; i--) {
+	        
+	        if(N % i == 0) {
+	            cnt++;
+	            
+	            if(cnt == K) {
+	                System.out.print(N / i);
+	                return;
+	            }
+	        }
+	        
+	    }
+	    
+	    System.out.print(0);
+ 	    
+	}
+	    
+}
+	
+
+
+
+```
