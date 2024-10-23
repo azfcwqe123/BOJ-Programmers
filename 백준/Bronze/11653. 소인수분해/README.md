@@ -134,7 +134,7 @@ class Main {
 	    
 	    StringBuilder sb = new StringBuilder();
 	    
-	    for(int i=2; i*i<=n; i++) { // 에라토스테네스의 체 원리 사용, 소수의 제곱이 n보다 작으면, n 안에 있는 해당 소수는 모두 처리된다.
+	    for(int i=2; i*i<=n; i++) { // 에라토스테네스의 체 원리 사용, n보다 작은 i*i에 해당하는 소수(i)들은 모두 처리됨.
 	 
 	        while(n % i == 0) { // 1이 될때까지 계속 나눈다.
 	            sb.append(i).append("\n");
