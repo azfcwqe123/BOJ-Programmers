@@ -36,3 +36,88 @@
 
  <p>첫째 줄에 N 개의 점을 둘러싸는 최소 크기의 직사각형의 넓이를 출력하시오. </p>
 
+---
+
+첫번째 풀이, Math() 메서드 사용, 260ms
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int maxX=-100001, minX=100001, maxY=-100001, minY=100001;
+	    
+	    while(n-- > 0) {
+	       
+	       StringTokenizer st = new StringTokenizer(br.readLine());
+	       
+	       int x = Integer.parseInt(st.nextToken());
+	       int y = Integer.parseInt(st.nextToken());
+	       
+	       maxX = Math.max(maxX,x);
+	       minX = Math.min(minX,x);
+	       
+	       maxY = Math.max(maxY,y);
+	       minY = Math.min(minY,y);
+	    }
+	    
+	    int square = (maxX - minX) * (maxY - minY);
+	    
+	    System.out.print(square);
+	    
+	}
+}
+
+
+
+
+```
+
+---
+
+두번째 풀이, 정렬 메서드 사용, 324ms 
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int[] x = new int[n];
+	    int[] y = new int[n];
+	    
+	    for(int i=0; i<n; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        x[i] = Integer.parseInt(st.nextToken());
+	        y[i] = Integer.parseInt(st.nextToken());
+	        
+	    }
+	    
+	    Arrays.sort(x);
+	    Arrays.sort(y);
+	    
+	    int square = (x[n-1] - x[0]) * (y[n-1] - y[0]);
+	    
+	    System.out.print(square);
+	    
+	}
+}
+
+
+
+
+```
