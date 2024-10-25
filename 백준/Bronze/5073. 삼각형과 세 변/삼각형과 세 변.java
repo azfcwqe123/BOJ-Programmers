@@ -9,29 +9,24 @@ class Main {
 	    
 	    while(true) {
 	        
-	        int[] arr = new int[3];
 	        
 	        StringTokenizer st = new StringTokenizer(br.readLine());
 	        
-	        arr[0] = Integer.parseInt(st.nextToken());
-	        arr[1] = Integer.parseInt(st.nextToken());
-	        arr[2] = Integer.parseInt(st.nextToken());
+	        int a = Integer.parseInt(st.nextToken());
+	        int b = Integer.parseInt(st.nextToken());
+	        int c = Integer.parseInt(st.nextToken());
 	        
-	        if(arr[0]==0 && arr[1]==0 && arr[2]==0) return;
 	        
-	        Arrays.sort(arr);
+	        if(a==0 && b==0 && c==0) return;
 	        
-	        if(arr[0] + arr[1] > arr[2]) {
-	            
-	            if(arr[0]==arr[1] && arr[1]==arr[2]) System.out.println("Equilateral");
-	            else if(arr[0]==arr[1] || arr[1]==arr[2] || arr[0]==arr[2]) System.out.println("Isosceles");
+	        if(a + b > c && a + c > b && b + c > a) {
+	            if(a==b && b==c) System.out.println("Equilateral");
+	            else if(a==b || b==c || c==a) System.out.println("Isosceles");
 	            else System.out.println("Scalene");    
-	            
 	        } else {
 	            System.out.println("Invalid");
 	        }
 	        
-       
 	    }
 	    
 	    
