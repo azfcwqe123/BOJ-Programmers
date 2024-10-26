@@ -40,3 +40,54 @@
 
 <p>둘째 줄에 코드1의 수행 횟수를 다항식으로 나타내었을 때, 최고차항의 차수를 출력한다. 단, 다항식으로 나타낼 수 없거나 최고차항의 차수가 3보다 크면 4를 출력한다.</p>
 
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    System.out.println((long) n*(n-1)/2);
+	    System.out.print(2);
+	    
+	}
+}
+
+
+```
+
+### 규칙 구하기
+
+n=7일때,
+
+i = 1 -> j = 2,3,4,5,6,7
+
+i = 2 -> j = 2,3,4,5,6
+
+i = 3 -> j = 2,3,4,5
+
+i = 4 -> j = 2,3,4
+
+i = 5 -> j = 2,3
+
+i = 6 -> j = 1
+
+총 횟수 = 1+2+3+4+5+6 = 21
+
+규칙을 보면 1부터 n-1까지의 합을 구하는 등차수열 합공식을 이용하면 된다.
+
+=> (n-1)*n / 2
+
+---
+
+### 범위
+
+입력 크기가 1 <= n <= 500,000이다.
+
+(n-1)*n / 2에 500,000을 대입해보면, 1250억이 나오게된다. 이는 대략 21억까지 숫자를 저장하는 int형 범위에 벗어난다.
