@@ -7,8 +7,8 @@ class Main {
 	 
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    
-	    long n = Integer.parseInt(br.readLine());
-	    System.out.println(n*(n-1)/2);
+	    int n = Integer.parseInt(br.readLine());
+	    System.out.println((long) n*(n-1)/2);
 	    System.out.print(2);
 	    
 	}
