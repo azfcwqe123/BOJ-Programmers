@@ -42,3 +42,50 @@
 
  <p>실험이 종료되었을 때 '칭찬 양파'의 길이와 '비난 양파'의 길이를 각각 출력해주세요.</p>
 
+---
+
+```java
+import java.io.*;
+import java.util.*;
+
+class Main {
+    
+    static int sum = 0;
+    
+	public static void main (String[] args) throws IOException {
+	 
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int n = Integer.parseInt(st.nextToken());
+	    
+	    int a = Integer.parseInt(st.nextToken());
+	    int b = Integer.parseInt(st.nextToken());
+	    
+	    int happyOnion = 1, badOnion = 1;
+	    
+	    
+	    while(n-- > 0) {
+	        
+	        happyOnion += a; // 1번 조건
+	        badOnion += b; // 1번 조건
+	        
+	        if(badOnion > happyOnion) { // 2번 조건 
+	            int tmp = happyOnion;
+	            happyOnion = badOnion;
+	            badOnion = tmp;
+	        }
+	        
+	        else if(badOnion == happyOnion) badOnion -= 1; // 3번 조건
+	    }
+	    
+	    System.out.print(happyOnion + " " + badOnion);
+	    
+	}
+	
+}
+
+```
+
+
