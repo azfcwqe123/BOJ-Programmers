@@ -29,17 +29,20 @@ class Main {
         
         int ans = 0;
         
+        fish[c] = true;
+        
         while(rt < n+k-1) {
             
-            fish[c] = true;
             int cnt = 0;
             
             for(int i = lt; i <= rt; i++) fish[arr[i]] = true;
            
-            
-            for(int i = 1; i <= d; i++) if(fish[i] == true) cnt++;
-            
-            Arrays.fill(fish, false);
+            for(int i = 1; i <= d; i++) {
+                if(fish[i]) {
+                    cnt++;
+                    if(i != c) fish[i] = false;
+                }
+            }
             
             ans = Math.max(ans, cnt);
             
