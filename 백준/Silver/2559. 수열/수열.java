@@ -12,27 +12,29 @@ class Main {
 	    int n = Integer.parseInt(st.nextToken());
 	    int k = Integer.parseInt(st.nextToken());
 	    
-	    int[] arr = new int[n+1];
-	    int[] sum = new int[n+1];
+	    int[] arr = new int[n];
 	    
 	    st = new StringTokenizer(br.readLine());
-	    for(int i=1; i<=n; i++) {
+	    for(int i=0; i<n; i++) {
 	        arr[i] = Integer.parseInt(st.nextToken());
 	    }
 	    
-	    for(int i=1; i<=n; i++) {
-	        sum[i] = sum[i-1] + arr[i];
-	    }
+	    int sum = 0, max = 0;
 	    
-	    int max = Integer.MIN_VALUE;
-	    
-	    for(int i=0; i<n-k+1; i++) {
-	        max = Math.max(max, sum[k+i] - sum[i]);
+	    for(int i=0; i<n; i++) {
+	        
+	        sum += arr[i];
+	        
+	        if(i == k-1) max = sum;
+	        
+	        else if(i >= k) {
+	            sum -= arr[i-k];
+	            max = Math.max(max, sum);
+	        }
+	        
 	    }
 	    
 	    System.out.print(max);
-	    
-	    
     }
     
 }
