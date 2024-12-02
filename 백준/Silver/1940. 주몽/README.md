@@ -28,3 +28,55 @@
 
  <p>첫째 줄에 갑옷을 만들 수 있는 개수를 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    int m = Integer.parseInt(br.readLine());
+	    
+	    int[] arr = new int[n];
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    for(int i=0; i<n; i++) {
+	        arr[i] = Integer.parseInt(st.nextToken());
+	    }
+	    
+	    Arrays.sort(arr);
+	    
+	    
+	    int lt=0, rt = arr.length - 1; // lt를 맨 왼쪽에, rt를 맨 오른쪽에
+	    
+	    int ans = 0;
+
+          // 배열에 있는 숫자들이 고유하다는 점 또한 고려한다.
+	    while(lt < rt) { 
+	        
+	        if(arr[lt] + arr[rt] == m) {
+	            ans++;
+	            lt++; 
+	            rt--;
+	        }
+	        
+	        else if(arr[lt] + arr[rt] < m) lt++; // m보다 작으면, 왼쪽에 있는 숫자(작은 숫자) 오른쪽(큰 숫자)으로 옮긴다.
+	        
+	        else if(arr[lt] + arr[rt] > m) rt--; // m보다 크면, 오른쪽에 있는 숫자(큰 숫자)를 왼쪽(작은 숫자)으로 옮긴다.
+	            
+	        } 
+	    
+	    
+	    System.out.print(ans);
+
+	    
+    }
+    
+}
+```
