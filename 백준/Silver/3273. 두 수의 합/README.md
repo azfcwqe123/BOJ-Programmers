@@ -26,3 +26,64 @@
 
  <p>문제의 조건을 만족하는 쌍의 개수를 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int n = Integer.parseInt(st.nextToken());
+	    
+	    int[] arr = new int[n];
+	    
+	    st = new StringTokenizer(br.readLine());
+	    for(int i=0; i<n; i++) {
+	        arr[i] = Integer.parseInt(st.nextToken());
+	    }
+	    
+	    Arrays.sort(arr);
+	    
+	    int x = Integer.parseInt(br.readLine());
+	    
+	    int lt = 0, rt = n-1;
+	    
+	    int cnt = 0;
+	    
+	    while(lt < rt) {
+	        
+	        int sum = arr[lt] + arr[rt];
+	        
+	        if(sum == x) {
+	            cnt++;
+	            lt++;
+	            rt--;
+	        }
+	        else if(sum < x) lt++;
+	        else if(sum > x) rt--;
+	    }
+	    
+	    System.out.print(cnt);
+	    
+    }
+    
+}
+
+```
+
+---
+
+수를 정렬하고
+
+1 2 3 5 7 9 10 11 12가 됐다고 가정했을때,
+
+lt와 rt을 함께 앞에서부터 돌면 합의 쌍이 지어지지 않는다. 
+
+lt을 맨 앞에, rt을 맨 끝에 두고 시작해야 합의 쌍이 지어진다.
