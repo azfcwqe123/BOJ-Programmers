@@ -28,3 +28,65 @@
 
  <p>첫째 줄부터 한 줄에 하나씩 가능한 성원이의 현재 몸무게를 오름차순으로 출력한다. 가능한 몸무게가 없을 때는 -1을 출력한다. 현재 몸무게는 자연수로 떨어지지 않을 수도 있는데, 이런 경우는 제외해야 한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    int g = Integer.parseInt(br.readLine());
+	    
+	    int lt = 1, rt = 2;
+	    
+	    ArrayList<Integer> list = new ArrayList<>();
+	    
+	    while(lt < rt) {
+	        
+	        int diff = (int) (Math.pow(rt,2) - Math.pow(lt,2));
+	        
+	        if(diff > g) lt++;
+	        else if(diff < g) rt++;
+	        else {
+	            list.add(rt);
+	            lt++;
+	            rt++;
+	        }
+	    }
+	    
+	    if(list.isEmpty() || g == 1) {
+	        System.out.print(-1);
+	        return;
+	    } else {
+            for(int x : list) {
+                System.out.println(x);
+            }
+	    }
+	    
+	    
+	    
+    }
+    
+}
+
+```
+
+가장 가까운 두 수의 제곱차가 g라면, 그 이후는 g를 못구한다.
+
+&nbsp;
+
+8^2 - 7^2 = 15
+
+9^2 - 8^2 = 17
+
+10^2 - 9^2 = 19
+
+&nbsp;
+
+규칙을 확인할 수 있다.
+참고 : https://somuchthings.tistory.com/267
