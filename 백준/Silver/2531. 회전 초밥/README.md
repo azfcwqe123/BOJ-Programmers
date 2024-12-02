@@ -39,3 +39,74 @@
 
  <p>주어진 회전 초밥 벨트에서 먹을 수 있는 초밥의 가짓수의 최댓값을 하나의 정수로 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int n = Integer.parseInt(st.nextToken()); // 회전 초밥 벨트에 놓인 접시의 수
+	    int d = Integer.parseInt(st.nextToken()); // 초밥 종류 개수
+	    int k = Integer.parseInt(st.nextToken()); // 연속해서 먹는 접시의 수 
+	    int c = Integer.parseInt(st.nextToken()); // 쿠폰 번호
+	    
+	    //회전 초밥은 원형이라는걸 인지해야한다. n이 6, k=3이라고 가정할 때, 
+	    // 1 2 3 -> 2 3 4 -> 3 4 5 -> 4 5 6 -> 5 6 1 -> 6 1 2 꼴로 돌아야하는데, 
+	    // 즉 접시 끝에 처음부터 나왔던 초밥 k-1개만 놓으면 원형으로 모든 경우의 수를 탐색하게끔 만들 수 있다.
+	    
+	    // 1 2 3 4 5 6 1 2 이런식으로 말이다.
+	    
+	    int[] arr = new int[n + k - 1]; 
+	    
+	    for(int i=0; i<n; i++) {
+	        arr[i] = Integer.parseInt(br.readLine());
+	    }
+	    
+	    for(int i=n; i<n+k-1; i++) {
+	        arr[i] = arr[i-n];
+	    }
+	    
+	    boolean[] fish = new boolean[d+1]; // 초밥 종류 개수
+        
+        int lt=0, rt = k-1; // 연속해서 먹는 접시의 수 길이만큼 lt와 rt길이를 지정한다.
+        
+        int ans = 0;
+        
+        fish[c] = true; // 쿠폰 초밥은 항상 포함시킨다.
+        
+        
+        while(rt < n+k-1) { // 배열의 끝까지
+            
+            int cnt = 0;
+            
+            for(int i = lt; i <= rt; i++) fish[arr[i]] = true; // 접시에 나온 초밥의 종류가 나왔다면 true
+           
+            for(int i = 1; i <= d; i++) { // 모든 초밥의 종류 탐색
+                if(fish[i]) { // 초밥이 나왔다면
+                    cnt++; // 초밥 가짓수 증가
+                    if(i != c) fish[i] = false; // 쿠폰 초밥은 제외
+                }
+            }
+            
+            ans = Math.max(ans, cnt); // 최대로 큰 초밥 가짓수 반환
+            
+            lt++;
+            rt++;
+            
+        }
+        
+        System.out.print(ans);
+	    
+    }
+    
+}
+
+// 원형이 나오면 배열을 복사해서 붙여넣는것도 생각해보자.
+```
