@@ -30,3 +30,58 @@
 
  <p>앨버트가 택한 최적 위치로부터 K만큼 떨어진 거리 내에 있는 얼음들의 합(최댓값)을 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int[] pos = new int[1_000_001];
+	    
+	    int n = Integer.parseInt(st.nextToken());
+	    int k = Integer.parseInt(st.nextToken());
+ 	    
+ 	    while(n-- > 0) {
+ 	        st = new StringTokenizer(br.readLine());
+ 	        
+ 	        int g = Integer.parseInt(st.nextToken());
+ 	        int x = Integer.parseInt(st.nextToken());
+ 	        
+ 	        pos[x] = g;
+ 	    }
+ 	    
+ 	    int sum = 0, max = -1;
+ 	    
+ 	    int d = 2*k + 1;
+ 	    
+ 	    for(int i=0; i<=1_000_000; i++) {
+ 	        sum += pos[i];
+ 	        
+ 	        if(i >= d) sum -= pos[i-d];
+ 	        
+ 	        max = Math.max(sum, max);
+ 	    }
+ 	    
+ 	    System.out.print(max);
+    }
+
+}
+```
+
+문제를 잘 읽자.. 곰이 이동할수 있는 거리가 4이고, 
+
+곰이 x=1 위치에 있을때는 x=0, x=1, x=2, x=3, x=4, x=5 즉, 6칸을 움직일 수 있다.
+
+곰이 x=2 위치에 있을때는 x=0, x=1, x=2, x=3, x=4, x=5, x=6, x=7 즉, 8칸을 움직일 수 있다.
+
+곰이 x=4 위치에 있을때는 x=0, x=1, x=2, x=3, x=4, x=5, x=6, x=7, x=8  즉 9칸에 움직일 수 있다. 
+
+이런 예외케이스도 생각을 하자.
