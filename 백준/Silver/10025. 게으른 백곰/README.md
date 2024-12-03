@@ -30,3 +30,50 @@
 
  <p>앨버트가 택한 최적 위치로부터 K만큼 떨어진 거리 내에 있는 얼음들의 합(최댓값)을 출력한다.</p>
 
+---
+
+슬라이딩 윈도우
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int[] pos = new int[1_000_001];
+	    
+	    int n = Integer.parseInt(st.nextToken());
+	    int k = Integer.parseInt(st.nextToken());
+ 	    
+ 	    while(n-- > 0) {
+ 	        st = new StringTokenizer(br.readLine());
+ 	        
+ 	        int g = Integer.parseInt(st.nextToken());
+ 	        int x = Integer.parseInt(st.nextToken());
+ 	        
+ 	        pos[x] = g;
+ 	    }
+ 	    
+ 	    int sum = 0, max = -1;
+ 	    
+ 	    int d = 2*k + 1; // 움직일 수 있는 총 거리
+ 	    
+ 	    for(int i=0; i<=1_000_000; i++) {
+ 	        sum += pos[i];
+ 	        
+ 	        if(i >= d) sum -= pos[i-d];
+ 	        
+ 	        max = Math.max(sum, max);
+ 	    }
+ 	    
+ 	    System.out.print(max);
+    }
+
+}
+```
