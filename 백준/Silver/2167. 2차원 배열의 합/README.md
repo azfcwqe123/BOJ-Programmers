@@ -26,3 +26,53 @@
 
  <p>K개의 줄에 순서대로 배열의 합을 출력한다. 배열의 합은 2<sup>31</sup>-1보다 작거나 같다.</p>
 
+---
+
+누적합 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    StringTokenizer st = new StringTokenizer(br.readLine());
+	    
+	    int n = Integer.parseInt(st.nextToken());
+	    int m = Integer.parseInt(st.nextToken());
+ 	    
+ 	    int[][] arr = new int[n+1][m+1];
+ 	    int[][] prefixSum = new int[n+1][m+1];
+ 	    
+ 	    for(int i=1; i<=n; i++) { // 입력과 동시에 2차원 배열 누적합을 구한다.
+ 	        st = new StringTokenizer(br.readLine());
+ 	        for(int j=1; j<=m; j++) {
+ 	            arr[i][j] = Integer.parseInt(st.nextToken());
+ 	            prefixSum[i][j] = prefixSum[i][j-1] + prefixSum[i-1][j] - prefixSum[i-1][j-1] + arr[i][j];
+ 	        }
+ 	    }
+ 
+ 	    
+ 	    int k = Integer.parseInt(br.readLine());
+ 	    
+ 	    for(int l=0; l<k; l++) { // 머릿속으로 떠올리면서 공부하자
+ 	        st = new StringTokenizer(br.readLine());
+ 	        
+ 	        int i = Integer.parseInt(st.nextToken());
+ 	        int j = Integer.parseInt(st.nextToken());
+ 	        int x = Integer.parseInt(st.nextToken());
+ 	        int y = Integer.parseInt(st.nextToken());
+ 	        
+ 	        int ans = prefixSum[x][y] - prefixSum[i-1][y] - prefixSum[x][j-1] + prefixSum[i-1][j-1];
+ 	        
+ 	        System.out.println(ans);
+ 	    }
+ 	    
+    }
+
+}
+```
