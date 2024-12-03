@@ -25,12 +25,15 @@ class Main {
  	    
  	    int sum = 0, max = -1;
  	    
- 	    int d = 2*k + 1;
+ 	    int d = 2*k + 1; 
  	    
  	    for(int i=0; i<=1_000_000; i++) {
+ 	        
  	        sum += pos[i];
  	        
- 	        if(i >= d) sum -= pos[i-d];
+ 	        if(i >= d) {
+ 	            sum -= pos[i-d];
+ 	        }
  	        
  	        max = Math.max(sum, max);
  	    }
