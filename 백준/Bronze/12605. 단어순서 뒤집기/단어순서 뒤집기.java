@@ -11,18 +11,20 @@ class Main {
 	    
 	    Stack<String> stack = new Stack<>();
 	    
+	    StringBuilder sb = new StringBuilder();
 	    for(int i=1; i<=n; i++) {
 	        StringTokenizer st = new StringTokenizer(br.readLine());
 	        
 	        while(st.hasMoreTokens()) stack.push(st.nextToken());
 	        
-	        System.out.print("Case #" + i + ": ");
+	        sb.append("Case #").append(i).append(": ");
 	        while(!stack.isEmpty()) {
-	           System.out.print(stack.pop() + " ");
+	           sb.append(stack.pop() + " ");
 	        }
-	        System.out.println();
+	        sb.append('\n');
 	    }
 	    
+	    System.out.print(sb);
     }
 
 }
