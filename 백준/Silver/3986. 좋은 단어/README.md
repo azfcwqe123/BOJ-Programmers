@@ -30,3 +30,44 @@
 
  <p>첫째 줄에 좋은 단어의 수를 출력한다.</p>
 
+---
+
+스택 풀이, 괄호 문제 느낌
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    Stack<Character> stack = new Stack<>();
+	    
+	    int ans = 0;
+	    
+	    while(n-- > 0) {
+	        
+	        for(char x : br.readLine().toCharArray()) {
+	            
+	            if(stack.isEmpty()) stack.push(x); // 스택이 비어있다면, x을 넣는다.
+	            else if(stack.peek() == x) stack.pop(); // 스택이 비어있지 않고, 스택에서 꺼내는 수와 같다면 스택을 지운다.
+	            else stack.push(x); // 스택이 비어있지 않고, 스택에서 꺼내는 수와 같지도 않다면 스택에 x을 넣는다.
+	            
+	        }
+	        
+	        if(stack.isEmpty()) ans++;
+	        else while(!stack.isEmpty()) stack.pop();
+	        
+	    }
+	    
+        System.out.print(ans);
+	    
+    }
+
+}
+```
