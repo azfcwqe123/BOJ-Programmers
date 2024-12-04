@@ -33,3 +33,38 @@
 
  <p dir="ltr">각 케이스에 대해서, 케이스 번호가 x일때  "Case #x: " 를 출력한 후 그 후에 이어서 단어들을 반대 순서로 출력한다.</p>
 
+---
+
+스택 기본 문제
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    Stack<String> stack = new Stack<>();
+	    
+	    StringBuilder sb = new StringBuilder();
+	    for(int i=1; i<=n; i++) {
+	        StringTokenizer st = new StringTokenizer(br.readLine());
+	        
+	        while(st.hasMoreTokens()) stack.push(st.nextToken());
+	        
+	        sb.append("Case #").append(i).append(": ");
+	        while(!stack.isEmpty()) {
+	           sb.append(stack.pop() + " ");
+	        }
+	        sb.append('\n');
+	    }
+	    
+	    System.out.print(sb);
+    }
+
+}
+```
