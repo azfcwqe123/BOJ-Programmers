@@ -30,3 +30,38 @@
 
  <p>오른쪽에서 N개의 막대기를 보았을 때, 보이는 막대기의 개수를 출력한다.</p>
 
+---
+
+스택
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+	public static void main (String[] args) throws IOException {
+	    
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	    
+	    int n = Integer.parseInt(br.readLine());
+	    
+	    Stack<Integer> stack = new Stack<>();
+	    
+	    while(n-- > 0) {
+	        
+	        int tmp = Integer.parseInt(br.readLine());
+	        
+	        // tmp(막대기)보다 작거나 같은 막대기들을 모조리 없앤다.
+	        // while문에서 stack.peek()이 먼저 나오면, EmptyStackException이 뜬다. 꺼낼 요소가 없기때문.
+	        while(!stack.isEmpty() && stack.peek() <= tmp) stack.pop();    
+	        
+	        stack.push(tmp);
+	    }
+	    
+	    System.out.print(stack.size());
+	    
+    }
+
+}
+```
