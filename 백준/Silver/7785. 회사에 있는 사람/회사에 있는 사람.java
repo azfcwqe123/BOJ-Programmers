@@ -25,7 +25,11 @@ class Main {
             }
         }
         
-        for(String x : set) System.out.println(x);
+        StringBuilder sb = new StringBuilder();
+        
+        for(String x : set) sb.append(x).append('\n');
+        
+        System.out.print(sb);
  
 
     }
