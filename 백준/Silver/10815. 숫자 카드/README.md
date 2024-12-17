@@ -28,3 +28,48 @@
 
  <p>첫째 줄에 입력으로 주어진 M개의 수에 대해서, 각 수가 적힌 숫자 카드를 상근이가 가지고 있으면 1을, 아니면 0을 공백으로 구분해 출력한다.</p>
 
+---
+
+해시셋
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int n = Integer.parseInt(br.readLine());
+        HashSet<Integer> set = new HashSet<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        while(n-- > 0) set.add(Integer.parseInt(st.nextToken()));
+   
+        
+        int m = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(m-- > 0) {
+            int k = Integer.parseInt(st.nextToken());
+            
+            if(set.contains(k)) sb.append("1 ");
+            else sb.append("0 ");
+        }
+        
+        System.out.print(sb);
+
+    }
+    
+}
+
+
+```
+
+---
+
+StringBuilder 썼을때와 안 썼을때의 차이
+![image](https://github.com/user-attachments/assets/413a07e3-c9b2-42d0-81ca-e6be022e7d5e)
