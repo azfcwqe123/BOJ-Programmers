@@ -9,7 +9,7 @@ class Main {
         
         int n = Integer.parseInt(br.readLine());
         
-        HashMap<String, String> map = new HashMap<>();
+        TreeSet<String> set = new TreeSet<>(Comparator.reverseOrder());
         
         while(n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -18,20 +18,15 @@ class Main {
             String log = st.nextToken();
             
             if(log.equals("enter")) {
-                map.put(name, log);
+                set.add(name);
             }
             else if(log.equals("leave")) {
-                map.remove(name);
+                set.remove(name);
             }
         }
         
-        ArrayList<String> list = new ArrayList<>();
-        
-        for(String x : map.keySet()) list.add(x);
-        
-        list.sort((a,b) -> b.compareTo(a));
-        
-        for(String x : list) System.out.println(x); 
+        for(String x : set) System.out.println(x);
+ 
 
     }
     
