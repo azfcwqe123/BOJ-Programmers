@@ -32,3 +32,180 @@
 
 <p>입력의 마지막 줄에는 "Total <total> 1.00"을 출력하며, <total>은 꿀벌이 한 일의 개수이다.</p>
 
+---
+
+LinkedHashMap 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>() {{
+            put("Re", 0);
+            put("Pt", 0);
+            put("Cc", 0);
+            put("Ea", 0);
+            put("Tb", 0);
+            put("Cm", 0);
+            put("Ex", 0);
+        }};
+        
+        int total = 0;
+        
+        String input = "";
+        
+        while((input = br.readLine()) != null) {
+            st = new StringTokenizer(input);
+            
+            while(st.hasMoreTokens()) {
+                String bee = st.nextToken();
+                if(map.containsKey(bee)) map.put(bee, map.get(bee) + 1);
+                total++;            
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for(String x : map.keySet()) {
+            
+            String per = String.format("%.2f", (double) map.get(x) / total);
+            
+            sb.append(x + " ").append(map.get(x) + " ").append(per + " ").append("\n");
+        }
+        
+        sb.append("Total " + total + " 1.00");
+        System.out.print(sb);
+        
+
+    }
+    
+}
+
+
+```
+
+---
+
+HashMap 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static final String[] arr = {"Re", "Pt", "Cc", "Ea", "Tb", "Cm", "Ex"};
+    private static HashMap<String, Integer> map = new HashMap<>();
+    private static int total = 0;
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        
+        setBee();
+        
+        String input = "";
+        
+        while((input = br.readLine()) != null) {
+            st = new StringTokenizer(input);
+            
+            while(st.hasMoreTokens()) {
+                String bee = st.nextToken();
+                if(map.containsKey(bee)) map.put(bee, map.get(bee) + 1);
+                total++;            
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+            
+        for(int i=0; i<7; i++) {
+            String key = arr[i];
+            
+            String per = String.format("%.2f", (double) map.get(key) / total);
+            
+            sb.append(key + " " + map.get(key) + " " + per).append("\n");
+            
+        }
+        
+        sb.append("Total " + total + " 1.00");
+        System.out.print(sb);
+        
+    }
+    
+    public static void setBee() {
+        for(int i=0; i<7; i++) map.put(arr[i], 0);
+    }
+    
+}
+
+
+```
+
+---
+
+틀렸던 풀이(출력값은 제대로 나왔으나, 입력 값을 받을 때 두번 반복해서 받는거로 처리하니까 틀렸음)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>() {{
+            put("Re", 0);
+            put("Pt", 0);
+            put("Cc", 0);
+            put("Ea", 0);
+            put("Tb", 0);
+            put("Cm", 0);
+            put("Ex", 0);
+        }};
+        
+        int total = 0;
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) {
+            String bee = st.nextToken();
+            if(map.containsKey(bee)) map.put(bee, map.get(bee) + 1);
+             total++;    
+        }
+        
+        st = new StringTokenizer(br.readLine()); // 이걸 두번 반복함
+        while(st.hasMoreTokens()) {
+            String bee = st.nextToken();
+            if(map.containsKey(bee)) map.put(bee, map.get(bee) + 1);
+            total++;    
+        }
+        
+        
+        StringBuilder sb = new StringBuilder();
+        for(String x : map.keySet()) {
+            
+            String per = String.format("%.2f", (double) map.get(x) / total);
+            
+            sb.append(x + " ").append(map.get(x) + " ").append(per + " ").append("\n");
+        }
+        
+        sb.append("Total " + total + " 1.00");
+        System.out.print(sb);
+        
+
+    }
+    
+}
+
+
+```
+
+![image](https://github.com/user-attachments/assets/ce8d49a0-63eb-4aaa-8785-2ab037859639)
