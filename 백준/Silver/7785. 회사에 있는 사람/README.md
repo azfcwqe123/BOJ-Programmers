@@ -32,3 +32,145 @@
 
  <p>현재 회사에 있는 사람의 이름을 사전 순의 역순으로 한 줄에 한 명씩 출력한다.</p>
 
+
+---
+
+첫번째 풀이, 해시맵 + 배열리스트 사용, 1212ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashMap<String, String> map = new HashMap<>();
+        
+        while(n-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            
+            String name = st.nextToken();
+            String log = st.nextToken();
+            
+            if(log.equals("enter")) {
+                map.put(name, log);
+            }
+            else if(log.equals("leave")) {
+                map.remove(name);
+            }
+        }
+        
+        ArrayList<String> list = new ArrayList<>();
+        
+        for(String x : map.keySet()) list.add(x);
+        
+        list.sort((a,b) -> b.compareTo(a));
+        
+        for(String x : list) System.out.println(x); 
+
+    }
+    
+}
+
+
+```
+
+해시맵 만들고 배열리스트 까지 만드는건 비효율적임. 이럴바에 순서를 보장해주는 트리셋 만들어서 내림차순만 시켜버리면 됨
+
+---
+
+두번째 풀이, 트리셋, 1004ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        TreeSet<String> set = new TreeSet<>(Comparator.reverseOrder()); // 초기 설정을 내림차순으로
+        
+        while(n-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            
+            String name = st.nextToken();
+            String log = st.nextToken();
+            
+            if(log.equals("enter")) {
+                set.add(name);
+            }
+            else if(log.equals("leave")) {
+                set.remove(name);
+            }
+        }
+        
+        for(String x : set) System.out.println(x);
+ 
+
+    }
+    
+}
+
+
+```
+
+---
+
+StringBuilder + 트리셋, 512ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        TreeSet<String> set = new TreeSet<>(Comparator.reverseOrder());
+        
+        while(n-- > 0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            
+            String name = st.nextToken();
+            String log = st.nextToken();
+            
+            if(log.equals("enter")) {
+                set.add(name);
+            }
+            else if(log.equals("leave")) {
+                set.remove(name);
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(String x : set) sb.append(x).append('\n');
+        
+        System.out.print(sb);
+ 
+
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/580616b2-35c1-4adc-938a-c7469ade234d)
+
