@@ -16,12 +16,16 @@ class Main {
         int m = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
         
+        StringBuilder sb = new StringBuilder();
+        
         while(m-- > 0) {
             int k = Integer.parseInt(st.nextToken());
             
-            if(set.contains(k)) System.out.print("1 ");
-            else System.out.print("0 ");
+            if(set.contains(k)) sb.append("1 ");
+            else sb.append("0 ");
         }
+        
+        System.out.print(sb);
 
     }
     
