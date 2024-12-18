@@ -13,24 +13,27 @@ class Main {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         
-        HashMap<Integer, Integer> map = new HashMap<>();
+        HashSet<Integer> A = new HashSet<>();
+        HashSet<Integer> B = new HashSet<>();
         
         st = new StringTokenizer(br.readLine());
         while(n-- > 0) {
-            int k = Integer.parseInt(st.nextToken());
-            map.put(k, map.getOrDefault(k, 0) + 1);
+            A.add(Integer.parseInt(st.nextToken()));
         }
         
         st = new StringTokenizer(br.readLine());
         while(m-- > 0) {
-            int k = Integer.parseInt(st.nextToken());
-            map.put(k, map.getOrDefault(k, 0) + 1);
+            B.add(Integer.parseInt(st.nextToken()));
         }
         
         int ans = 0;
         
-        for(int x : map.keySet()) {
-            if(map.get(x) == 1) ans++;
+        for(int x : A) {
+            if(!B.contains(x)) ans++;
+        }
+        
+        for(int x : B) {
+            if(!A.contains(x)) ans++;
         }
         
         System.out.print(ans);
