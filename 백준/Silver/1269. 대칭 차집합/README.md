@@ -27,3 +27,114 @@
 
  <p>첫째 줄에 대칭 차집합의 원소의 개수를 출력한다.</p>
 
+---
+
+첫번째 풀이, 해시맵 이용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        st = new StringTokenizer(br.readLine());
+        while(n-- > 0) {
+            int k = Integer.parseInt(st.nextToken());
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        
+        st = new StringTokenizer(br.readLine());
+        while(m-- > 0) {
+            int k = Integer.parseInt(st.nextToken());
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        
+        int ans = 0;
+        
+        for(int x : map.keySet()) {
+            if(map.get(x) == 1) ans++;
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+두번째 풀이, 해시셋 이용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        HashSet<Integer> A = new HashSet<>();
+        HashSet<Integer> B = new HashSet<>();
+        
+        st = new StringTokenizer(br.readLine());
+        while(n-- > 0) {
+            A.add(Integer.parseInt(st.nextToken()));
+        }
+        
+        st = new StringTokenizer(br.readLine());
+        while(m-- > 0) {
+            B.add(Integer.parseInt(st.nextToken()));
+        }
+        
+        int ans = 0;
+        
+        for(int x : A) {
+            if(!B.contains(x)) ans++;
+        }
+        
+        for(int x : B) {
+            if(!A.contains(x)) ans++;
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+![10](https://github.com/user-attachments/assets/5df8bfd3-ae02-4d20-829c-17510c10202f)
+
+---
+
+
+![image](https://github.com/user-attachments/assets/47e4b9ff-7f43-44c2-a1d9-0210b87bd80f)
+
+
+해시맵 - 712ms
+해시셋 - 652ms
