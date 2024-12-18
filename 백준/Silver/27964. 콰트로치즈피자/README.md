@@ -32,7 +32,7 @@
 
 ---
 
-내 틀린 풀이
+해시셋 이용하지 않은 구현
 
 ```java
 import java.util.*;
@@ -56,11 +56,7 @@ class Main {
             String tmp = st.nextToken();
             int len = tmp.length();
             
-            if(tmp.contains("Cheese")) {
-                int p = tmp.indexOf("Cheese");
-                if(p + 6 == len) set.add(tmp);  
-            }
-            else continue;
+            if(len >= 6 && tmp.substring(len - 6, len).equals("Cheese")) set.add(tmp);
             
         }
         
@@ -72,8 +68,6 @@ class Main {
 
 
 ```
-
-예외케이스 aaaCheeseA 같은것도 생각했고, 모두 다 고려해서 테스트케이스까지 다 맞긴했는데 아직까지도 뭐가 틀린지 모르겠다.
 
 ---
 
@@ -112,4 +106,5 @@ class Main {
 
 ---
 
-![image](https://github.com/user-attachments/assets/8f69f8e4-fe5b-49e5-8dde-810340234440)
+![image](https://github.com/user-attachments/assets/6264837d-a895-4fb1-9280-39f257d8d416)
+
