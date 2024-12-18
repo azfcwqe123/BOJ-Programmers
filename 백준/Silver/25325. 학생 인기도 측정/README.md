@@ -30,3 +30,168 @@
 
  <p>첫 번째 줄부터 <em>n</em>번째 줄까지 학생 이름과 해당 학생을 좋아하는 학생 수를 공백으로 구분하여 한 줄에 출력한다. 인기도가 높은 학생부터 낮은 학생 순으로 출력하고, 인기도가 같은 경우 학생 이름 기준으로 오름차순으로 출력한다.</p>
 
+---
+
+첫번째 풀이, Class + HashMap + ArrayList
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Student implements Comparable<Student> {
+    String name;
+    int count;
+    
+    Student(String name, int count) {
+        this.name = name;
+        this.count = count;
+    }
+    
+    @Override
+    public int compareTo(Student o) {
+        if(this.count == o.count) return this.name.compareTo(o.name);
+        else return o.count - this.count;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        int n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) map.put(st.nextToken(), 0);
+        
+        while(n-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            while(st.hasMoreTokens()) {
+                String tmp = st.nextToken();
+                map.put(tmp, map.get(tmp) + 1);
+            }
+        }
+    
+        ArrayList<Student> list = new ArrayList<>();
+        
+        for(String key : map.keySet()) {
+            list.add(new Student(key, map.get(key)));    
+        }
+        
+        Collections.sort(list);
+        
+        for(Student x : list) sb.append(x.name + " " + x.count).append("\n");
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+두번째 풀이, HashMap + ArrayList
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        int n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) map.put(st.nextToken(), 0);
+        
+        while(n-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            while(st.hasMoreTokens()) {
+                String tmp = st.nextToken();
+                map.put(tmp, map.get(tmp) + 1);
+            }
+        }
+    
+        ArrayList<String> list = new ArrayList<>(map.keySet());
+        
+        list.sort((a, b) -> {
+            if(map.get(a) == map.get(b)) return a.compareTo(b);
+            
+            return map.get(b) - map.get(a);
+        });
+        
+        for(String x : list) {
+            sb.append(x + " " + map.get(x)).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+세번째 풀이, 배열리스트 정렬 부분을 삼항연산자 사용해서 더 깔끔하게 함
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        int n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) map.put(st.nextToken(), 0);
+        
+        while(n-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            while(st.hasMoreTokens()) {
+                String tmp = st.nextToken();
+                map.put(tmp, map.get(tmp) + 1);
+            }
+        }
+    
+        ArrayList<String> list = new ArrayList<>(map.keySet());
+        
+        list.sort((a, b) -> {
+            return map.get(a) == map.get(b) ? a.compareTo(b) : map.get(b) - map.get(a); // 여기 수정
+        });
+        
+        for(String x : list) {
+            sb.append(x + " " + map.get(x)).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/6f66b1f8-4076-4170-bac2-8ad0690f4b86)
