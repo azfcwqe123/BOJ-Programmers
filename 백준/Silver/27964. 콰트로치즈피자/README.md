@@ -30,3 +30,86 @@
 
  <p>입력으로 주어진 토핑의 목록으로 콰트로치즈피자를 만들 수 있으면 <span style="color:#e74c3c;"><code>yummy</code></span>, 만들 수 없으면 <span style="color:#e74c3c;"><code>sad</code></span>를 출력하라.</p>
 
+---
+
+내 틀린 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashSet<String> set = new HashSet<>();
+        
+        st = new StringTokenizer(br.readLine());
+        while(n-- > 0) {
+            
+            String tmp = st.nextToken();
+            int len = tmp.length();
+            
+            if(tmp.contains("Cheese")) {
+                int p = tmp.indexOf("Cheese");
+                if(p + 6 == len) set.add(tmp);  
+            }
+            else continue;
+            
+        }
+        
+        System.out.print(set.size() > 3 ? "yummy" : "sad");
+        
+    }
+    
+}
+
+
+```
+
+예외케이스 aaaCheeseA 같은것도 생각했고, 모두 다 고려해서 테스트케이스까지 다 맞긴했는데 아직까지도 뭐가 틀린지 모르겠다.
+
+---
+
+두번째 풀이, endsWith() 메서드 이용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashSet<String> set = new HashSet<>();
+        
+        st = new StringTokenizer(br.readLine());
+        while(n-- > 0) {
+            String tmp = st.nextToken();
+            if(tmp.endsWith("Cheese")) set.add(tmp);
+        }
+        
+        System.out.print(set.size() > 3 ? "yummy" : "sad");
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/8f69f8e4-fe5b-49e5-8dde-810340234440)
