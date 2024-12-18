@@ -1,22 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-class Student implements Comparable<Student> {
-    String name;
-    int count;
-    
-    Student(String name, int count) {
-        this.name = name;
-        this.count = count;
-    }
-    
-    @Override
-    public int compareTo(Student o) {
-        if(this.count == o.count) return this.name.compareTo(o.name);
-        else return o.count - this.count;
-    }
-}
-
 class Main {
     
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,15 +23,17 @@ class Main {
             }
         }
     
-        ArrayList<Student> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>(map.keySet());
         
-        for(String key : map.keySet()) {
-            list.add(new Student(key, map.get(key)));    
+        list.sort((a, b) -> {
+            if(map.get(a) == map.get(b)) return a.compareTo(b);
+            
+            return map.get(b) - map.get(a);
+        });
+        
+        for(String x : list) {
+            sb.append(x + " " + map.get(x)).append("\n");
         }
-        
-        Collections.sort(list);
-        
-        for(Student x : list) sb.append(x.name + " " + x.count).append("\n");
         
         System.out.print(sb);
     }
