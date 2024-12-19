@@ -28,3 +28,64 @@
 
  <p>듣보잡의 수와 그 명단을 사전순으로 출력한다.</p>
 
+---
+
+해시맵 + 배열리스트 정렬
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        while(n-- > 0) {
+            String tmp = br.readLine();
+            map.put(tmp, map.getOrDefault(tmp, 0) + 1);
+        }
+        
+        while(m-- > 0) {
+            String tmp = br.readLine();
+            map.put(tmp, map.getOrDefault(tmp, 0) + 1);
+        }
+        
+        
+        ArrayList<String> list = new ArrayList<>();
+        
+        for(String x : map.keySet()) {
+            if(map.get(x) == 2) {
+                list.add(x);
+            }
+        }
+        
+        Collections.sort(list);
+        
+        for(String x : list) {
+            sb.append(x).append('\n');    
+        }
+        
+        System.out.println(list.size());
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/dee6477a-3cf3-487f-8455-78d8a3d361c6)
