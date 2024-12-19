@@ -32,3 +32,46 @@
 
  <p>첫째 줄에 버리는 카드들을 순서대로 출력한다. 제일 마지막에는 남게 되는 카드의 번호를 출력한다.</p>
 
+---
+
+큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    private static String[] arr;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Queue<Integer> Q = new LinkedList<>();
+        
+        for(int i=1; i<=n; i++) Q.offer(i);
+        
+        
+        while(!Q.isEmpty()) {
+            System.out.print(Q.poll() + " ");
+            
+            if(Q.size() == 0) break;
+            
+            Q.offer(Q.poll());
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/060c4aed-db46-4e08-bd95-575dacabc046)
