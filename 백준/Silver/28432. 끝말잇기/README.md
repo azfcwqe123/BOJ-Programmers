@@ -1,6 +1,6 @@
 # [Silver V] 끝말잇기 - 28432 
 
-[문제 링크](https://www.acmicpc.net/problem/28432) 
+[문제 링크](https://www.acmicpc.net/problem/28432)  
 
 ### 성능 요약
 
