@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 45816 KB, 시간: 328 ms
+메모리: 55148 KB, 시간: 424 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 12월 19일 18:45:25
+2024년 12월 19일 18:09:07
 
 ### 문제 설명
 
@@ -44,3 +44,278 @@
 	<li>상근이가 모든 국가를 여행하기 위해 타야 하는 비행기 종류의 최소 개수를 출력한다.</li>
 </ul>
 
+---
+
+BFS, 그래프
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int[][] graph;
+    public static int[] ch;
+    public static int N, M, L;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            N = Integer.parseInt(st.nextToken());
+            M = Integer.parseInt(st.nextToken());
+            
+            graph = new int[N+1][N+1];
+            ch = new int[N+1];
+            
+            for(int i=0; i<M; i++) {
+                st = new StringTokenizer(br.readLine());
+                
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());    
+            
+                graph[a][b] = 1;
+                graph[b][a] = 1;
+            }    
+            
+            ch[1] = 1;
+            
+            BFS();
+            
+            System.out.println(L - 1);
+        }
+        
+        
+    }
+    
+    public static void BFS() {
+        Queue<Integer> Q = new LinkedList<>();
+        Q.offer(1);
+        
+        L = 0;
+        
+        while(!Q.isEmpty()) {
+            int cur = Q.poll();
+            L++;
+            for(int i=1; i<=N; i++) {
+                if(graph[cur][i] == 1 && ch[i] == 0) {
+                    ch[i] = 1;
+                    Q.add(i);
+                }
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+BFS, 인접리스트
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static int[] ch;
+    public static int N, M, ans;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            N = Integer.parseInt(st.nextToken());
+            M = Integer.parseInt(st.nextToken());
+            
+            graph = new ArrayList<>();
+            for(int i=0; i<=N; i++) graph.add(new ArrayList<>());
+            
+            ch = new int[N+1];
+            
+            for(int i=0; i<M; i++) {
+                st = new StringTokenizer(br.readLine());
+                
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());    
+            
+                graph.get(a).add(b);
+                graph.get(b).add(a);
+            }    
+            
+            ans = 0;
+            
+            ch[1] = 1;
+            
+            BFS();
+            
+            System.out.println(ans);
+
+        }
+        
+        
+    }
+    
+    public static void BFS() {
+        
+        Queue<Integer> Q = new LinkedList<>();
+        Q.offer(1);
+        
+        while(!Q.isEmpty()) {
+            int cur = Q.poll();
+            for(int x : graph.get(cur)) {
+                if(ch[x] == 0) {
+                    Q.offer(x);
+                    ch[x] = 1;
+                    ans++;
+                }
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+DFS(못풀음, 틀린 풀이)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static int[] ch;
+    public static int N, M, ans;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            N = Integer.parseInt(st.nextToken());
+            M = Integer.parseInt(st.nextToken());
+            
+            graph = new ArrayList<>();
+            for(int i=0; i<=N; i++) graph.add(new ArrayList<>());
+            
+            ch = new int[N+1];
+            
+            for(int i=0; i<M; i++) {
+                st = new StringTokenizer(br.readLine());
+                
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());    
+            
+                graph.get(a).add(b);
+                graph.get(b).add(a);
+            }    
+            
+            ans = 0;
+            
+            ch[1] = 1;
+            
+            DFS(1);
+            
+            System.out.println(ans);
+        }
+        
+        
+    }
+    
+    public static void DFS(int v) {
+        
+        if(v == N) return;
+        
+        else {
+            for(int x : graph.get(v)) {
+                if(ch[x] == 0) {
+                    ch[x] = 1;
+                    ans++;
+                    DFS(x);
+                }
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+--- 
+
+최소 신장 트리, "주어지는 비행 스케줄은 항상 연결 그래프를 이룬다."
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            int N = Integer.parseInt(st.nextToken());
+            int M = Integer.parseInt(st.nextToken());
+            
+            for(int i=0; i<M; i++) {
+                st = new StringTokenizer(br.readLine());
+                
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());    
+            }    
+            
+            System.out.println(N-1);
+        }
+
+    }
+    
+}
+
+
+```
+---
+
+최소신장트리 - 328ms
+BFS - 432 ~ 424ms
+![image](https://github.com/user-attachments/assets/7a990e39-7382-4857-be6b-be96172d28f1)
