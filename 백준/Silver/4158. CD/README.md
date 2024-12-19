@@ -28,3 +28,163 @@
 
  <p>두 사람이 동시에 가지고 있는 CD의 개수를 출력한다.</p>
 
+---
+
+해시맵 풀이(2004ms)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        while(true) {
+            
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+            
+            if(n == 0 && m == 0) break;
+            
+            HashMap<Integer, Integer> map = new HashMap<>();
+            int ans = 0;
+            
+            while(n-- > 0) {
+                int k = Integer.parseInt(br.readLine());
+                map.put(k, map.getOrDefault(k, 0) + 1);
+            }
+        
+            while(m-- > 0) {
+                int k = Integer.parseInt(br.readLine());
+                map.put(k, map.getOrDefault(k, 0) + 1);
+            }
+            
+            for(int key : map.keySet()) {
+                if(map.get(key) > 1) ans++;
+            }
+        
+            System.out.println(ans);
+        }
+        
+        
+    }
+    
+}
+
+
+```
+
+---
+
+해시셋 풀이(1112ms)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        
+        while(true) {
+            
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+            
+            if(n == 0 && m == 0) break;
+            
+            int ans = 0;
+            HashSet<Integer> set = new HashSet<>();
+            
+            while(n-- > 0) set.add(Integer.parseInt(br.readLine()));
+        
+            while(m-- > 0) {
+                int k = Integer.parseInt(br.readLine());
+                if(set.contains(k)) ans++;
+                else set.add(k);
+            }
+            
+            System.out.println(ans);
+            
+        }
+        
+        
+    }
+    
+}
+
+
+```
+
+---
+
+투포인터 풀이(864ms)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        while(true) {
+            
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+            
+            if(n == 0 && m == 0) break;
+            
+            int[] arr1 = new int[n];
+            int[] arr2 = new int[m];
+            
+            for(int i=0; i<n; i++) arr1[i] = Integer.parseInt(br.readLine());
+            for(int i=0; i<m; i++) arr2[i] = Integer.parseInt(br.readLine());
+            
+            int lt = 0, rt = 0;
+            
+            int ans = 0;
+            
+            while(lt < n && rt < m) {
+                
+                if(arr1[lt] == arr2[rt]) {
+                    ans++;
+                    lt++;
+                    rt++;
+                }
+                
+                else if(arr1[lt] < arr2[rt]) lt++;
+                
+                else if(arr1[lt] > arr2[rt]) rt++;
+                
+            }
+            
+            System.out.println(ans);
+            
+        }
+        
+        
+    }
+    
+}
+
+
+```
+
