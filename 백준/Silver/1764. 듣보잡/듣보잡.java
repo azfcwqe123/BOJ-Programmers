@@ -26,24 +26,22 @@ class Main {
             map.put(tmp, map.getOrDefault(tmp, 0) + 1);
         }
         
-        int cnt = 0 ;
         
         ArrayList<String> list = new ArrayList<>();
         
         for(String x : map.keySet()) {
             if(map.get(x) == 2) {
                 list.add(x);
-                cnt++;
             }
         }
         
-        list.sort((a,b) -> a.compareTo(b));
+        Collections.sort(list);
         
         for(String x : list) {
             sb.append(x).append('\n');    
         }
         
-        System.out.println(cnt);
+        System.out.println(list.size());
         System.out.print(sb);
         
     }
