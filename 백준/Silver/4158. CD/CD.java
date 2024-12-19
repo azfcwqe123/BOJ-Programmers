@@ -9,7 +9,6 @@ class Main {
     
     public static void main(String[] args) throws IOException {
         
-        
         while(true) {
             
             st = new StringTokenizer(br.readLine());
@@ -18,15 +17,28 @@ class Main {
             
             if(n == 0 && m == 0) break;
             
-            int ans = 0;
-            HashSet<Integer> set = new HashSet<>();
+            int[] arr1 = new int[n];
+            int[] arr2 = new int[m];
             
-            while(n-- > 0) set.add(Integer.parseInt(br.readLine()));
-        
-            while(m-- > 0) {
-                int k = Integer.parseInt(br.readLine());
-                if(set.contains(k)) ans++;
-                else set.add(k);
+            for(int i=0; i<n; i++) arr1[i] = Integer.parseInt(br.readLine());
+            for(int i=0; i<m; i++) arr2[i] = Integer.parseInt(br.readLine());
+            
+            int lt = 0, rt = 0;
+            
+            int ans = 0;
+            
+            while(lt < n && rt < m) {
+                
+                if(arr1[lt] == arr2[rt]) {
+                    ans++;
+                    lt++;
+                    rt++;
+                }
+                
+                else if(arr1[lt] < arr2[rt]) lt++;
+                
+                else if(arr1[lt] > arr2[rt]) rt++;
+                
             }
             
             System.out.println(ans);
