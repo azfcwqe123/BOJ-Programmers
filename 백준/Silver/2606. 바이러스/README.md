@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14120 KB, 시간: 100 ms
+메모리: 14248 KB, 시간: 104 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 12월 20일 15:12:37
+2024년 12월 20일 15:00:04
 
 ### 문제 설명
 
@@ -32,3 +32,137 @@
 
  <p>1번 컴퓨터가 웜 바이러스에 걸렸을 때, 1번 컴퓨터를 통해 웜 바이러스에 걸리게 되는 컴퓨터의 수를 첫째 줄에 출력한다.</p>
 
+
+---
+
+BFS + 인접리스트
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    private static ArrayList<ArrayList<Integer>> graph;
+    private static boolean[] ch; // 방문 여부
+    private static int N, M, ans;
+    
+    public static void main(String[] args) throws IOException {
+        
+        N = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
+        
+        graph = new ArrayList<>();
+        ch = new boolean[N+1];
+        
+        for(int i=0; i<=N; i++) graph.add(new ArrayList<>());
+        
+        for(int i=0; i<M; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            
+            // 컴퓨터끼리 서로 연결돼있으니, 양방향 그래프를 사용한다.
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+        
+        BFS();
+        
+        System.out.print(ans);
+    }
+    
+    public static void BFS() {
+        Queue<Integer> Q = new LinkedList<>();
+        
+        ch[1] = true; // 첫번째 컴퓨터부터 시작하니, 이미 감염돼있는 상태
+        Q.offer(1); // 첫번째 컴퓨터를 큐에 넣어놓는다.
+        
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                int cur = Q.poll(); // 감염된 컴퓨터를 꺼낸다
+                
+                for(int x : graph.get(cur)) { // 감염된 컴퓨터와 연결된 컴퓨터들을 꺼낸다
+                    if(!ch[x]) {  // 연결된 컴퓨터 중에서 감염돼있지 않다면
+                        Q.offer(x); // 큐에 넣는다.
+                        ch[x] = true; // 감염 표시를 한다.
+                        ans++;
+                    }
+                }
+            }
+        }
+        
+    }
+    
+}
+
+```
+
+---
+
+DFS + 인접리스트
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    private static ArrayList<ArrayList<Integer>> graph;
+    private static boolean[] ch;
+    private static int N, M, ans;
+    
+    public static void main(String[] args) throws IOException {
+        
+        N = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
+        
+        graph = new ArrayList<>();
+        ch = new boolean[N+1];
+        
+        for(int i=0; i<=N; i++) graph.add(new ArrayList<>());
+        
+        for(int i=0; i<M; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+        
+        DFS(1);
+        
+        System.out.print(ans);
+    }
+    
+    public static void DFS(int v) {
+        ch[v] = true;
+        
+        for(int x : graph.get(v)) {
+            if(!ch[x]) {
+                ans++;
+                DFS(x);
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/b5c2e0c8-c9b4-4226-94da-9c706eaa27cf)
