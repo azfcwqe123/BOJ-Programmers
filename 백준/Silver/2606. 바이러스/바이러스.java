@@ -30,30 +30,18 @@ class Main {
             graph.get(b).add(a);
         }
         
-        BFS();
+        DFS(1);
         
         System.out.print(ans);
     }
     
-    public static void BFS() {
-        Queue<Integer> Q = new LinkedList<>();
+    public static void DFS(int v) {
+        ch[v] = true;
         
-        ch[1] = true;
-        Q.offer(1);
-        
-        while(!Q.isEmpty()) {
-            int len = Q.size();
-            
-            for(int i=0; i<len; i++) {
-                int cur = Q.poll();
-                
-                for(int x : graph.get(cur)) {
-                    if(!ch[x]) {
-                        Q.offer(x);
-                        ch[x] = true;
-                        ans++;
-                    }
-                }
+        for(int x : graph.get(v)) {
+            if(!ch[x]) {
+                ans++;
+                DFS(x);
             }
         }
         
