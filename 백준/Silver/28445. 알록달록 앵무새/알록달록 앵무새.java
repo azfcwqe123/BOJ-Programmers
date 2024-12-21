@@ -15,8 +15,6 @@ class Main {
         st = new StringTokenizer(br.readLine());
         while(st.hasMoreTokens()) set.add(st.nextToken());
         
-        int n = set.size();
-        
         StringBuilder sb = new StringBuilder();
         
         for(String x : set) {
