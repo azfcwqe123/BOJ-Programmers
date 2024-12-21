@@ -15,9 +15,10 @@ class Main {
         int[] sum = new int[N+1];
         
         st = new StringTokenizer(br.readLine());
-        for(int i=1; i<=N; i++) arr[i] = Integer.parseInt(st.nextToken());
-        
-        for(int i=1; i<=N; i++) sum[i] = sum[i-1] + arr[i];
+        for(int i=1; i<=N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            sum[i] = sum[i-1] + arr[i];
+        }
         
         StringBuilder sb = new StringBuilder();
         while(M-- > 0) {
