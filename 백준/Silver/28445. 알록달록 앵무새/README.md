@@ -32,3 +32,44 @@
 
  <p>자식 새의 몸통 색과 꼬리 색의 쌍을 한 줄에 하나씩 사전 순으로 출력한다. 사전 순으로 출력하라는 말은 몸통 색이 다르다면 몸통 색의 사전 순으로, 몸통 색이 같다면 꼬리 색의 사전 순으로 출력하라는 것을 의미한다.</p>
 
+---
+
+트리셋 + 향상된 2중 for문
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        TreeSet<String> set = new TreeSet<>();
+        
+        st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) set.add(st.nextToken());
+        
+        st = new StringTokenizer(br.readLine());
+        while(st.hasMoreTokens()) set.add(st.nextToken());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(String x : set) {
+            for(String y : set) {
+                sb.append(x + " " + y).append('\n');
+            }
+        }
+        
+        System.out.print(sb);
+        
+    }
+}
+
+
+
+
+```
+
+![image](https://github.com/user-attachments/assets/3c324d14-2959-49fb-a792-658a3cba838d)
