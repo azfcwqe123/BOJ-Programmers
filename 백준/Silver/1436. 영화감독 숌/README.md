@@ -30,3 +30,80 @@
 
  <p>첫째 줄에 N번째 영화의 제목에 들어간 수를 출력한다.</p>
 
+---
+
+
+첫번째 풀이, 브루트 포스
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int cnt = 0, k = 666;
+
+        while(true) {
+            
+            if(String.valueOf(k).contains("666")) {
+                cnt++;
+                if(cnt == n) {
+                   System.out.print(k);
+                   return;
+                }
+                k++;
+            }
+            else k++;
+        }
+        
+    }
+}
+
+```
+
+---
+
+살짝 수정한 코드
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int cnt = 0, k = 666;
+
+        while(true) {
+            
+            if(String.valueOf(k).contains("666")) {
+                cnt++;
+                if(cnt == n) {
+                   System.out.print(k);
+                   return;
+                }
+            }
+            
+            k++; // 이 부분을 더 깔끔하게 수정했다.
+        }
+        
+    }
+}
+
+```
+
+---
+
+이 문제는 브루트 포스 알고리즘을 이용해야하는데, 이유는 모든 경우의수를 다 따져볼 수밖에 없기 때문
+
+![image](https://github.com/user-attachments/assets/5edfbfde-5c21-46bb-bd56-6c8f645b4fa4)
