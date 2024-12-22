@@ -34,3 +34,51 @@
 
  <p>첫째 줄에 E S M으로 표시되는 가장 빠른 연도를 출력한다. 1 1 1은 항상 1이기 때문에, 정답이 음수가 나오는 경우는 없다.</p>
 
+---
+
+간단한 브루트 포스 문제
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int E = Integer.parseInt(st.nextToken());
+        int S = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        
+        int e = 1, s = 1, m = 1, ans = 1;
+        
+        while(true) {
+        
+            if(e == E && s == S && m == M) {
+                System.out.println(ans);
+                return;
+            }   
+            
+            e++;
+            s++;
+            m++;
+            
+            if(e > 15) e = 1;
+            if(s > 28) s = 1;
+            if(m > 19) m = 1;
+            
+            ans++;
+        }
+        
+    }
+}
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/aebf8048-f5a1-44fb-a40c-63f1b5c27131)
