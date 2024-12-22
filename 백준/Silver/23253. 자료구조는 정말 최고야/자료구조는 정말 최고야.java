@@ -14,15 +14,19 @@ class Main {
         
         for(int i=0; i<m; i++) {
             
+            int prevB = 200_001;
+            
             int k = Integer.parseInt(br.readLine());
             
-            int[] books = Arrays.stream(br.readLine().split(" ")).mapToInt(x -> Integer.parseInt(x)).toArray();
+            StringTokenizer st = new StringTokenizer(br.readLine());
             
-            for(int j=0; j<k-1; j++) {
-                if(books[j] < books[j+1]) {
+            for(int j=0; j<k; j++) {
+                int cur = Integer.parseInt(st.nextToken());
+                if(cur > prevB) {
                     System.out.print("No");
                     return;
                 }
+                prevB = cur;
             }
         }
         
