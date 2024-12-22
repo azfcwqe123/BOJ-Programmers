@@ -28,3 +28,67 @@
 
  <p>첫째 줄에 중복되지 않게 최대 몇 번 등장하는지 출력한다.</p>
 
+---
+
+브루트 포스 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        String docu = br.readLine();
+        String k = br.readLine();
+        
+        int ans = 0;
+        
+        for(int i=0; i<docu.length(); i++) {
+            
+            if(docu.substring(i).startsWith(k)) {
+                ans++;
+                i += k.length() - 1; // for문의 조건 i++ 때문에 -1을 해줘야함.
+            }
+            
+        }
+        
+        System.out.print(ans);
+    }
+}
+
+
+
+```
+
+---
+
+정규표현식 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        String docu = br.readLine();
+        String k = br.readLine();
+
+        // docu.replaceAll(k, "");와 같다.
+        String tmp = docu.replaceAll("(" + k + ")", "");
+        
+        System.out.print((docu.length() - tmp.length()) / k.length()); 
+        
+    }
+}
+
+
+
+```
