@@ -10,10 +10,18 @@ class Main {
         String docu = br.readLine();
         String k = br.readLine();
         
-        String tmp = docu.replaceAll("(" + k + ")", "");
+        int ans = 0;
         
-        System.out.print((docu.length() - tmp.length()) / k.length()); 
+        for(int i=0; i<docu.length(); i++) {
+            
+            if(docu.substring(i).startsWith(k)) {
+                ans++;
+                i += k.length() - 1; // for문의 조건 i++ 때문에 -1을 해줘야함.
+            }
+            
+        }
         
+        System.out.print(ans);
     }
 }
 
