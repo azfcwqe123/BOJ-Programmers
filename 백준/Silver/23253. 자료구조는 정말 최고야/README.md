@@ -38,3 +38,233 @@
 
  <p>올바른 순서대로 교과서를 꺼낼 수 있다면 Yes를, 불가능하다면 No를 출력한다.</p>
 
+---
+
+배열을 이용한 풀이, 512ms(스트림 이용해서 시간 효율성이 좋진 못했다.)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        for(int i=0; i<m; i++) {
+            
+            int k = Integer.parseInt(br.readLine());
+            
+            int[] books = Arrays.stream(br.readLine().split(" ")).mapToInt(x -> Integer.parseInt(x)).toArray();
+            
+            for(int j=0; j<k-1; j++) {
+                if(books[j] < books[j+1]) {
+                    System.out.print("No");
+                    return;
+                }
+            }
+        }
+        
+        System.out.print("Yes");
+        
+    }
+    
+}
+
+
+```
+
+---
+
+포인터를 이용한 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        for(int i=0; i<m; i++) {
+            
+            int prevB = 200_001;
+            
+            int k = Integer.parseInt(br.readLine());
+            
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            
+            for(int j=0; j<k; j++) {
+                int cur = Integer.parseInt(st.nextToken());
+                if(cur > prevB) {
+                    System.out.print("No");
+                    return;
+                }
+                prevB = cur;
+            }
+        }
+        
+        System.out.print("Yes");
+        
+    }
+    
+}
+
+
+```
+
+---
+
+틀렸던 풀이1, 스택 + 우선순위큐, 
+
+테스트 케이스는 다 맞았으나, 한층씩 내려온다는 가정을 해버려서 틀려버림. 1 바로 아래 2가 있을 수도 있는건데, 그 생각을 못함.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        Stack<Integer> ans = new Stack<>();
+        for(int i=1; i<=n; i++) ans.push(i);
+        
+        ArrayList<Stack<Integer>> list = new ArrayList<>();
+        
+        for(int i=0; i<m; i++) list.add(new Stack<>());
+        
+        int maxF = -1;
+        
+        for(int i=0; i<m; i++) {
+            
+            int k = Integer.parseInt(br.readLine());
+            maxF = Math.max(maxF, k);
+            
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<k; j++) {
+                int tmp = Integer.parseInt(st.nextToken());
+                list.get(i).push(tmp);
+            }
+        }
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>();
+        
+        for(int i=maxF; i>=1; i--) {
+            
+            for(int j=0; j<m; j++) {
+                if(list.get(j).size() == i) {
+                    pQ.offer(list.get(j).pop());
+                }
+            }
+            while(!pQ.isEmpty()) stack.push(pQ.poll());
+        }
+        
+        if(ans.equals(stack)) {
+            System.out.print("Yes");
+        } else System.out.print("No");
+        
+    }
+    
+}
+
+
+```
+
+---
+
+틀렸던 풀이2, 스택 이용
+
+테스트 케이스와 방법은 다 맞은듯 하지만 시간초과가 났다.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        ArrayList<Stack<Integer>> list = new ArrayList<>();
+        for(int i=0; i<m; i++) list.add(new Stack<>());
+        
+        
+        for(int i=0; i<m; i++) {
+            
+            int k = Integer.parseInt(br.readLine());
+            
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<k; j++) {
+                int tmp = Integer.parseInt(st.nextToken());
+                list.get(i).push(tmp);
+            }
+        }
+        
+        
+        for(int i=1; i<=n; i++) {
+            boolean flag = false;
+            
+            for(int j=0; j<m; j++) {
+                if(!list.get(j).isEmpty() && list.get(j).peek() == i) {
+                    flag = true;
+                    break;
+                } 
+            }
+            
+            if(!flag) {
+                System.out.print("No");
+                return;
+            }
+        }
+        
+        System.out.print("Yes");
+
+    }
+    
+}
+
+
+```
+
+---
+
+이 문제의 중요한 점은 애드혹을 생각해야한다는 점이다.
+
+애드혹 알고리즘이란 특정 문제를 해결하기 위한 문제 맞춤형 해결책을 의미한다.
+
+그러기에 틀린풀이2처럼 방법은 맞게 풀어도, 시간 초과가 날 수밖에 없었다.
+&nbsp;
+
+---
+
+이 문제의 핵심은, 책들이 내림차순을 기준으로 밑에서부터 책이 쌓여있으면, 위에서 작은 번호의 책을 꺼내기만 해도 번호순으로 순서대로 책을 꺼낼 수 있는 점을 파악하는 것이었다.
