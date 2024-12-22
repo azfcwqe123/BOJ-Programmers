@@ -19,9 +19,9 @@ class Main {
                    System.out.print(k);
                    return;
                 }
-                k++;
             }
-            else k++;
+            
+            k++;
         }
         
     }
