@@ -12,8 +12,17 @@ class Main {
             
             if(str.equals("0")) return;
             
-            if(str.equals(new StringBuilder(str).reverse().toString())) System.out.println("yes");
+            int n = Integer.parseInt(str);
+            
+            StringBuilder sb = new StringBuilder();
+            while(n > 0) {
+                sb.append(n % 10);
+                n /= 10;
+            }
+            
+            if(str.equals(sb.toString())) System.out.println("yes");
             else System.out.println("no");
+            
         }
         
     }
