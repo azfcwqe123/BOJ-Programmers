@@ -32,3 +32,80 @@
 
  <p>여러분은 T초를 위한 최소버튼 조작의 A B C 횟수를 첫 줄에 차례대로 출력해야 한다. 각각의 횟수 사이에는 빈 칸을 둔다. 해당 버튼을 누르지 않는 경우에는 숫자 0을 출력해야한다. 만일 제시된 3개의 버튼으로 T초를 맞출 수 없으면 음수 -1을 첫 줄에 출력해야 한다. </p>
 
+---
+
+첫번째 풀이, 그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int a=0, b=0, c=0;
+        
+        if(n / 300 > 0) {
+            a = n / 300;
+            n -= 300 * a;
+        }
+        
+        if(n / 60 > 0) {
+            b = n / 60;
+            n -= 60 * b;
+        }
+        
+        if(n / 10 > 0) {
+            c = n / 10;
+            n -= 10 * c;
+        }
+        
+        if(n > 0) System.out.print(-1);
+        else System.out.print(a + " " + b + " " + c); 
+    }
+    
+}
+
+```
+
+---
+
+두번째 풀이, 그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] time = {300, 60, 10};
+        int[] arr = new int[3];
+        
+        for(int i=0; i<3; i++) {
+            if(n / time[i] > 0) {
+                arr[i] = n / time[i];
+                n -= time[i] * arr[i];
+            }
+        }
+        
+        if(n > 0) System.out.print(-1);
+        else System.out.print(arr[0] + " " + arr[1] + " " + arr[2]); 
+    }
+    
+}
+
+
+```
+
+![image](https://github.com/user-attachments/assets/3b41af86-5391-4365-915f-ea1f0f7cbc66)
