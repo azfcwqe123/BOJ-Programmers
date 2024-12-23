@@ -30,3 +30,89 @@
 
  <p>예제와 같이 요세푸스 순열을 출력한다.</p>
 
+---
+
+큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        Queue<Integer> Q = new LinkedList<>();
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        
+        for(int i=1; i<=N; i++) Q.offer(i);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        
+        while(Q.size() != 1) {
+            for(int i=1; i<K; i++) Q.offer(Q.poll());
+            sb.append(Q.poll() + ", ");
+        }
+        
+        sb.append(Q.poll() + ">");
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+실수한 풀이, K가 3으로 고정돼있다고 착각을 함
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        Queue<Integer> Q = new LinkedList<>();
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        
+        for(int i=1; i<=N; i++) Q.offer(i);
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        while(!Q.isEmpty()) {
+            
+            Q.offer(Q.poll());
+            Q.offer(Q.poll());
+            list.add(Q.poll());
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        for(int i=0; i<N-1; i++) sb.append(list.get(i) + ", ");
+        sb.append(list.get(N-1) + ">");
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+---
