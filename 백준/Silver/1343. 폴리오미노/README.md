@@ -30,3 +30,101 @@
 
  <p>첫째 줄에 사전순으로 가장 앞서는 답을 출력한다. 만약 덮을 수 없으면 -1을 출력한다.</p>
 
+---
+그리디 알고리즘 문제
+&nbsp;
+
+정규표현식 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        
+        str = str.replaceAll("(" + "XXXX" + ")", "AAAA").replaceAll("(" + "XX" + ")", "BB");;
+        
+        if(str.contains("X")) System.out.print(-1);
+        else System.out.print(str);
+    }
+    
+}
+
+
+```
+
+---
+
+직접 구현
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        
+        int x = 0;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i=0; i<str.length(); i++) {
+            
+            if(str.charAt(i) == '.') { // XXX. 같은 경우가 나와버리면 x=0으로 초기화 시켜버림. BB가 나올수 없게됨
+                sb.append(".");
+                x = 0;
+            }
+            
+            if(str.charAt(i) == 'X') {
+                x++;
+                    
+                if(x == 2) { // x = 2일 경우, XX. 이거나 ~~XX일때만 BB로 바뀐다. 나머지는 패스.
+                    if(i+1 < str.length() && str.charAt(i+1) == '.') {
+                        sb.append("BB");
+                        x = 0;
+                    }
+                    
+                    else if(i == str.length() - 1) {
+                        sb.append("BB");
+                        x = 0;
+                    }
+                    
+                }    
+                    
+                if(x == 4) {
+                    sb.append("AAAA");
+                    x = 0;
+                }
+                
+            }
+            
+        }
+        
+        String ans = sb.toString();
+        
+        if(ans.length() != str.length()) System.out.print(-1);
+        else System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/fdfc2b90-93e6-4d48-b7bd-378d8594a8e1)
