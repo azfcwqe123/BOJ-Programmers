@@ -38,3 +38,51 @@
 
  <p>첫째 줄에 다솜이가 매수해야 하는 사람의 최솟값을 출력한다.</p>
 
+---
+
+우선순위 큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>(Comparator.reverseOrder());
+        
+        int n = Integer.parseInt(br.readLine()) - 1; // 1번 후보를 제외한 나머지 후보의 수
+        
+        int k = Integer.parseInt(br.readLine());
+        
+        if(n == 0) { // 후보가 1번밖에 없다면, 다른 후보의 표를 빼앗을 필요도 없이 끝남.
+            System.out.print(0);
+            return;
+        } else while(n-- > 0) pQ.offer(Integer.parseInt(br.readLine()));
+        
+        
+        int ans = 0;
+        
+        // 다른 후보의 표를 하나씩 빼앗는다.
+        while(k <= pQ.peek()) {
+            pQ.offer(pQ.poll() - 1);
+            k++;
+            ans++;
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/e5b120d3-a100-4493-8f57-02e9f641a62f)
