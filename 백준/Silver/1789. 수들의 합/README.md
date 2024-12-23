@@ -26,3 +26,45 @@
 
  <p>첫째 줄에 자연수 N의 최댓값을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        long n = Long.parseLong(br.readLine());
+        
+        long sum = 0, ans = 0;
+        
+        for(int i=1; ; i++) {
+            sum += i;
+            ans++;
+            if(sum > n) {
+                System.out.print(ans - 1);
+                return;
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![13](https://github.com/user-attachments/assets/d4973259-e9f7-452d-be7c-3cc2f7e7f4ee)
+
+---
+
+![image](https://github.com/user-attachments/assets/27906352-f7c9-448f-85e4-5c5edb4e2faf)
+
