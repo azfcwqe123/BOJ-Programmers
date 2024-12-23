@@ -34,3 +34,128 @@
 
  <p>첫째 줄에 W의 순열이 S 안에 있을 수 있는 형태의 개수를 출력한다.</p>
 
+---
+
+해시맵 + 슬라이딩 윈도우, 804ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int w = Integer.parseInt(st.nextToken());
+        int g = Integer.parseInt(st.nextToken());
+        
+        HashMap<Character, Integer> mapA = new HashMap<>();
+        String W = br.readLine();
+        for(char x : W.toCharArray()) mapA.put(x, mapA.getOrDefault(x, 0) + 1);
+        
+        String str = br.readLine();
+        HashMap<Character, Integer> mapB = new HashMap<>();
+        
+        int ans = 0;
+        
+        for(int i=0; i<g; i++) {
+            char ch = str.charAt(i);
+            
+            mapB.put(ch, mapB.getOrDefault(ch, 0) + 1);
+            
+            if(i == w-1) {
+                if(mapA.equals(mapB)) ans++;    
+            }
+            
+            if(i >= w) {
+                char tmp = str.charAt(i-w);
+                
+                if(mapB.get(tmp) > 1) {
+                    mapB.put(tmp, mapB.get(tmp) - 1);
+                } else mapB.remove(tmp);
+                
+                if(mapA.equals(mapB)) ans++;    
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+배열 + 슬라이딩 윈도우, 344ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static int[] ch1;
+    public static int[] ch2;
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int w = Integer.parseInt(st.nextToken());
+        int g = Integer.parseInt(st.nextToken());
+        
+        String W = br.readLine();
+        String G = br.readLine();
+
+        // 소문자 - 0 ~ 25
+        // 대문자 - 26 ~ 51        
+        ch1 = new int[52];
+        ch2 = new int[52];
+        
+        for(char x : W.toCharArray()) checkPlus(x, ch1);
+
+        int ans = 0;
+        
+        for(int i=0; i<g; i++) {
+            char tmp = G.charAt(i);
+            
+            checkPlus(tmp, ch2);
+            
+            if(i == w-1) {
+                if(Arrays.equals(ch1, ch2)) ans++;
+            }
+            
+            else if(i >= w) {
+                checkMinus(G.charAt(i-w), ch2);
+                if(Arrays.equals(ch1, ch2)) ans++;
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+    private static void checkPlus(char ch, int[] arr) {
+        if(Character.isUpperCase(ch)) arr[ch-39]++;
+        else arr[ch - 97]++;
+    }
+    
+    private static void checkMinus(char ch, int[] arr) {
+        if(Character.isUpperCase(ch)) arr[ch-39]--;
+        else arr[ch - 97]--;
+    }
+    
+}
+
+
+```
+
+![image](https://github.com/user-attachments/assets/e6cbe678-95e1-4de7-96e0-84bec10ef9f9)
