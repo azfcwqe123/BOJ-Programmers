@@ -37,3 +37,70 @@
 
  <p>첫째 줄에 다솜이가 해야하는 행동의 최소 횟수를 출력한다.</p>
 
+---
+
+StringTokenizer() 구분자 활용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        
+        StringTokenizer a = new StringTokenizer(str, "1");
+        StringTokenizer b = new StringTokenizer(str, "0");
+            
+        System.out.print(Math.min(a.countTokens(), b.countTokens()));    
+
+    }
+    
+}
+
+
+```
+
+---
+
+직접 구현, 직관력 필요
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        
+        int cnt = 0;
+        
+        for(int i=1; i<str.length(); i++) {
+            if(str.charAt(i) != str.charAt(i-1)) cnt++;
+        }
+        
+        System.out.print((int) Math.ceil((double) cnt / 2));
+
+    }
+    
+}
+
+
+```
+
+앞뒤 숫자가 바뀌는 시점에 cnt++ 하고,
+
+cnt을 2로 나눈 숫자를 반올림 시키면 정답이 된다.
+
+---
+
+![image](https://github.com/user-attachments/assets/24a2f4b5-0c20-4f87-a0b2-7719b40efc8b)
+
