@@ -26,3 +26,35 @@
 
  <p>첫째 줄에 수를 오름차순으로 정렬한 결과를 출력한다. 이때, 같은 수는 한 번만 출력한다.</p>
 
+---
+
+트리셋
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        TreeSet<Integer> set = new TreeSet<>();
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) set.add(Integer.parseInt(st.nextToken()));
+        
+        for(int x : set) System.out.print(x + " ");
+    }
+    
+}
+
+
+```
+
+---
+
+
+![image](https://github.com/user-attachments/assets/d03b4fb0-ae44-4ee5-ad0f-9099676ee8c1)
