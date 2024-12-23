@@ -7,8 +7,7 @@ class Main {
     
     public static void main(String[] args) throws IOException {
         
-        HashSet<Integer> A = new HashSet<>();
-        HashSet<Integer> B = new HashSet<>();
+        TreeSet<Integer> set = new TreeSet<>();
         
         StringTokenizer st = new StringTokenizer(br.readLine());
         
@@ -16,19 +15,16 @@ class Main {
         int m = Integer.parseInt(st.nextToken());
         
         st = new StringTokenizer(br.readLine());
-        while(n-- > 0) A.add(Integer.parseInt(st.nextToken()));
+        while(n-- > 0) set.add(Integer.parseInt(st.nextToken()));
         
         st = new StringTokenizer(br.readLine());
-        while(m-- > 0) B.add(Integer.parseInt(st.nextToken()));
+        while(m-- > 0) set.remove(Integer.parseInt(st.nextToken()));
         
-        TreeSet<Integer> list = new TreeSet<>();
+        StringBuilder sb = new StringBuilder();
+        System.out.println(set.size());
+        for(int x : set) sb.append(x + " ");
         
-        for(int x : A) {
-            if(!B.contains(x)) list.add(x);   
-        } 
-        
-        System.out.println(list.size());
-        for(int x : list) System.out.print(x + " ");
+        System.out.print(sb);
         
     }
     
