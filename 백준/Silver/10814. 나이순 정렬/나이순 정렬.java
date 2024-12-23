@@ -37,9 +37,12 @@ class Main {
         
         Collections.sort(list);
         
+        StringBuilder sb = new StringBuilder();
         for(Person x : list) {
-            System.out.println(x.age + " " + x.name);
+            sb.append(x.age + " " + x.name).append('\n');
         }
+        
+        System.out.print(sb);
         
     }
     
