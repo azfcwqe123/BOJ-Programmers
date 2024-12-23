@@ -9,10 +9,13 @@ class Main {
         
         String str = br.readLine();
         
-        StringTokenizer a = new StringTokenizer(str, "1");
-        StringTokenizer b = new StringTokenizer(str, "0");
-            
-        System.out.print(Math.min(a.countTokens(), b.countTokens()));    
+        int cnt = 0;
+        
+        for(int i=1; i<str.length(); i++) {
+            if(str.charAt(i) != str.charAt(i-1)) cnt++;
+        }
+        
+        System.out.print((int) Math.ceil((double) cnt / 2));
 
     }
     
