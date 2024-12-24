@@ -26,3 +26,38 @@
 
  <p>첫째 줄에 구한 0의 개수를 출력한다.</p>
 
+---
+
+수학적 사고력이 필요함
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int ans = 0;
+        
+        while(n >= 5) {
+            ans += n / 5;
+            n /= 5;
+        }
+        
+        System.out.print(ans);
+    }
+        
+}
+
+
+```
+
+---
+
+참고: https://st-lab.tistory.com/165
+
+![image](https://github.com/user-attachments/assets/2b4f89f4-974e-4af4-bd71-7f415f154579)
