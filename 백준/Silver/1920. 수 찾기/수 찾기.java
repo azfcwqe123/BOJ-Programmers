@@ -16,14 +16,19 @@ class Main {
         
         int m = Integer.parseInt(br.readLine());
         
+        StringBuilder sb = new StringBuilder();
+        
         st = new StringTokenizer(br.readLine());
         while(m-- > 0) {
             int k = Integer.parseInt(st.nextToken());
             
-            if(Arrays.binarySearch(arr, k) >= 0) System.out.println(1);
-            else System.out.println(0);
+            if(Arrays.binarySearch(arr, k) >= 0) sb.append(1);
+            else sb.append(0);
+            
+            sb.append("\n");
         }
         
+        System.out.print(sb);
     }
     
         
