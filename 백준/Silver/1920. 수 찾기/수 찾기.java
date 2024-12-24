@@ -20,28 +20,12 @@ class Main {
         while(m-- > 0) {
             int k = Integer.parseInt(st.nextToken());
             
-            if(binarySearch(arr, k) != -1 ) System.out.println(1);
+            if(Arrays.binarySearch(arr, k) >= 0) System.out.println(1);
             else System.out.println(0);
         }
         
     }
     
-    public static int binarySearch(int[] arr, int k) {
-        
-        int lt = 0, rt = arr.length - 1;
-        
-        while(lt <= rt) {
-            
-            int mid = (lt + rt) / 2;
-            
-            if(k < arr[mid]) rt = mid - 1;
-            else if(k > arr[mid]) lt = mid + 1;
-            else return mid;
-        }
-        
-        return -1;
-        
-    }
         
 }
 
