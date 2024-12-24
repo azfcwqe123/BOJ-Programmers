@@ -26,3 +26,116 @@
 
  <p>M개의 줄에 답을 출력한다. 존재하면 1을, 존재하지 않으면 0을 출력한다.</p>
 
+---
+
+이분 탐색
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr);
+        
+        int m = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        while(m-- > 0) {
+            int k = Integer.parseInt(st.nextToken());
+            
+            if(binarySearch(arr, k) >= 0) sb.append(1);
+            else sb.append(0);
+            
+            sb.append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+    public static int binarySearch(int[] arr, int k) {
+        
+        int lt = 0, rt = arr.length - 1;
+        
+        while(lt <= rt) {
+            
+            int mid = (lt + rt) / 2;
+            
+            if(k < arr[mid]) rt = mid - 1;
+            else if(k > arr[mid]) lt = mid + 1;
+            else return mid;
+        }
+        
+        return -1;
+        
+    }
+    
+        
+}
+
+
+```
+
+---
+
+이분 탐색(Arrays 클래스의 이분탐색 메서드 이용 방법)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr);
+        
+        int m = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        while(m-- > 0) {
+            int k = Integer.parseInt(st.nextToken());
+            
+            if(Arrays.binarySearch(arr, k) >= 0) sb.append(1);
+            else sb.append(0);
+            
+            sb.append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+        
+}
+
+
+```
+
+메서드 사용하는건 버릇 안좋아지니 웬만하면 직접 구현도 꼭 해보자.
+
+---
+참고 블로그 : https://st-lab.tistory.com/261
+
+![image](https://github.com/user-attachments/assets/6b57ad76-e554-4eb3-8979-45c4278f85ed)
+
+이분탐색 메서드를 이용하나, 이분탐색 알고리즘을 직접 만들어서 사용하거나 별 큰 차이는 없다.
