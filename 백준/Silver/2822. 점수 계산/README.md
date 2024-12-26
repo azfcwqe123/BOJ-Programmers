@@ -28,3 +28,50 @@
 
  <p>첫째 줄에 참가자의 총점을 출력한다. 둘째 줄에는 어떤 문제가 최종 점수에 포함되는지를 공백으로 구분하여 출력한다. 출력은 문제 번호가 증가하는 순서이어야 한다.</p>
 
+---
+
+해시맵을 사용하려고 했으나, 2차원 배열에 담는게 더 간편할 것 같아서 2차원 배열 정렬을 이용했다.
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static void main(String[] args) throws IOException {
+        
+        int[][] arr = new int[8][2];
+        int[] ans = new int[5];
+        
+        for(int i=0; i<8; i++) {
+            arr[i][0] = Integer.parseInt(br.readLine());
+            arr[i][1] = i+1;
+        }
+        
+        Arrays.sort(arr, (a, b) -> b[0] - a[0]);
+        
+        int sum = 0;
+        
+        for(int i=0; i<5; i++) {
+            sum += arr[i][0];
+            ans[i] = arr[i][1];
+        }
+        
+        Arrays.sort(ans);
+        
+        System.out.println(sum);
+        for(int x : ans) System.out.print(x + " ");
+        
+        
+        
+    }
+}
+
+
+```
+
+---
+
+
+![image](https://github.com/user-attachments/assets/5b768fe6-7d02-4cdc-99e2-2b009c03eea1)
