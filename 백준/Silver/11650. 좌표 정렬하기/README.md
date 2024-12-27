@@ -26,3 +26,52 @@
 
  <p>첫째 줄부터 N개의 줄에 점을 정렬한 결과를 출력한다.</p>
 
+---
+
+좌표 정렬
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[][] pos = new int[n][2];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            
+            pos[i][0] = x;
+            pos[i][1] = y;
+        }
+        
+        Arrays.sort(pos, (a, b) -> {
+            if(a[0] == b[0]) return a[1] - b[1];
+            else return a[0] - b[0];
+        });
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(int[] x : pos) sb.append(x[0] + " " + x[1]).append('\n');
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+---
+처음 푼 1120ms는 StringBuilder()을 사용하지 않았을때 나온 결과
+![image](https://github.com/user-attachments/assets/e33515ff-3e21-4629-811b-4287b768b55e)
