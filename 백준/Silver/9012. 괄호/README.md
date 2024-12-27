@@ -28,3 +28,52 @@
 
  <p>출력은 표준 출력을 사용한다. 만일 입력 괄호 문자열이 올바른 괄호 문자열(VPS)이면 “YES”, 아니면 “NO”를 한 줄에 하나씩 차례대로 출력해야 한다. </p>
 
+---
+
+기본적인 스택 문제다. 체크해야할것들이 많으면 check 메서드를 만든것처럼, 메서드를 만들어서 리턴시켜주는게 가독성도 좋고 간편한 것 같다.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        while(n-- > 0) {
+            System.out.println(check(br.readLine()));
+        }
+        
+        
+    }
+    
+    public static String check(String str) {
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(char x : str.toCharArray()) {
+            
+            if(x == '(') stack.push(x);
+            
+            else {
+                if(stack.isEmpty()) return "NO";
+                else stack.pop();
+            }
+        }
+        
+        if(stack.isEmpty()) return "YES";
+        else return "NO";
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/e3ea7ca1-1ee0-4d49-ab04-a8bf6169946d)
