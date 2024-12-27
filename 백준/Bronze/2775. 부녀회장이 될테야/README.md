@@ -30,3 +30,53 @@
 
  <p>각각의 Test case에 대해서 해당 집에 거주민 수를 출력하라.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        int[][] apt = new int[15][15];
+        
+        for(int i=0; i<15; i++) {
+            apt[i][1] = 1;
+            apt[0][i] = i;
+        }
+        
+        for(int i=1; i<15; i++) {
+            
+            for(int j=2; j<15; j++) {
+                apt[i][j] = apt[i-1][j] + apt[i][j-1];
+            }
+        }
+        
+        while(T-- > 0) {
+            int a = Integer.parseInt(br.readLine());
+            int b = Integer.parseInt(br.readLine());
+            
+            System.out.println(apt[a][b]);
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+참고 블로그 : https://st-lab.tistory.com/78
+
+![image](https://github.com/user-attachments/assets/529427b6-8e63-47d9-b397-acc3059eb218)
