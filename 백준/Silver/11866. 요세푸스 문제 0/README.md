@@ -30,3 +30,50 @@
 
  <p>예제와 같이 요세푸스 순열을 출력한다.</p>
 
+---
+
+큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        
+        Queue<Integer> Q = new LinkedList<>();
+        
+        for(int i=1; i<=N; i++) Q.offer(i);
+        
+        StringBuilder sb = new StringBuilder("<");
+        
+        while(!Q.isEmpty()) {
+            
+            for(int i=0; i<K-1; i++) Q.offer(Q.poll());
+            
+            if(Q.size() == 1) sb.append(Q.poll());
+            else sb.append(Q.poll() + ", ");
+        }
+        sb.append(">");
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+전에 풀었던 요세푸스 문제랑 똑같다
+
+---
+
+![image](https://github.com/user-attachments/assets/c51d42a1-12e9-4172-a120-5d0b91ccef95)
+
