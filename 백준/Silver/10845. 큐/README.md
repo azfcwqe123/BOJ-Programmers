@@ -37,3 +37,113 @@
 
  <p>출력해야하는 명령이 주어질 때마다, 한 줄에 하나씩 출력한다.</p>
 
+---
+
+큐 자료구조 구현
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int[] Q = new int[10001]; // 문제 조건처럼 10000개의 수가 들어갔다 나올 수 있으니, 미리 설정해놓는다.
+    public static int first = 0, last = 0;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        Q = new int[n];
+        
+        while(n-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            switch(st.nextToken()) {
+                
+                case "push" :
+                    push(Integer.parseInt(st.nextToken()));
+                    break;
+                
+                case "pop" :
+                    sb.append(pop()).append('\n');
+                    break;
+                    
+                case "size" :
+                    sb.append(size()).append('\n');
+                    break;
+                    
+                case "empty" :
+                    sb.append(empty()).append('\n');
+                    break;
+                
+                case "front" :
+                    sb.append(front()).append('\n');
+                    break;
+                
+                case "back" :
+                    sb.append(back()).append('\n');
+                    break;
+            }
+            
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    //---
+    
+    public static void push(int item) {
+        Q[last++] = item;
+    }
+    
+    public static int pop() {
+        if(last - first == 0) return -1;
+        else {
+            int tmp = Q[first++];
+            return tmp;
+        }
+    }
+    
+    public static int size() {
+        return last - first;
+    }
+    
+    public static int empty() {
+        if(last - first == 0) return 1;
+        else return 0;
+    }
+    
+    public static int front() {
+        if(last - first == 0) return -1;
+        else {
+            int tmp = Q[first];
+            return tmp;
+        }
+    }
+    
+    public static int back() {
+        if(last - first == 0) return -1;
+        else {
+            int tmp = Q[last - 1];
+            return tmp;
+        }
+    }
+    
+}
+
+
+```
+
+---
+
+참고 블로그 : https://comain.tistory.com/272
+
+![image](https://github.com/user-attachments/assets/9507a504-a435-4a26-b75b-659cc8c8ea52)
