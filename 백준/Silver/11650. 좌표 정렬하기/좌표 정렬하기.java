@@ -26,7 +26,11 @@ class Main {
             else return a[0] - b[0];
         });
         
-        for(int[] x : pos) System.out.println(x[0] + " " + x[1]);
+        StringBuilder sb = new StringBuilder();
+        
+        for(int[] x : pos) sb.append(x[0] + " " + x[1]).append('\n');
+        
+        System.out.print(sb);
         
     }
     
