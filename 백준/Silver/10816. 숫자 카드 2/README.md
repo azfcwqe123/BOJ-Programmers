@@ -28,3 +28,175 @@
 
  <p>첫째 줄에 입력으로 주어진 M개의 수에 대해서, 각 수가 적힌 숫자 카드를 상근이가 몇 개 가지고 있는지를 공백으로 구분해 출력한다.</p>
 
+---
+
+해시맵
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) {
+            int k = Integer.parseInt(st.nextToken());
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        
+        int m = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<m; i++) {
+            int ch = Integer.parseInt(st.nextToken());
+            
+            if(map.containsKey(ch)) sb.append(map.get(ch) + " ");
+            else sb.append("0 ");
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+이분 탐색
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr);
+        
+        int m = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        while(m-- > 0) {
+            int key = Integer.parseInt(st.nextToken());
+            
+            sb.append(upperBound(arr, key) - lowerBound(arr, key) + " ");
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    private static int lowerBound(int[] arr, int key) {
+        
+        int lt = 0, rt = arr.length;
+        
+        while(lt < rt) {
+            
+            int mid = (lt + rt) / 2;
+            
+            if(key <= arr[mid]) {
+                rt = mid;
+            }
+            
+            else lt = mid + 1;
+        }
+        
+        return lt;
+        
+    }
+    
+    private static int upperBound(int[] arr, int key) {
+        
+        int lt = 0, rt = arr.length;
+        
+        while(lt < rt) {
+            
+            int mid = (lt + rt) / 2;
+            
+            if(key < arr[mid]) {
+                rt = mid;
+            }
+            
+            else lt  = mid + 1;
+        }
+        
+        return rt;
+    }
+    
+}
+
+
+```
+
+---
+
+직접 구현, 테스트케이스는 맞으나, 메모리 초과뜸
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[200_000_001];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) {
+            arr[Integer.parseInt(st.nextToken()) + 100_000_000]++;
+        }
+        
+        int m = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<m; i++) {
+            sb.append(arr[Integer.parseInt(st.nextToken()) + 100_000_000] + " ");
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+참고 블로그 : https://st-lab.tistory.com/267
+
+![image](https://github.com/user-attachments/assets/53ea4561-5268-45c5-a732-350246aefd8a)
+
+밑에서부터 해시맵, 이분탐색, 직접구현이다.
