@@ -30,3 +30,52 @@
 
  <p>상근이가 배달하는 봉지의 최소 개수를 출력한다. 만약, 정확하게 N킬로그램을 만들 수 없다면 -1을 출력한다.</p>
 
+---
+
+그리디 알고리즘. 그리디한 관점이 필요하다
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int cnt = 0;
+        
+        while(n > 0) {
+            
+            if(n % 5 == 0) { // 5로 n이 딱 나눠 떨어지는 경우가 베스트.
+                cnt += n / 5;
+                System.out.print(cnt);
+                return;
+            }
+            
+            else { // 5로 나눠 떨어지지 않는다면, 설탕을 3개 빼고 while문으로 돌아가서 다시 5로 딱 나눠 떨어지는지 확인한다.
+                n -= 3;
+                cnt++;
+            }
+            
+            if(n < 0) { // 설탕이 3과 5를 이용해도 나눠 떨어지지 않는다면 fail
+                System.out.print(-1);
+                return;
+            }
+        }
+        
+        System.out.print(cnt);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/36d7d58c-c546-410e-aa94-4a057cb3fcfc)
