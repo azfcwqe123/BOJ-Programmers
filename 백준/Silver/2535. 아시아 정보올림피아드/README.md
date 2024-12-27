@@ -91,3 +91,79 @@
 
  <p>메달을 받는 학생들을 금, 은, 동메달 순서대로 한 줄에 한 명씩 출력한다. 즉, 첫 번째 줄에는 금메달 수상자를, 두 번째 줄에는 은메달 수상자를, 세 번째 줄에는 동메달 수상자를 출력한다. 하나의 줄에는 소속국가 번호와 학생 번호를 하나의 빈칸을 사이에 두고 출력한다. </p>
 
+---
+
+객체 사용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Person implements Comparable<Person>{
+    
+    int country;
+    int num;
+    int grade;
+    
+    Person(int country, int num, int grade) {
+        this.country = country;
+        this.num = num;
+        this.grade = grade;
+    }
+    
+    public int compareTo(Person ob) {
+        return ob.grade - this.grade;
+    }
+    
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] ch = new int[n+1];
+        
+        ArrayList<Person> list = new ArrayList<>();
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int C = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            int G = Integer.parseInt(st.nextToken());
+            
+            list.add(new Person(C, N, G));
+        }
+        
+        Collections.sort(list);
+        
+        int cnt = 0;
+        
+        for(int i=0; i<n; i++) {
+            Person x = list.get(i);
+            
+            if(ch[x.country] < 2) {
+                System.out.println(x.country + " " + x.num);
+                ch[x.country]++;
+                cnt++;
+            }
+            
+            if(cnt == 3) return;
+        }
+        
+    }
+}
+
+
+```
+
+한 학생의 주어진 정보가 많을때는 객체를 이용해서 푸는게 훨씬 효율적이라는 생각이 들게 해준 문제다.
+
+---
+
+![image](https://github.com/user-attachments/assets/862970dd-c9a8-4d11-b5bb-4b85c36c8ded)
+
