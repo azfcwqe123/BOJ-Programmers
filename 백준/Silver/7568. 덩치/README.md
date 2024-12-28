@@ -67,3 +67,62 @@
 
  <p>여러분은 입력에 나열된 사람의 덩치 등수를 구해서 그 순서대로 첫 줄에 출력해야 한다. 단, 각 덩치 등수는 공백문자로 분리되어야 한다.</p>
 
+---
+
+객체 사용 + 브루트포스 알고리즘 + 등수 매기기
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Person {
+    
+    int kg;
+    int cm;
+    int grade = 1;
+    
+    Person(int kg, int cm) {
+        this.kg = kg;
+        this.cm = cm;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Person[] arr = new Person[n];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            int kg = Integer.parseInt(st.nextToken());
+            int cm = Integer.parseInt(st.nextToken());
+            
+            arr[i] = new Person(kg, cm);
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(arr[i].kg < arr[j].kg && arr[i].cm < arr[j].cm) arr[i].grade++;
+            }
+        }
+        
+        for(Person ob : arr) {
+            System.out.print(ob.grade + " ");
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/1d432e31-dc27-4cb0-b9b4-114cc34799eb)
