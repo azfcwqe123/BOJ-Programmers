@@ -71,7 +71,7 @@ class Main {
         
         double sum = 0; // 변수 sum의 타입을 double로 해야함.
         
-        for(int i=k; i<n-k; i++) {
+        for(int i=k; i<n-k; i++) { // 절사평균에 포함된 사람들 제외한 나머지 사람들의 점수를 sum에 넣는다.
             sum += arr[i];
         }
         
