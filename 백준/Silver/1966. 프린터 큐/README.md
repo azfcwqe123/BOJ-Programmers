@@ -37,3 +37,89 @@
 
  <p>각 테스트 케이스에 대해 문서가 몇 번째로 인쇄되는지 출력한다.</p>
 
+---
+
+큐 응용 문제, 구현 중요
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Docu {
+    int order;
+    int priority;
+    
+    Docu(int order, int priority) {
+        this.order = order;
+        this.priority = priority;
+    }
+}
+class Main {
+    
+    //private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    //private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int T = sc.nextInt();
+        
+        while(T-- > 0) {
+
+            
+            // 연결리스트로 만든다. 큐로 만들면 자료 탐색이 상당히 까다로워짐
+            LinkedList<Docu> Q = new LinkedList<>(); 
+            int N = sc.nextInt(); // 자료 개수
+            int M = sc.nextInt(); // 찾아야할 순서
+            
+            for(int i=0; i<N; i++) { // 순서, 중요도를 가지는 객체 생성 후 연결리스트에 추가
+                Q.offer(new Docu(i, sc.nextInt()));
+            }
+            
+            int cnt = 0;
+            
+            while(!Q.isEmpty()) { // 연결리스트 전체를순회
+                Docu tmp = Q.poll(); // 일단 하나 꺼낸다.
+                boolean isMax = true; // 이 하나가 모든 자료중에서 중요도가 가장 높은지 체크 여부
+                
+                for(int i=0; i<Q.size(); i++) { // 하나 뺀 자료를 제외한 나머지 자료 탐색
+                    
+                    if(tmp.priority < Q.get(i).priority) { // tmp보다 중요도가 큰 자료가 있다면?
+                        
+                        Q.offer(tmp); // tmp을 맨 뒤에 넣는다.
+                        for(int j=0; j<i; j++) { // tmp보다 중요도가 더 높은 자료 이전까지의 자료들을 뒤에 넣는다.
+                            Q.offer(Q.poll());
+                        }
+                        isMax = false; // tmp는 가장 중요도가 높은 자료가 아니었다.
+                        break; // 더이상 탐색은 무의미하니 break;
+                    }
+                }
+                
+                if(!isMax) continue; // 가장 중요도가 크지 않았다면, 다시 자료 하나 꺼내서 탐색 준비
+                
+                cnt++; // 중요도가 가장 컸다면 cnt++;
+                
+                if(tmp.order == M) break; // 찾고 있던 순서라면 break;
+            }
+            
+            System.out.println(cnt);
+        }
+        
+
+        
+    }
+    
+}
+    
+
+
+
+```
+
+---
+
+참고 블로그 : https://st-lab.tistory.com/201
+
+![image](https://github.com/user-attachments/assets/85858de0-6fda-4405-9f08-e9d06eb705ef)
+
+
