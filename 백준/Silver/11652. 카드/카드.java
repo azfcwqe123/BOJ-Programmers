@@ -17,20 +17,20 @@ class Main {
         }
         
         int max = 0;
+        long ans = 0;
         
-        for(int x : map.values()) {
-            max = Math.max(x, max);    
+        for(long key : map.keySet()) {
+            if(map.get(key) > max) {
+                max = map.get(key);
+                ans = key;
+            }
+            
+            else if(map.get(key) == max) {
+                ans = Math.min(key, ans);
+            }
         }
         
-        ArrayList<Long> list = new ArrayList<>();
-        
-        for(Long key : map.keySet()) {
-            if(map.get(key) == max) list.add(key);
-        }
-        
-        Collections.sort(list);
-        
-        System.out.print(list.get(0));
+        System.out.print(ans);
 
     }
     
