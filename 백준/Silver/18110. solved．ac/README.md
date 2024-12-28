@@ -47,3 +47,48 @@
 
  <p>solved.ac가 계산한 문제의 난이도를 출력한다.</p>
 
+---
+
+구현 문제
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
+        Arrays.sort(arr);
+        
+        int k = (int) Math.round(n * 0.15);
+        
+        double sum = 0; // 변수 sum의 타입을 double로 해야함.
+        
+        for(int i=k; i<n-k; i++) {
+            sum += arr[i];
+        }
+        
+        // 그렇지 않으면 여기서 유도하고자 하는 결과가 나오지 않게됨.
+        int ans = (int) Math.round(sum / (n - k*2)); // double / int 꼴로 돼야 소숫점이 나와서 반올림을 할 수 있기 때문
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+    
+
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/98a25032-bbe2-4402-bb56-140acac5b2c0)
