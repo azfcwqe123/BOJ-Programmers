@@ -42,3 +42,129 @@
 
  <p>각 줄마다 해당 문자열이 균형을 이루고 있으면 "yes"를, 아니면 "no"를 출력한다.</p>
 
+---
+
+해시맵 + 스택 이용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static HashMap<Character, Character> map = new HashMap<>();
+    public static void main(String[] args) throws IOException {
+        
+        map.put(')', '(');
+        map.put(']', '[');
+            
+        while(true) {
+            String str = br.readLine();
+            if(str.equals(".")) return;
+            
+            if(check(str)) System.out.println("yes");
+            else System.out.println("no");
+        }
+        
+    }
+    
+    public static boolean check(String str) {
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(char x : str.toCharArray()) {
+            
+            if(x == '(' || x == '[') stack.push(x);
+            
+            else if(x == ')' || x == ']') {
+                    
+                if(stack.isEmpty()) return false; // 닫는 괄호를 넣으려고 하는데, 스택이 비어있다면 false
+                
+                else if(stack.peek().equals(map.get(x))) stack.pop(); // 닫는 괄호와의 쌍이 맞으면 그 괄호는 스택에서 빼버린다.
+                
+                else return false; // (] 이런 케이스는 쌍이 맞지 않으므로, false
+                    
+            }
+        }
+        
+        if(stack.isEmpty()) return true;
+        else return false;
+        
+    }
+            
+}
+    
+
+
+
+```
+
+---
+틀린 풀이
+
+첫번째 풀이 틀린 이유 : check 메서드 마지막에 스택이 비어있는지 여부에 따라 true, false을 해야하는데 이 과정을 생략해버렸다.
+
+추가로 boolean flag라는 변수를 만들 필요 조차도 없었다.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static HashMap<Character, Character> map = new HashMap<>();
+    public static void main(String[] args) throws IOException {
+        
+        map.put(')', '(');
+        map.put(']', '[');
+            
+        while(true) {
+            String str = br.readLine();
+            if(str.equals(".")) return;
+            
+            if(check(str)) System.out.println("yes");
+            else System.out.println("no");
+        }
+        
+    }
+    
+    public static boolean check(String str) {
+        
+        Stack<Character> stack = new Stack<>();
+        
+        boolean flag = true;
+        
+        for(char x : str.toCharArray()) {
+            
+            if(x == '(' || x == '[') stack.push(x);
+            
+            else if(x == ')' || x == ']') {
+                    
+                if(stack.isEmpty()) return false;
+                
+                else if(stack.peek().equals(map.get(x))) stack.pop();
+                
+                else return false;
+                    
+            }
+        }
+        
+        return flag;
+    }
+            
+}
+    
+
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/f0876b9d-f0ae-413d-98be-97e8a93fb0fc)
