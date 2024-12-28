@@ -36,3 +36,47 @@
 
  <p>재민이가 최종적으로 적어 낸 수의 합을 출력한다. 최종적으로 적어낸 수의 합은 2<sup>31</sup>-1보다 작거나 같은 정수이다.</p>
 
+---
+
+기본적인 스택 문제
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        while(n-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            
+            if(k == 0) stack.pop();
+            else stack.push(k);
+        }
+        
+        int ans = 0;
+        
+        for(int x : stack) ans += x;
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+    
+
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/ebc2c24c-322d-4bfb-aaf9-e31487f1decd)
+
