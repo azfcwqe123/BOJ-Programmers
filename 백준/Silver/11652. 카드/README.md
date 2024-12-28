@@ -28,3 +28,102 @@
 
  <p>첫째 줄에 준규가 가장 많이 가지고 있는 정수를 출력한다.</p>
 
+---
+
+첫번째 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashMap<Long, Integer> map = new HashMap<>();
+        
+        while(n-- > 0) {
+            long k = Long.parseLong(br.readLine());
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        
+        int max = 0;
+        
+        for(int x : map.values()) {
+            max = Math.max(x, max);    
+        }
+        
+        ArrayList<Long> list = new ArrayList<>();
+        
+        for(Long key : map.keySet()) {
+            if(map.get(key) == max) list.add(key);
+        }
+        
+        Collections.sort(list);
+        
+        System.out.print(list.get(0));
+
+    }
+    
+}
+    
+
+
+
+```
+
+---
+
+두번째 풀이, 리팩토링, 참고함
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        HashMap<Long, Integer> map = new HashMap<>();
+        
+        while(n-- > 0) {
+            long k = Long.parseLong(br.readLine());
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        
+        int max = 0;
+        long ans = 0;
+        
+        for(long key : map.keySet()) {
+            if(map.get(key) > max) {
+                max = map.get(key);
+                ans = key;
+            }
+            
+            else if(map.get(key) == max) {
+                ans = Math.min(key, ans);
+            }
+        }
+        
+        System.out.print(ans);
+
+    }
+    
+}
+    
+
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/4ed24716-1dab-4767-9706-bfcfe652b8f9)
