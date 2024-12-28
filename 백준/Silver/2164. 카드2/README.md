@@ -32,3 +32,40 @@
 
  <p>첫째 줄에 남게 되는 카드의 번호를 출력한다.</p>
 
+---
+
+기본적인 큐 문제
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Queue<Integer> Q = new LinkedList<>();
+        
+        for(int i=1; i<=n; i++) Q.offer(i);
+        
+        while(Q.size() != 1) {
+            Q.poll();
+            Q.offer(Q.poll());
+        }
+        
+        System.out.print(Q.poll());
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/21272c8e-8761-4c23-980f-eb6311613f0a)
