@@ -28,3 +28,61 @@
 
  <p>입력된 수열을 만들기 위해 필요한 연산을 한 줄에 한 개씩 출력한다. push연산은 +로, pop 연산은 -로 표현하도록 한다. 불가능한 경우 NO를 출력한다.</p>
 
+---
+
+스택 응용 문제
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        int start = 1; // 시작점
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(n-- > 0) {
+            
+            int k = Integer.parseInt(br.readLine());
+            
+            if(k >= start) {
+                
+                for(int i=start; i<=k; i++) {
+                    stack.push(i);
+                    sb.append('+').append('\n');
+                }
+                start = k + 1;
+            }
+            
+            else if(stack.peek() != k) {
+                System.out.print("NO");
+                return;
+            }
+            
+            stack.pop();
+            sb.append('-').append('\n');
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+```
+스택에 push하는 순서는 반드시 오름차순을 지키도록 한다는것이 포인트
+
+---
+
+참고 블로그 : https://st-lab.tistory.com/182
+
+![image](https://github.com/user-attachments/assets/99422a1b-92e5-47d7-bc35-1106e439199c)
