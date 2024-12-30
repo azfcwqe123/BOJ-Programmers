@@ -12,6 +12,8 @@ class Main {
         
         int T = Integer.parseInt(br.readLine());
         
+        StringBuilder sb = new StringBuilder();
+        
         while(T-- > 0) {
             
             int n = Integer.parseInt(br.readLine());
@@ -36,10 +38,12 @@ class Main {
                 }
             }
             
-            System.out.println(ans);
+            sb.append(ans + "\n");
             graph.clear();
             Arrays.fill(visited, false);
         }
+        
+        System.out.print(sb);
         
     }
     
