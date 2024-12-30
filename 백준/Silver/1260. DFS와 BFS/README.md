@@ -26,3 +26,172 @@
 
  <p>첫째 줄에 DFS를 수행한 결과를, 그 다음 줄에는 BFS를 수행한 결과를 출력한다. V부터 방문된 점을 순서대로 출력하면 된다.</p>
 
+---
+
+인접리스트 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+
+class Main { 
+    
+    public static int n, m, v;
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static boolean[] ch;
+    public static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        n = sc.nextInt(); // 정점
+        m = sc.nextInt(); // 간선 개수 
+        v = sc.nextInt(); // 탐색 시작
+        
+        graph = new ArrayList<ArrayList<Integer>>();
+        for(int i=0; i<=n; i++) graph.add(new ArrayList<Integer>());
+        
+        for(int i=0; i<m; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+    
+        // 인접 리스트 정렬 : 가장 작은 노드부터 탐색해야하기 때문
+        for(ArrayList<Integer> x : graph) {
+            Collections.sort(x);
+        }
+        
+        ch = new boolean[n+1];
+        DFS(v);
+        sb.append('\n');
+        
+        ch = new boolean[n+1];
+        BFS(v);
+        
+        System.out.print(sb);
+    }
+    
+    public static void DFS(int v) {
+        
+        ch[v] = true;
+        sb.append(v + " ");
+        
+        for(int nv : graph.get(v)) {
+            if(!ch[nv]) {
+                DFS(nv);
+            }
+        }
+    }    
+        
+    public static void BFS(int v) {
+        Queue<Integer> Q = new LinkedList<>();
+        Q.offer(v);
+        ch[v] = true;
+        
+        while(!Q.isEmpty()) {
+            int cur = Q.poll();
+            sb.append(cur + " ");
+            
+            for(int nv : graph.get(cur)) {
+                if(!ch[nv]) {
+                    Q.offer(nv);
+                    ch[nv] = true;
+                }
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+배열 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+
+class Main {
+
+    public static int n, m, start;
+    public static int[][] graph;
+    public static boolean[] ch;
+    public static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+
+        Scanner sc = new Scanner(System.in);
+        
+        n = sc.nextInt();
+        m = sc.nextInt();
+        start = sc.nextInt();
+        
+        graph = new int[n+1][n+1];
+        ch = new boolean[n+1];
+        
+        for(int i=0; i<m; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            graph[a][b] = graph[b][a] = 1;
+        }
+        
+        DFS(start);
+        sb.append('\n');
+        
+        ch = new boolean[n+1];
+        BFS(start);
+        
+        System.out.print(sb);
+        
+    }
+    
+    public static void DFS(int start) {
+        
+        ch[start] = true;
+        sb.append(start + " ");
+        
+        for(int i=1; i<=n; i++) {
+            if(graph[start][i] == 1 && !ch[i]) {
+                DFS(i);
+            }
+        }
+    }
+    
+    public static void BFS(int start) {
+        
+        Queue<Integer> Q = new LinkedList<>();
+        Q.add(start);
+        ch[start] = true;
+        
+        while(!Q.isEmpty()) {
+            start = Q.poll();
+            sb.append(start + " ");
+            
+            for(int i=1; i<=n; i++) {
+                if(graph[start][i] == 1 && !ch[i]) {
+                    Q.add(i);
+                    ch[i] = true;
+                }
+            }
+        }
+    }
+    
+}
+
+
+
+```
+
+---
+
+시간이 왜 다른사람들보다 느리게 나왔는지 의문이었지만 가독성을 위해서 Scanner을 써서 그런거였다. 236ms는 bufferedReader 풀이
+
+![image](https://github.com/user-attachments/assets/13fc720a-2ebc-42d5-9c7a-7150ffc941dd)
