@@ -47,7 +47,7 @@ class Main {
             for(int i=0; i<h; i++) {
                 for(int j=0; j<w; j++) {
                     if(!visited[i][j] && board[i][j] == 1) {
-                        BFS(i, j);
+                        DFS(i, j);
                         ans++;
                     }
                 }
@@ -61,25 +61,20 @@ class Main {
         
     }
     
-    public static void BFS(int x, int y) {
-        Queue<Node> Q = new LinkedList<>();
+    public static void DFS(int x, int y) {
+        
         visited[x][y] = true;
         
-        Q.offer(new Node(x, y));
-        
-        while(!Q.isEmpty()) {
-            Node cur = Q.poll();
+        for(int i=0; i<8; i++) {
+            int nx = dirX[i] + x;
+            int ny = dirY[i] + y;
             
-            for(int i=0; i<8; i++) {
-                int nx = dirX[i] + cur.x;
-                int ny = dirY[i] + cur.y;
-                
-                if(range_check(nx, ny) && !visited[nx][ny] && board[nx][ny] == 1) {
-                    visited[nx][ny] = true;
-                    Q.offer(new Node(nx, ny));
-                }
+            if(range_check(nx, ny) && !visited[nx][ny] && board[nx][ny] == 1) {
+                visited[nx][ny] = true;
+                DFS(nx, ny);
             }
         }
+        
     }
     
     public static boolean range_check(int nx, int ny) {
