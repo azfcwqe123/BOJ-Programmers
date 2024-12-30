@@ -34,3 +34,148 @@
 
  <p>각 테스트 케이스마다, 입력으로 주어진 순열에 존재하는 순열 사이클의 개수를 출력한다.</p>
 
+---
+
+DFS + 인접리스트, 660ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static boolean[] visited;
+    public static int n, m;
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            graph = new ArrayList<>();
+            visited = new boolean[n+1];
+            int ans = 0;
+            
+            for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+            
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=1; i<=n; i++) {
+                int k = Integer.parseInt(st.nextToken());
+                graph.get(i).add(k);
+            }
+            
+            
+            for(int i=1; i<=n; i++) {
+                if(!visited[i]) {
+                    DFS(i);
+                    ans++;
+                }
+            }
+            
+            sb.append(ans + "\n");
+            graph.clear();
+            Arrays.fill(visited, false);
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    public static void DFS(int v) {
+        
+        visited[v] = true;
+        
+        for(int nv : graph.get(v)) {
+            if(!visited[nv]) {
+                visited[nv] = true;
+                DFS(nv);
+            }
+        }
+    }
+    
+}
+
+
+
+
+```
+
+---
+
+DFS + 배열 그 자체를 그래프로, 476ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int[] graph;
+    public static boolean[] visited;
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            graph = new int[n+1];
+            
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=1; i<=n; i++) {
+                graph[i] = Integer.parseInt(st.nextToken());
+            }
+            
+            visited = new boolean[n+1];
+            int ans = 0;
+            
+            for(int i=1; i<=n; i++) {
+                if(!visited[i]) {
+                    DFS(i);
+                    ans++;
+                }
+            }
+            
+            sb.append(ans + "\n");
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    public static void DFS(int v) {
+        
+        visited[v] = true;
+        
+        int next = graph[v];
+        
+        if(!visited[next]) {
+            DFS(next);
+        }
+        
+    }
+    
+}
+
+
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/658cfd54-369d-4fc7-a1a2-eed5d2100718)
+
