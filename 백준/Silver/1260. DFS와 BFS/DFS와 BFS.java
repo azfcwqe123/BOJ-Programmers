@@ -4,24 +4,27 @@ import java.io.*;
 
 class Main { 
     
-    public static int n, m, start;
+    public static int n, m, v;
     public static ArrayList<ArrayList<Integer>> graph;
     public static boolean[] ch;
     public static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         
-        Scanner sc = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
-        n = sc.nextInt(); // 정점
-        m = sc.nextInt(); // 간선 개수 
-        start = sc.nextInt(); // 탐색 시작
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken()); // 정점
+        m = Integer.parseInt(st.nextToken()); // 간선 개수 
+        v = Integer.parseInt(st.nextToken()); // 탐색 시작
         
         graph = new ArrayList<ArrayList<Integer>>();
         for(int i=0; i<=n; i++) graph.add(new ArrayList<Integer>());
         
         for(int i=0; i<m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
             graph.get(a).add(b);
             graph.get(b).add(a);
         }
@@ -32,11 +35,11 @@ class Main {
         }
         
         ch = new boolean[n+1];
-        DFS(start);
+        DFS(v);
         sb.append('\n');
         
         ch = new boolean[n+1];
-        BFS(start);
+        BFS(v);
         
         System.out.print(sb);
     }
@@ -59,7 +62,7 @@ class Main {
         ch[v] = true;
         
         while(!Q.isEmpty()) {
-            start = Q.poll();
+            int start = Q.poll();
             sb.append(start + " ");
             
             for(int nv : graph.get(start)) {
