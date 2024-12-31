@@ -105,3 +105,183 @@
 
  <p>각 테스트 케이스에 대해 필요한 최소의 배추흰지렁이 마리 수를 출력한다.</p>
 
+---
+
+DFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int m, n, k;
+    public static int[][] map;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            m = Integer.parseInt(st.nextToken());
+            n = Integer.parseInt(st.nextToken());
+            k = Integer.parseInt(st.nextToken());
+            
+            int ans = 0;
+            
+            map = new int[n][m];
+            
+            for(int i=0; i<k; i++) {
+                st = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                map[y][x] = 1;
+            }
+            
+            
+            for(int i=0; i<n; i++) {
+                for(int j=0; j<m; j++) {
+                    if(map[i][j] == 1) {
+                        DFS(i, j);
+                        ans++;
+                    }
+                }
+            }
+            sb.append(ans + "\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+    public static void DFS(int y, int x) { // 여기 이후로는 DFS(int x, int y)로 해도 상관없다. 문제에서 가로(M)을 먼저 제시해서 처음에는 판을 그에 따라 만들었을뿐이다.
+        
+        map[y][x] = 0;
+        
+        for(int i=0; i<4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            
+            if(range_Check(ny, nx) && map[ny][nx] == 1) {
+                map[ny][nx] = 0;
+                DFS(ny, nx);
+            }
+        }
+        
+    }
+    
+    public static boolean range_Check(int ny, int nx) {
+        return (nx >= 0 && ny >= 0 && nx < m && ny < n);
+    }
+}
+
+
+```
+
+---
+
+BFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int m, n, k;
+    public static int[][] map;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            m = Integer.parseInt(st.nextToken());
+            n = Integer.parseInt(st.nextToken());
+            k = Integer.parseInt(st.nextToken());
+            
+            int ans = 0;
+            
+            map = new int[n][m];
+            
+            for(int i=0; i<k; i++) {
+                st = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+                map[y][x] = 1;
+            }
+            
+            
+            for(int i=0; i<n; i++) {
+                for(int j=0; j<m; j++) {
+                    if(map[i][j] == 1) {
+                        BFS(i, j);
+                        ans++;
+                    }
+                }
+            }
+            
+            sb.append(ans + "\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+    public static void BFS(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        map[x][y] = 0;
+        
+        while(!Q.isEmpty()) {
+            Point cur = Q.poll();
+            
+            for(int i=0; i<4; i++) {
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+                
+                if(range_Check(nx, ny) && map[nx][ny] == 1) {
+                    map[nx][ny] = 0;
+                    Q.offer(new Point(nx, ny));
+                }
+            }
+        }
+        
+    }
+    
+    public static boolean range_Check(int nx, int ny) {
+        return (nx >= 0 && ny >= 0 && nx < n && ny < m);
+    }
+}
+
+
+```
+
+---
+
+visited을 사용해도 됐지만, 굳이 사용하지 않고 1을 0으로 바꿔주기만 해도 충분히 탐색할 수 있기에 제외했다.
+
+---
+
