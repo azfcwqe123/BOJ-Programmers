@@ -40,3 +40,227 @@
 
  <p>‘쩰리’가 끝 점에 도달할 수 있으면 “HaruHaru”(인용부호 없이), 도달할 수 없으면 “Hing” (인용부호 없이)을 한 줄에 출력합니다.</p>
 
+---
+
+BFS 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    public static int n;
+    public static int[][] map; 
+    public static boolean[][] visited;
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        map = new int[n][n];
+        visited = new boolean[n][n];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }    
+        }
+        
+        System.out.print(BFS(0, 0));
+        
+    }
+    
+    public static String BFS(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        visited[x][y] = true;
+        
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            Point cur = Q.poll();
+            
+            if(cur.x == n-1 && cur.y == n-1) return "HaruHaru";
+            
+            int move = map[cur.x][cur.y];
+            
+            for(int i=0; i<len; i++) {
+                
+                if(cur.x < n && cur.y + move < n && !visited[cur.x][cur.y + move]) {
+                    visited[cur.x][cur.y + move] = true;
+                    Q.offer(new Point(cur.x, cur.y + move));
+                }
+                
+                if(cur.x + move < n && cur.y < n && !visited[cur.x+move][cur.y]) {
+                    visited[cur.x + move][cur.y] = true;
+                    Q.offer(new Point(cur.x + move, cur.y));
+                }
+                
+            }
+            
+        }
+        
+        return "Hing";
+        
+    }
+    
+}
+
+
+```
+
+---
+
+BFS 풀이(리팩토링)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int n;
+    public static int[][] map; 
+    public static boolean[][] visited;
+    public static int[] dx = {1, 0};
+    public static int[] dy = {0, 1};
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        map = new int[n][n];
+        visited = new boolean[n][n];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }    
+        }
+        
+        System.out.print(BFS(0, 0));
+        
+    }
+    
+    public static String BFS(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        
+        while(!Q.isEmpty()) {
+            Point cur = Q.poll();
+            
+            if(map[cur.x][cur.y] == -1) return "HaruHaru";
+            
+            for(int i=0; i<2; i++) {
+                int nx = cur.x + dx[i] * map[cur.x][cur.y];
+                int ny = cur.y + dy[i] * map[cur.x][cur.y];
+                
+                if(nx < n && ny < n && !visited[nx][ny]) {
+                    Q.offer(new Point(nx, ny));
+                    visited[nx][ny] = true;
+                }
+            }
+            
+        }
+        
+        return "Hing";
+        
+    }
+    
+}
+
+
+```
+
+---
+
+DFS 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int n;
+    public static int[][] map; 
+    public static boolean[][] visited;
+    public static int[] dx = {1, 0};
+    public static int[] dy = {0, 1};
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        map = new int[n][n];
+        visited = new boolean[n][n];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }    
+        }
+        
+        DFS(0, 0);
+        System.out.print("Hing");
+    }
+    
+    public static void DFS(int x, int y) {
+        
+        if(map[x][y] == -1) {
+            System.out.print("HaruHaru");
+            System.exit(0);
+        }
+        
+        for(int i=0; i<2; i++) {
+            int nx = x + dx[i] * map[x][y];
+            int ny = y + dy[i] * map[x][y];
+            
+            if(nx < n && ny < n && !visited[nx][ny]) {
+                visited[nx][ny] = true;
+                DFS(nx, ny);
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/3ee66e72-7e6a-4612-a9fd-dbed0c7c25d5)
