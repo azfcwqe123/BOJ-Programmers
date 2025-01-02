@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 29532 KB, 시간: 616 ms
+메모리: 23772 KB, 시간: 264 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2025년 1월 2일 18:11:01
+2025년 1월 2일 18:17:27
 
 ### 문제 설명
 
@@ -26,101 +26,3 @@
 
  <p>한 줄에 하나씩, 증가하는 순서대로 소수를 출력한다.</p>
 
----
-
-에라토스테네스의 체 이용
-
-```java
-import java.util.*;
-import java.io.*;
-
-class Main {
-    
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringTokenizer st;
-    private static StringBuilder sb = new StringBuilder();
-    
-    public static boolean[] isPrime;
-    public static int m;
-    public static void main(String[] args) throws IOException {
-        
-        st = new StringTokenizer(br.readLine());
-        
-        int n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        
-        isPrime = new boolean[m + 1];
-        Arrays.fill(isPrime, true);
-        
-        Check();
-        
-        for(int i=n; i<=m; i++) {
-            if(isPrime[i]) System.out.println(i);
-        }
-        
-    }
-    
-    public static void Check() {
-        
-        isPrime[0] = isPrime[1] = false;
-        
-        for(int i=2; i<=Math.sqrt(m); i++) {
-            if(!isPrime[i]) continue;
-            for(int j=i*i; j<=m; j+=i) {
-                isPrime[j] = false;
-            }
-        }
-        
-    }
-    
-}
-
-
-```
-
----
-
-시간 초과 풀이
-
-```java
-import java.util.*;
-import java.io.*;
-
-class Main {
-    
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringTokenizer st;
-    private static StringBuilder sb = new StringBuilder();
-    
-    public static void main(String[] args) throws IOException {
-        
-        st = new StringTokenizer(br.readLine());
-        
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        
-        for(int i=n; i<=m; i++) {
-            if(Check(i)) System.out.println(i);
-        }
-        
-    }
-    
-    public static boolean Check(int k) {
-        
-        if(k==0 || k==1) return false;
-        
-        for(int i=2; i<k; i++) {
-            if(k % i == 0) return false;
-        }
-        
-        return true;
-    }
-    
-}
-
-
-```
-
----
-
-![image](https://github.com/user-attachments/assets/c54b16ad-d6f9-497a-86b4-88ffb543b297)

@@ -22,8 +22,10 @@ class Main {
         Check();
         
         for(int i=n; i<=m; i++) {
-            if(isPrime[i]) System.out.println(i);
+            if(isPrime[i]) sb.append(i + "\n");
         }
+        
+        System.out.print(sb);
         
     }
     
