@@ -30,3 +30,186 @@
 
  <p>첫째 줄에 문제의 정답을 출력한다.</p>
 
+---
+
+DFS 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static char[][] board;
+    public static boolean[][] visited;
+    public static int n, m;
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        board = new char[n][m];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<m; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+        
+        visited = new boolean[n][m];
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(!visited[i][j]) {
+                    if(board[i][j] == '-') {
+                        DFS_Row(i, j);
+                        ans++;
+                    }
+                    if(board[i][j] == '|') {
+                        DFS_Column(i, j);
+                        ans++;
+                    }
+                }
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+    public static void DFS_Row(int x, int y) {
+        
+        visited[x][y] = true;
+        
+        if(y+1 < m && board[x][y+1] == '-') {
+            DFS_Row(x, y+1);
+        }
+    }
+    
+    public static void DFS_Column(int x, int y) {
+        
+        visited[x][y] = true;
+        
+        if(x+1 < n && board[x+1][y] == '|') {
+            DFS_Column(x+1, y);
+        }
+    }
+}
+
+
+```
+
+---
+
+BFS 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static char[][] board;
+    public static boolean[][] visited;
+    public static int n, m;
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        board = new char[n][m];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<m; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+        
+        visited = new boolean[n][m];
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(!visited[i][j]) {
+                    if(board[i][j] == '-') {
+                        BFS_Row(i, j);
+                        ans++;
+                    }
+                    if(board[i][j] == '|') {
+                        BFS_Column(i, j);
+                        ans++;
+                    }
+                }
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+    public static void BFS_Row(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        
+        while(!Q.isEmpty()) {
+            Point cur = Q.poll();
+            visited[cur.x][cur.y] = true;
+            
+            if(cur.y + 1 < m && board[cur.x][cur.y + 1] == '-') {
+                Q.offer(new Point(cur.x, cur.y + 1));
+            }
+        }
+        
+    }
+    
+    public static void BFS_Column(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        
+        while(!Q.isEmpty()) {
+            Point cur = Q.poll();
+            visited[cur.x][cur.y] = true;
+            
+            if(cur.x + 1 < n && board[cur.x + 1][cur.y] == '|') {
+                Q.offer(new Point(cur.x + 1, cur.y));
+            }
+        }
+        
+    }
+}
+
+
+```
+
+---
+
+이런 문제는 DFS로 푸는게 더 괜찮은듯 싶다. 그래도 BFS로도 풀 수 있다면 두가지 방법 모두 사용해보자
+
+---
+
+![image](https://github.com/user-attachments/assets/7966b356-124e-47e2-9276-1a653665c25a)
