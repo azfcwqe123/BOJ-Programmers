@@ -7,6 +7,7 @@ class Main {
     private static StringTokenizer st;
     private static StringBuilder sb = new StringBuilder();
     
+    public static final int m = 1_234_567_891;
     public static void main(String[] args) throws IOException {
         
         int n = Integer.parseInt(br.readLine());
@@ -15,11 +16,15 @@ class Main {
         
         String str = br.readLine();
         
+        long pow = 1;
+        
         for(int i=0; i<n; i++) {
-            sum += (long) (Math.pow(31, i) * (str.charAt(i) - 96));
+            int alphabet = (int) (str.charAt(i) - 96);
+            sum += alphabet * pow % m;
+            pow = (pow * 31) % m;
         }
         
-        System.out.print(sum);
+        System.out.print(sum % m);
     }
     
 }
