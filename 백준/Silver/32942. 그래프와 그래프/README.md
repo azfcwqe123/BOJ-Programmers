@@ -32,3 +32,52 @@
 
  <p>총 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c><mjx-c class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$10$</span></mjx-container>개의 줄을 출력한다. <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>i</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$i$</span></mjx-container>번째 줄에는 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D456 TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>i</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$i$</span></mjx-container>번 정점에서 간선을 정확히 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$1$</span></mjx-container>개 지나서 도착할 수 있는 정점들의 번호를 공백으로 구분하여 오름차순으로 출력한다. 만약 그런 정점이 없다면 그 대신 <span style="color:#e74c3c;"><code>0</code></span>을 출력한다.</p>
 
+---
+
+인접리스트 사용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i=0; i<=10; i++) graph.add(new ArrayList<>());
+        
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int c = Integer.parseInt(st.nextToken());
+        
+        for(int i=1; i<=10; i++) {
+            for(int j=1; j<=10; j++) {
+                if(a*i + b*j == c) graph.get(i).add(j);
+            }
+        }
+        
+        for(int i=1; i<=10; i++) {
+            if(graph.get(i).size() == 0) System.out.println(0);
+            else {
+                for(int x : graph.get(i)) System.out.print(x + " ");
+                System.out.println();
+            }
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/8e11cd76-7867-41fc-9464-dc7679b70b0f)
