@@ -30,3 +30,57 @@
 
  <p>첫째 줄에 N개를 만들 수 있는 랜선의 최대 길이를 센티미터 단위의 정수로 출력한다.</p>
 
+---
+
+이분 탐색 응용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
+        
+        Arrays.sort(arr);
+        
+        long lt = 1;
+        long rt = arr[n-1];
+        long cnt, mid;
+        
+        while(lt <= rt) {
+            cnt = 0;
+            mid = (lt + rt) / 2;
+            
+            for(int i=0; i<n; i++) cnt += arr[i] / mid;
+            
+            if(cnt < m) rt = mid - 1;
+            else lt = mid + 1;
+        }
+        
+        System.out.print(rt);
+
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/8c33b81a-9fdc-443d-889e-5d6ea78f5e6a)
+
+---
+
+
