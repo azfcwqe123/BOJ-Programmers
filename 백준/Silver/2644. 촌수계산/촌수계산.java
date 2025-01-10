@@ -8,12 +8,14 @@ class Main {
 
     public static int n, m, start, end;
     public static ArrayList<ArrayList<Integer>> graph;
+    public static int[] dist;
     public static boolean[] visited;
     public static void main(String[] args) throws IOException {
         
         n = Integer.parseInt(br.readLine());
         graph = new ArrayList<>();
         for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+        dist = new int[n+1];
         visited = new boolean[n+1];
         
         st = new StringTokenizer(br.readLine());
@@ -30,24 +32,32 @@ class Main {
             graph.get(y).add(x);
         }
         
-        DFS(start, 0);
-        System.out.print(-1);
+        System.out.print(BFS(start));
     }
     
-    public static void DFS(int start, int cnt) {
+    public static int BFS(int start) {
         
-        if(start == end) {
-            System.out.print(cnt);
-            System.exit(0);
-        }
+        Queue<Integer> Q = new LinkedList<>();
+        visited[start] = true;
+        Q.offer(start);
         
-        for(int nv : graph.get(start)) {
-            if(!visited[nv]) {
-                visited[nv] = true;
-                DFS(nv, cnt + 1);
+        while(!Q.isEmpty()) {
+            int cur = Q.poll();
+            
+            for(int i=0; i<graph.get(cur).size(); i++) {
+                int k = graph.get(cur).get(i);
+                if(!visited[k]) {
+                    dist[k] = dist[cur] + 1;
+                    if(k == end) {
+                        return dist[k];
+                    }
+                    Q.offer(k);
+                    visited[k] = true;
+                }
             }
         }
         
+        return -1;
     }
 }
 
