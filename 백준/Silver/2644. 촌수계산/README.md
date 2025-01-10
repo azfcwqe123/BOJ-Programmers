@@ -30,3 +30,138 @@
 
  <p>입력에서 요구한 두 사람의 촌수를 나타내는 정수를 출력한다. 어떤 경우에는 두 사람의 친척 관계가 전혀 없어 촌수를 계산할 수 없을 때가 있다. 이때에는 -1을 출력해야 한다.</p>
 
+---
+
+DFS, 그래프 탐색
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+
+    public static int n, m, start, end;
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static boolean[] visited;
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        graph = new ArrayList<>();
+        for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+        visited = new boolean[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+        start = Integer.parseInt(st.nextToken());
+        end = Integer.parseInt(st.nextToken());
+        
+        m = Integer.parseInt(br.readLine());
+        
+        for(int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            graph.get(x).add(y);
+            graph.get(y).add(x);
+        }
+        
+        DFS(start, 0); // 시작을 start부터
+        System.out.print(-1);
+    }
+    
+    public static void DFS(int start, int cnt) {
+        
+        if(start == end) {
+            System.out.print(cnt);
+            System.exit(0);
+        }
+        
+        for(int nv : graph.get(start)) {
+            if(!visited[nv]) { // 방문 체크 여부가 없다면 양방향 그래프이기 때문에 무한 루프를 돌게 된다.
+                visited[nv] = true;
+                DFS(nv, cnt + 1);
+            }
+        }
+        
+    }
+}
+
+
+```
+
+---
+
+BFS, 그래프 탐색
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+
+    public static int n, m, start, end;
+    public static ArrayList<ArrayList<Integer>> graph;
+    public static int[] dist;
+    public static boolean[] visited;
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        graph = new ArrayList<>();
+        for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+        dist = new int[n+1];
+        visited = new boolean[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+        start = Integer.parseInt(st.nextToken());
+        end = Integer.parseInt(st.nextToken());
+        
+        m = Integer.parseInt(br.readLine());
+        
+        for(int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            graph.get(x).add(y);
+            graph.get(y).add(x);
+        }
+        
+        System.out.print(BFS(start));
+    }
+    
+    public static int BFS(int start) {
+        
+        Queue<Integer> Q = new LinkedList<>();
+        visited[start] = true;
+        Q.offer(start);
+        
+        while(!Q.isEmpty()) {
+            int cur = Q.poll();
+            
+            for(int i=0; i<graph.get(cur).size(); i++) {
+                int k = graph.get(cur).get(i);
+                if(!visited[k]) {
+                    dist[k] = dist[cur] + 1;
+                    if(k == end) {
+                        return dist[k];
+                    }
+                    Q.offer(k);
+                    visited[k] = true;
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/7a60222e-ba64-44d0-9bbe-6f9992914fe5)
