@@ -28,3 +28,91 @@
 
  <p>첫째 줄에 개구리가 a번 징검다리에서 b번 징검다리로 최소 몇 번 점프하여 갈 수 있는 지를 출력하시오. a에서 b로 갈 수 없는 경우에는 -1을 출력한다.</p>
 
+---
+
+BFS 활용
+
+```java
+import java.util.*;
+import java.io.*;
+
+// 개구리 클래스 생성
+class Frog {
+    
+    int pos;
+    int count;
+    
+    public Frog(int pos, int count) {
+        this.pos = pos;
+        this.count = count;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int[] bridge;
+    public static int n;
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        bridge = new int[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) {
+            bridge[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        st = new StringTokenizer(br.readLine());
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+        
+        System.out.print(BFS(start, end));
+    }
+    
+    public static int BFS(int start, int end) {
+        
+        boolean[] visited = new boolean[n+1];
+        visited[start] = true;
+        
+        Queue<Frog> Q = new LinkedList<>();
+        Q.offer(new Frog(start, 0));
+        
+        while(!Q.isEmpty()) {
+            Frog cur = Q.poll();
+            
+            if(cur.pos == end) return cur.count;
+            
+            int jump = bridge[cur.pos];
+            
+            // 뒤로
+            for(int i=cur.pos; i>=1; i -= jump) {
+                if(visited[i]) continue;
+                visited[i] = true;
+                Q.offer(new Frog(i, cur.count + 1));
+            }
+            
+            // 앞으로
+            for(int i=cur.pos; i<=n; i += jump) {
+                if(visited[i]) continue;
+                visited[i] = true;
+                Q.offer(new Frog(i, cur.count + 1));
+            }
+            
+        }
+        
+        return -1;
+    }
+}
+
+
+```
+
+---
+
+참고 블로그 : https://akys159357.tistory.com/431
+![image](https://github.com/user-attachments/assets/92f739a7-fc01-431a-b953-84556dc847ea)
