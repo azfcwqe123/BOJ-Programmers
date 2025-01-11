@@ -11,41 +11,26 @@ class Main {
         st = new StringTokenizer(br.readLine());
         
         int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int[] arr = new int[n];
+        int w = Integer.parseInt(st.nextToken());
+        int[] books = new int[n];
         
-        if(n == 0) {
-            System.out.print(0);
-            System.exit(0);
+        int ans = (n == 0 ? 0 : 1), sum = 0;
+        
+        if(n > 0) {
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<n; i++) books[i] = Integer.parseInt(st.nextToken());
         }
         
-        int ans = 0, sum = 0;
-        
-        st = new StringTokenizer(br.readLine());
-        for(int i=0; i<n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+        for(int x : books) {
+            sum += x;
             
-            if(sum + arr[i] == m) {
-                ans++;
-                sum = 0;
-            }
-            
-            else if(sum + arr[i] > m) {
-                sum = 0;
-                sum += arr[i];
+            if(sum > w) {
+                sum = x;
                 ans++;
             }
-            
-            else {
-                sum += arr[i];
-            }
-                
         }
-        
-        if(sum > 0) ans++;
         
         System.out.print(ans);
-        
         
     }
     
