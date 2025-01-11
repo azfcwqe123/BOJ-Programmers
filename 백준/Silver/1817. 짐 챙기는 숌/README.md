@@ -30,3 +30,113 @@
 
  <p>첫째 줄에 필요한 박스의 개수의 최솟값을 출력한다.</p>
 
+---
+
+첫번째 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int[] arr = new int[n];
+        
+        if(n == 0) {
+            System.out.print(0);
+            System.exit(0);
+        }
+        
+        int ans = 0, sum = 0;
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            
+            if(sum + arr[i] == m) {
+                ans++;
+                sum = 0;
+            }
+            
+            else if(sum + arr[i] > m) {
+                sum = 0;
+                sum += arr[i];
+                ans++;
+            }
+            
+            else {
+                sum += arr[i];
+            }
+                
+        }
+        
+        if(sum > 0) ans++;
+        
+        System.out.print(ans);
+        
+        
+    }
+    
+}
+
+```
+
+---
+
+두번째 풀이, 리팩토링
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int w = Integer.parseInt(st.nextToken());
+        int[] books = new int[n];
+        
+        int ans = (n == 0 ? 0 : 1), sum = 0;
+        
+        if(n > 0) {
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<n; i++) books[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        for(int x : books) {
+            sum += x;
+            
+            if(sum > w) {
+                sum = x;
+                ans++;
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+```
+
+---
+
+참고: https://yab-lab.tistory.com/29
+
+![image](https://github.com/user-attachments/assets/137d2a6b-cb54-48be-acb0-ec198dc9a9b3)
