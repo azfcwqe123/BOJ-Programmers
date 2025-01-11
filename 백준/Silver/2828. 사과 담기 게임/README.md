@@ -30,3 +30,64 @@
 
  <p>모든 사과를 담기 위해서 바구니가 이동해야 하는 거리의 최솟값을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int j = Integer.parseInt(br.readLine());
+        
+        int ans = 0;
+        int start = 1, end = m;
+        
+        while(j-- > 0) {
+            int apple = Integer.parseInt(br.readLine());
+
+            // 바구니 위치 < 사과 위치
+            if(end < apple) {
+                int move = apple - end;
+                ans += move;
+                start += move;
+                end = apple;
+            }
+
+            // 사과 위치 < 바구니 위치
+            else if(apple < start) {
+                int move = start - apple;
+                ans += move;
+                start = apple;
+                end -= move;
+            }
+            
+        }
+        
+        System.out.print(ans);
+    }
+    
+}
+
+```
+
+처음에 문제가 잘 안 풀려서 BFS로 풀어야하나 싶었지만 그러기엔 코드가 복잡해지고 구현하기에도 빡셀것 같다는 생각이 들었다.
+
+그리디하게 생각해서 풀면 쉽게 풀 수 있는 문제였다.
+
+---
+
+참고: https://tussle.tistory.com/941
+
+![image](https://github.com/user-attachments/assets/15e300de-997a-44c6-b7da-630720691694)
