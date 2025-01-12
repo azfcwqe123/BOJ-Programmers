@@ -10,6 +10,8 @@ class Main {
         
         String str;
         
+        StringBuilder sb = new StringBuilder();
+        
         while((str = br.readLine()) != null) {
             st = new StringTokenizer(str);
             
@@ -24,9 +26,10 @@ class Main {
             }
             
             String ans = (p1 == s.length()) ? "Yes" : "No";
-            System.out.println(ans);
+            sb.append(ans).append('\n');
         }
         
+        System.out.print(sb);
     }
 }
 
