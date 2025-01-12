@@ -44,3 +44,83 @@
 
  <p>주파수 A에서 B로 갈 때 눌러야 하는 버튼수의 최솟값을 출력한다.</p>
 
+---
+
+첫번째 풀이, 배열 리스트 사용했지만, 굳이 사용할 필요 없었음.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(br.readLine());
+        
+        int ans = Math.abs(A - B);
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0; i<n; i++) {
+            int k = Integer.parseInt(br.readLine());
+            list.add(Math.abs(k - B));
+        }
+        
+        Collections.sort(list);
+        
+        ans = Math.min(ans, list.get(0) + 1);
+        
+        System.out.println(ans);
+    }
+    
+}
+
+
+```
+
+---
+
+두번째 풀이(리팩토링), 더 깔끔한 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(br.readLine());
+        
+        int ans = Math.abs(A - B);
+        
+        for(int i=0; i<n; i++) {
+            int tmp = Integer.parseInt(br.readLine());
+            ans = Math.min(ans, Math.abs(tmp - B) + 1);
+        }
+        
+        System.out.println(ans);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/4163eb66-4d26-46a8-9055-98c475709bc8)
