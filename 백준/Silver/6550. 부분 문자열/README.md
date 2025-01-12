@@ -26,3 +26,50 @@
 
  <p>입력된 s와 t의 순서대로 s가 t의 부분 문자열인 경우 Yes라 출력하고 아닐 경우 No라고 출력한다.</p>
 
+---
+
+그리디 알고리즘, 투포인터 이용, 입력 방법
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str;
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while((str = br.readLine()) != null) {
+            st = new StringTokenizer(str);
+            
+            String s = st.nextToken();
+            String t = st.nextToken();
+            
+            int p1 = 0;
+            
+            for(int p2 = 0; p2 < t.length(); p2++) {
+                if(s.charAt(p1) == t.charAt(p2)) p1++;
+                if(p1 == s.length()) break; // 문자열 s을 완성했다면 break;
+            }
+            
+            String ans = (p1 == s.length()) ? "Yes" : "No";
+            sb.append(ans).append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+}
+
+```
+
+그리디 알고리즘과 투포인터가 곁들어진 문제인것 같다. 
+
+---
+
+![image](https://github.com/user-attachments/assets/c2603abc-4293-439a-892b-2f27335ab5e3)
