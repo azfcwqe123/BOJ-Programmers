@@ -16,10 +16,15 @@ class Main {
         
         int ans = Math.abs(A - B);
         
+        ArrayList<Integer> list = new ArrayList<>();
         for(int i=0; i<n; i++) {
-            int tmp = Integer.parseInt(br.readLine());
-            ans = Math.min(ans, Math.abs(tmp - B) + 1);
+            int k = Integer.parseInt(br.readLine());
+            list.add(Math.abs(k - B));
         }
+        
+        Collections.sort(list);
+        
+        ans = Math.min(ans, list.get(0) + 1);
         
         System.out.println(ans);
     }
