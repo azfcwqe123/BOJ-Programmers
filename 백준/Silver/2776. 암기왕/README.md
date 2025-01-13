@@ -26,3 +26,117 @@
 
  <p>‘수첩2’에 적혀있는 M개의 숫자 순서대로, ‘수첩1’에 있으면 1을, 없으면 0을 출력한다.</p>
 
+---
+
+이분 탐색 풀이, 1768ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0 ) {
+            StringBuilder sb = new StringBuilder();
+            
+            int N = Integer.parseInt(br.readLine());
+            int[] arr = new int[N];
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
+            
+            Arrays.sort(arr);
+            
+            int M = Integer.parseInt(br.readLine());
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<M; i++) {
+                int k = Integer.parseInt(st.nextToken());
+                sb.append(binarySearch(arr, k)).append('\n');    
+            }
+            
+            System.out.print(sb);
+        }
+        
+    }
+    
+    public static int binarySearch(int[] arr, int k) {
+        
+        int lt = 0;
+        int rt = arr.length - 1;
+        
+        while(lt <= rt) {
+            
+            int mid = (lt + rt) / 2;
+            
+            if(k < arr[mid]) rt = mid - 1;
+            else if(k > arr[mid]) lt = mid + 1;
+            else return 1;
+            
+        }
+        
+        return 0;
+        
+    }
+}
+
+
+```
+
+---
+
+해시셋 풀이, 1572ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0 ) {
+            StringBuilder sb = new StringBuilder();
+            
+            int N = Integer.parseInt(br.readLine());
+            HashSet<Integer> set = new HashSet<>();
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<N; i++) set.add(Integer.parseInt(st.nextToken()));
+            
+            int M = Integer.parseInt(br.readLine());
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<M; i++) {
+                int k = Integer.parseInt(st.nextToken());
+                if(set.contains(k)) sb.append("1");
+                else sb.append("0");
+                
+                sb.append("\n");
+            }
+            
+            System.out.print(sb);
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/2d8b1357-e46a-4851-a1ad-21a57e0b9e4f)
