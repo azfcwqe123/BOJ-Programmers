@@ -26,3 +26,193 @@
 
  <p>첫째 줄에는 그림의 개수, 둘째 줄에는 그 중 가장 넓은 그림의 넓이를 출력하여라. 단, 그림이 하나도 없는 경우에는 가장 넓은 그림의 넓이는 0이다.</p>
 
+---
+
+BFS 풀이, 396ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static int n, m, cnt=0;
+    public static int[][] map;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<m; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(map[i][j] == 1) {
+                    ans = Math.max(ans, BFS(i, j));
+                    cnt++;
+                }
+            }
+        }
+        
+        System.out.println(cnt);
+        System.out.println(ans);
+    }
+    
+    public static int BFS(int x, int y) {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        map[x][y] = 0;
+        
+        int area = 0;
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                Point cur = Q.poll();
+                area++;
+                
+                for(int j=0; j<4; j++) {
+                    int nx = cur.x + dx[j];
+                    int ny = cur.y + dy[j];
+                    
+                    if(rangeCheck(nx, ny) && map[nx][ny] == 1) {
+                        map[nx][ny] = 0;
+                        Q.offer(new Point(nx, ny));
+                    }
+                }    
+            }
+        }
+        
+        return area;
+        
+    }
+    
+    private static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < m;
+    }
+}
+
+
+```
+
+---
+
+DFS 풀이, 624ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static int n, m, cnt=0, area;
+    public static int[][] map;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<m; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(map[i][j] == 1) {
+                    area = 1; // 넓이의 시작은 1
+                    DFS(i, j);
+                    ans = Math.max(ans, area);
+                    cnt++;
+                }
+            }
+        }
+        
+        System.out.println(cnt);
+        System.out.println(ans);
+    }
+    
+    public static void DFS(int x, int y) {
+        
+        map[x][y] = 0;
+        
+        for(int i=0; i<4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            
+            if(rangeCheck(nx, ny) && map[nx][ny] == 1) {
+                map[nx][ny] = 0;
+                area++;
+                DFS(nx, ny);
+            }
+        }
+    }
+    
+    private static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < m;
+    }
+}
+
+
+```
+
+---
+
+처음에 틀렸던 이유:
+
+```java
+Queue<Point> Q = new LinkedList<>();
+Q.offer(new Point(x, y));
+map[x][y] = 0; // 시작 부분을 0으로 만들어주는걸 깜빡해버림
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/1dc1751e-52a5-4ab9-8f80-5b248e34542e)
