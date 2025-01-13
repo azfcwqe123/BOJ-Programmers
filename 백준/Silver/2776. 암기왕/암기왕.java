@@ -14,19 +14,20 @@ class Main {
             StringBuilder sb = new StringBuilder();
             
             int N = Integer.parseInt(br.readLine());
-            int[] arr = new int[N];
+            HashSet<Integer> set = new HashSet<>();
             
             st = new StringTokenizer(br.readLine());
-            for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
-            
-            Arrays.sort(arr);
+            for(int i=0; i<N; i++) set.add(Integer.parseInt(st.nextToken()));
             
             int M = Integer.parseInt(br.readLine());
             
             st = new StringTokenizer(br.readLine());
             for(int i=0; i<M; i++) {
                 int k = Integer.parseInt(st.nextToken());
-                sb.append(binarySearch(arr, k)).append('\n');    
+                if(set.contains(k)) sb.append("1");
+                else sb.append("0");
+                
+                sb.append("\n");
             }
             
             System.out.print(sb);
@@ -34,23 +35,5 @@ class Main {
         
     }
     
-    public static int binarySearch(int[] arr, int k) {
-        
-        int lt = 0;
-        int rt = arr.length - 1;
-        
-        while(lt <= rt) {
-            
-            int mid = (lt + rt) / 2;
-            
-            if(k < arr[mid]) rt = mid - 1;
-            else if(k > arr[mid]) lt = mid + 1;
-            else return 1;
-            
-        }
-        
-        return 0;
-        
-    }
 }
 
