@@ -67,3 +67,179 @@
 
  <p>첫째 줄에 지나야 하는 최소의 칸 수를 출력한다. 항상 도착위치로 이동할 수 있는 경우만 입력으로 주어진다.</p>
 
+---
+
+BFS, 최단경로
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int[][] map;
+    public static int n, m, ans = 1;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<m; j++) {
+                map[i][j] = str.charAt(j) - '0';
+            }
+        }
+        
+        BFS();
+        
+        System.out.print(map[n-1][m-1]);
+    }
+    
+    public static void BFS() {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(0, 0));
+        
+        while(!Q.isEmpty()) {
+            
+            Point cur = Q.poll();
+            
+            for(int i=0; i<4; i++) {
+                
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+                
+                if(rangeCheck(nx, ny) && map[nx][ny] == 1) {
+                    map[nx][ny] = map[cur.x][cur.y] + 1;
+                    Q.offer(new Point(nx, ny));
+                }
+                
+            }
+        }
+    }
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < m;
+    }
+    
+}
+
+
+```
+
+---
+
+DFS 시도(풀 수 없음)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int[][] map;
+    public static boolean[][] visited;
+    public static int n, m, ans = 1;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        visited = new boolean[n][m];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<m; j++) {
+                map[i][j] = str.charAt(j) - '0';
+            }
+        }
+        
+        visited[0][0] = true;
+        DFS(0, 0);
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                System.out.print(map[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        System.out.print(map[n-1][m-1]);
+    }
+    
+    public static void DFS(int x, int y) {
+        
+        if(x == n-1 && y == m-1) return;
+        
+        for(int i=0; i<4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            
+            if(rangeCheck(nx, ny) && map[nx][ny] == 1 && !visited[nx][ny]) {
+                map[nx][ny] = map[x][y] + 1;
+                visited[nx][ny] = true;
+                DFS(nx, ny);
+            }
+        }
+        
+    }
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < m;
+    }
+    
+}
+
+
+```
+
+DFS 풀리지 않는 이유는, 깊이 우선 탐색인것처럼 한 방향으로만 쭉 가는 방식을 사용하기 때문에 최단경로를 찾는데 적합하지 않다.
+
+BFS로 풀리는 이유는, 상하좌우를 골고루 탐색하면서 가기에 최단경로를 찾는데 적합하다.
+
+&nbsp;
+
+즉, 최단 경로 문제는 BFS로 푸는게 맞다.
+
+
+
+---
+
+![image](https://github.com/user-attachments/assets/e34f25d0-2f8b-46bc-80e9-1e794e162688)
