@@ -43,3 +43,138 @@
 
  <p>각 테스트 케이스마다 빌딩을 탈출하는데 가장 빠른 시간을 출력한다. 빌딩을 탈출할 수 없는 경우에는 "IMPOSSIBLE"을 출력한다.</p>
 
+---
+
+BFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Fire {
+    int x;
+    int y;
+    
+    public Fire(int x, int y) {
+        this.x = x;
+        this.y = y; 
+    }
+}
+
+class Person {
+    int x;
+    int y;
+    
+    public Person(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static char[][] map;
+    public static int w, h;
+    
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static Queue<Person> pQ;
+    public static Queue<Fire> fQ;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            
+            // 처음에 int w, int h라 써서 이 부분 잘못된거 찾느라 애먹음.. BFS 코드가 잘못된줄 알고 개고생함
+            w = Integer.parseInt(st.nextToken()); 
+            h = Integer.parseInt(st.nextToken());
+            
+            map = new char[h][w];
+            
+            // 시작할때마다 새로운 큐를 만들어준다. 
+            pQ = new LinkedList<>(); // 사람
+            fQ = new LinkedList<>(); // 불
+            
+            for(int i=0; i<h; i++) {
+                String str = br.readLine();
+                for(int j=0; j<w; j++) {
+                    map[i][j] = str.charAt(j);
+                    if(map[i][j] == '*') fQ.offer(new Fire(i, j)); // 동시 확산이니, 불이 보이는대로 큐에 넣는다.
+                    if(map[i][j] == '@') pQ.offer(new Person(i, j));
+                }
+            }
+            
+            int ch = BFS();
+            
+            if(ch == -1) System.out.println("IMPOSSIBLE"); 
+            else System.out.println(ch);
+            
+        }
+    }
+    
+    public static int BFS() {
+        
+        int cnt = 0;
+        
+        while(!pQ.isEmpty()) { // 사람을 기준으로 큐를 돌린다. 못빠져나가면 -1이 리턴된다.
+            
+            int len = fQ.size(); // 불이 옮겨진 칸 또는 이제 불이 붙으려는 칸으로 이동할 수 없으니, 불 먼저 확산시킨다. 
+            
+            for(int i=0; i<len; i++) {
+                Fire cur = fQ.poll();
+                
+                for(int d=0; d<4; d++) {
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
+                    
+                    if(rangeCheck(nx, ny) && (map[nx][ny] == '.' || map[nx][ny] == '@')) {
+                        map[nx][ny] = '*';
+                        fQ.offer(new Fire(nx, ny));
+                    }
+                }
+            }
+            
+            len = pQ.size(); // 사람을 이동시킨다.
+            
+            for(int i=0; i<len; i++) {
+                Person cur = pQ.poll();
+                
+                for(int d=0; d<4; d++) {
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
+                    
+                    if(!rangeCheck(nx, ny)) return cnt + 1;
+                    
+                    if(map[nx][ny] == '.') {
+                        map[nx][ny] = '@';
+                        pQ.offer(new Person(nx, ny));
+                    }
+                }
+            }
+            
+            cnt++;
+        }
+        
+        return -1; // 사람이 탈출 못했다면
+    }
+        
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < h && ny >= 0 && ny < w;
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/3143d055-aadf-416d-9cc0-521421abeee1)
