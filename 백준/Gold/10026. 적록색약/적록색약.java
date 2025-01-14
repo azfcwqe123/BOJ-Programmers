@@ -29,9 +29,7 @@ class Main {
         
         System.out.print(notCbn());
         
-        for(int i=0; i<visited.length; i++) {
-            Arrays.fill(visited[i], false);    
-        }
+        visited = new boolean[n][n];
         
         System.out.print(" " + Cbn());
     }
@@ -47,9 +45,9 @@ class Main {
                 }
             }
         }
-        
         return cnt;
     }
+    
     
     public static int Cbn() {
         int cnt = 0;
@@ -68,9 +66,9 @@ class Main {
                 }
             }
         }
-        
         return cnt;
     }
+    
     
     public static void DFS(char color, int x, int y) {
         
