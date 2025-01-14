@@ -54,7 +54,8 @@ class Main {
         for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
         
         Arrays.sort(arr);
-        
+
+        // 랜섬의 길이는 int형의 최댓값까지 주어지기 때문에, 이와 관련된 모든 변수들을 long타입으로 잡아준다.
         long lt = 1;
         long rt = arr[n-1];
         long cnt, mid;
