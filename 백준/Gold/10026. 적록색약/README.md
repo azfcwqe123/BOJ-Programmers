@@ -42,3 +42,226 @@ RRRRR</pre>
 
  <p>적록색약이 아닌 사람이 봤을 때의 구역의 개수와 적록색약인 사람이 봤을 때의 구역의 수를 공백으로 구분해 출력한다.</p>
 
+---
+
+DFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int n;
+    public static char[][] board;
+    public static boolean[][] visited;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        board = new char[n][n];
+        
+        visited = new boolean[n][n];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<n; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+        
+        int ans1 = notCbn(); // 적록색약이 아닌 사람
+        
+        visited = new boolean[n][n]; // 방문 초기화
+        int ans2 = Cbn(); // 적록색약인 사람
+        
+        System.out.print(ans1 + " " + ans2);
+    }
+    
+    public static int notCbn() {
+        int cnt = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(!visited[i][j]) {
+                    DFS(board[i][j], i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+    
+    
+    public static int Cbn() {
+        int cnt = 0;
+        
+        // 적록색약인 사람은 G와 R을 구분 못하기에 똑같은 색으로 교체해준다.
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(board[i][j] == 'G') board[i][j] = 'R';
+            }
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(!visited[i][j]) {
+                    DFS(board[i][j], i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+    
+    
+    public static void DFS(char color, int x, int y) {
+        
+        visited[x][y] = true;
+        
+        for(int i=0; i<4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            
+            if(rangeCheck(nx, ny) && !visited[nx][ny] && board[nx][ny] == color) {
+                visited[nx][ny] = true;
+                DFS(color, nx, ny);
+            }
+        }
+    }
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < n;
+    }
+}
+
+
+```
+
+---
+
+BFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Point {
+    int x;
+    int y;
+    
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static int n;
+    public static char[][] board;
+    public static boolean[][] visited;
+    public static int[] dx = {-1, 0, 0, 1};
+    public static int[] dy = {0, 1, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        board = new char[n][n];
+        
+        visited = new boolean[n][n];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<n; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+        
+        int ans1 = notCbn(); 
+        
+        visited = new boolean[n][n];
+        int ans2 = Cbn();
+        
+        System.out.print(ans1 + " " + ans2);
+    }
+    
+    public static int notCbn() {
+        int cnt = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(!visited[i][j]) {
+                    BFS(board[i][j], i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+    
+    
+    public static int Cbn() {
+        int cnt = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(board[i][j] == 'G') board[i][j] = 'R';
+            }
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(!visited[i][j]) {
+                    BFS(board[i][j], i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+    
+    
+    public static void BFS(char color, int x, int y) {
+        
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
+        visited[x][y] = true;
+        
+        while(!Q.isEmpty()) {
+            Point cur = Q.poll();
+            
+            for(int i=0; i<4; i++) {
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
+                
+                if(rangeCheck(nx, ny) && !visited[nx][ny] && board[nx][ny] == color) {
+                    visited[nx][ny] = true;
+                    Q.offer(new Point(nx, ny));
+                }
+            }
+        }
+        
+    }
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && nx < n && ny >= 0 && ny < n;
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/4aade501-75f2-4975-91af-c0d82a6a992b)
