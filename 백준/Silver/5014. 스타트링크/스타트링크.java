@@ -9,7 +9,8 @@ class Main {
     
     public static int F, S, G, U, D;
     public static boolean[] visited;
-    public static int[] move;
+    public static int[] dir, move;
+    
     public static void main(String[] args) throws IOException {
         
         st = new StringTokenizer(br.readLine());
@@ -20,43 +21,40 @@ class Main {
         U = Integer.parseInt(st.nextToken());
         D = Integer.parseInt(st.nextToken());
         
-        move = new int[] {U, -D};
+        dir = new int[] {U, -D};
         
         visited = new boolean[F+1];
+        move = new int[F+1];
         
-        int ans = BFS(S);
-        
-        if(S == G) System.out.print(0);
-        else System.out.print(ans == -1 ? "use the stairs" : ans);
+        BFS(S);
     }
     
-    public static int BFS(int S) {
+    public static void BFS(int S) {
         Queue<Integer> Q = new LinkedList<>();
-        visited[S] = true;
         Q.offer(S);
-        
-        int cnt = 0;
+        visited[S] = true;
+        move[S] = 0;
         
         while(!Q.isEmpty()) {
-            int len = Q.size();
-            
-            for(int i=0; i<len; i++) {
-                int cur = Q.poll();
+            int cur = Q.poll();
                 
-                for(int d=0; d<2; d++) {
-                    int k = cur + move[d];
+            if(cur == G) {
+                System.out.println(move[cur]);
+                return;
+            }
+                
+            for(int d=0; d<2; d++) {
+                int k = cur + dir[d];
                     
-                    if(k == G) return cnt + 1;
-                    
-                    if(rangeCheck(k) && !visited[k]) {
-                        visited[k] = true;
-                        Q.offer(k);
-                    }
+                if(rangeCheck(k) && !visited[k]) {
+                    visited[k] = true;
+                    Q.offer(k);
+                    move[k] = move[cur] + 1;
                 }
             }
-            cnt++;
         }
-        return -1;
+        
+        System.out.println("use the stairs");
     }
     
     public static boolean rangeCheck(int k) {
