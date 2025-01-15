@@ -21,7 +21,7 @@ class Main {
     public static int[][] map;
     public static int[] dx = {0, -1, 0, 1};
     public static int[] dy = {1, 0, -1, 0};
-    public static int n;
+    public static int n, tmp;
     
     public static void main(String[] args) throws IOException {
         
@@ -41,7 +41,9 @@ class Main {
         for(int i=0; i<n; i++) {
             for(int j=0; j<n; j++) {
                 if(map[i][j] == 1) {
-                    list.add(BFS(i, j));
+                    tmp = 1;
+                    DFS(i, j);
+                    list.add(tmp);
                     ans++;
                 }
             }
@@ -56,29 +58,20 @@ class Main {
         
     }
     
-    public static int BFS(int x, int y) {
-        Queue<Point> Q = new LinkedList<>();
-        Q.offer(new Point(x, y));
+    public static void DFS(int x, int y) {
+        
         map[x][y] = 0;
         
-        int area = 1;
-        
-        while(!Q.isEmpty()) {
-            Point cur = Q.poll();
+        for(int i=0; i<4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
             
-            for(int i=0; i<4; i++) {
-                int nx = cur.x + dx[i];
-                int ny = cur.y + dy[i];
-                
-                if(rangeCheck(nx, ny) && map[nx][ny] == 1) {
-                    map[nx][ny] = 0;
-                    area++;
-                    Q.offer(new Point(nx, ny));
-                }
+            if(rangeCheck(nx, ny) && map[nx][ny] == 1) {
+                map[nx][ny] = 0;
+                tmp++;
+                DFS(nx, ny);
             }
         }
-        
-        return area;
         
     }
     
