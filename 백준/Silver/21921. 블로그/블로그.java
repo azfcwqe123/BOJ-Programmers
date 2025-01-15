@@ -29,9 +29,7 @@ class Main {
         
         for(int i=x; i<=n; i++) {
             int tmp = sum[i] - sum[i-x];
-            
             if(tmp == max) cnt++;
-            max = Math.max(max, tmp);
         }
         
         
