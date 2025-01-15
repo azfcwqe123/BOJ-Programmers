@@ -23,11 +23,11 @@ class Main {
         
         int max = 0, sum = 0, ans = 1;
         
-        for(int i=0; i<x; i++) sum += arr[i];
+        for(int i=1; i<=x; i++) sum += arr[i];
         
         max = sum;
         
-        for(int i=x; i<arr.length; i++) {
+        for(int i=x+1; i<arr.length; i++) {
             
             sum += arr[i] - arr[i-x];
             
