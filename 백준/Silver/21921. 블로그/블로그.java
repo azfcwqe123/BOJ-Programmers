@@ -15,28 +15,35 @@ class Main {
         int x = Integer.parseInt(st.nextToken());
         
         int[] arr = new int[n+1];
-        int[] sum = new int[n+1];
         
         st = new StringTokenizer(br.readLine());
         for(int i=1; i<=n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-            sum[i] = sum[i-1] + arr[i];
         }
         
-        int max = 0, cnt = 0;
+        int max = 0, sum = 0, ans = 1;
         
-        for(int i=x; i<=n; i++) max = Math.max(max, sum[i] - sum[i-x]);
+        for(int i=0; i<x; i++) sum += arr[i];
         
-        for(int i=x; i<=n; i++) {
-            int tmp = sum[i] - sum[i-x];
-            if(tmp == max) cnt++;
+        max = sum;
+        
+        for(int i=x; i<arr.length; i++) {
+            
+            sum += arr[i] - arr[i-x];
+            
+            if(sum > max) {
+                max = sum;
+                ans = 1;
+            }
+            
+            else if(sum == max) ans++;
+            
         }
-        
         
         if(max == 0) System.out.print("SAD");
         else {
             System.out.println(max);
-            System.out.println(cnt);    
+            System.out.println(ans);    
         }
         
     }
