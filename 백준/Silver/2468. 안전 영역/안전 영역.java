@@ -2,20 +2,8 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-    
-    static class Point {
-        int x;
-        int y;
-        
-        Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-    
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static StringTokenizer st;
-    private static StringBuilder sb = new StringBuilder();
     
     public static int[][] map;
     public static boolean[][] visited;
@@ -47,7 +35,7 @@ class Main {
             for(int j=0; j<n; j++) {
                 for(int k=0; k<n; k++) {
                     if(map[j][k] > i && !visited[j][k]) {
-                        BFS(i, j, k);
+                        DFS(i, j, k);
                         tmp++;
                     }
                 }
@@ -59,26 +47,21 @@ class Main {
         
     }
     
-    public static void BFS(int hill, int x, int y) {
-        Queue<Point> Q = new LinkedList<>();
-        Q.offer(new Point(x, y));
-        visited[x][y] = true;
+    public static void DFS(int hill, int x, int y) {
         
-        while(!Q.isEmpty()) {
-            Point cur = Q.poll();
+        visited[x][y] = true;
             
-            for(int d=0; d<4; d++) {
-                int nx = cur.x + dx[d];
-                int ny = cur.y + dy[d];
+        for(int d=0; d<4; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
                 
-                if(rangeCheck(nx, ny) && map[nx][ny] > hill && !visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    Q.offer(new Point(nx, ny));
-                }
+            if(rangeCheck(nx, ny) && map[nx][ny] > hill && !visited[nx][ny]) {
+                visited[nx][ny] = true;
+                DFS(hill, nx, ny);
             }
         }
-        
     }
+        
     
     public static boolean rangeCheck(int nx, int ny) {
         return nx >= 0 && ny >= 0 && nx < n && ny < n;
