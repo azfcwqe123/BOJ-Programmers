@@ -40,7 +40,6 @@ class Main {
             }
         }
         
-        
         int ans = 0;
         
         for(int i=0; i<n; i++) {
@@ -64,26 +63,21 @@ class Main {
         
         while(!Q.isEmpty()) {
             
-            int len = Q.size();
-            
-            for(int i=0; i<len; i++) {
-                Point cur = Q.poll();
-                max = Math.max(cur.dis, max);
+            Point cur = Q.poll();
+            max = Math.max(cur.dis, max);
                 
-                for(int d=0; d<4; d++) {
-                    int nx = cur.x + dx[d];
-                    int ny = cur.y + dy[d];
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
                     
-                    if(checkRange(nx,ny) && map[nx][ny] == 'L' && !visited[nx][ny]) {
-                        visited[nx][ny] = true;
-                        Q.offer(new Point(nx, ny, cur.dis + 1));
-                    }
+                if(checkRange(nx,ny) && map[nx][ny] == 'L' && !visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    Q.offer(new Point(nx, ny, cur.dis + 1));
                 }
             }
-        }
+        }       
         
-        return max;
-        
+        return max;     
     }
     
     public static boolean checkRange(int x, int y) {
