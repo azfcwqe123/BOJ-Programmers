@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 28660 KB, 시간: 328 ms
+메모리: 28448 KB, 시간: 352 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2025년 1월 17일 17:32:03
+2025년 1월 17일 17:18:09
 
 ### 문제 설명
 
@@ -32,3 +32,70 @@
 
  <p>첫째 줄에 특성값이 0에 가장 가까운 용액을 만들어내는 두 용액의 특성값을 출력한다. 출력해야 하는 두 용액은 특성값의 오름차순으로 출력한다. 특성값이 0에 가장 가까운 용액을 만들어내는 경우가 두 개 이상일 경우에는 그 중 아무것이나 하나를 출력한다.</p>
 
+
+---
+
+투포인터
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr);
+        
+        int lt = 0;
+        int rt = arr.length - 1;
+        
+        int min = Integer.MAX_VALUE;
+        
+        int[] ans = new int[2];
+        
+        while(lt < rt) {
+            
+            int a = arr[lt];
+            int b = arr[rt];
+            
+            int diff = Math.abs(a + b); // 두 용액의 차이
+            
+            if(diff < min) {
+                ans[0] = arr[lt];
+                ans[1] = arr[rt];
+                min = diff
+                
+                if(diff == 0) break; // 두 용액의 차이가 0이라면 break;
+            }
+            
+            // a, b 모두 양수일 때 -> 큰 용액 b에서 작은쪽으로 옮겨간다.
+            // a, b 모두 음수일 때 -> 작은 용액 a에서 큰쪽 b로 옮겨간다.
+            
+            // a 음수, b 양수일 때 -> 차이를 줄이는 방향으로 유동적으로 용액을 옮겨간다.
+            if(a + b > 0) rt--;
+            else lt++;
+        }
+        
+        for(int x : ans) System.out.print(x + " ");
+    }
+    
+}
+
+```
+
+---
+
+
+
+![image](https://github.com/user-attachments/assets/8877d9f3-0fe9-419c-9466-edfda893a4eb)
