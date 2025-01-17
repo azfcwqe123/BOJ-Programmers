@@ -35,8 +35,10 @@ class Main {
                 ans[0] = arr[lt];
                 ans[1] = arr[rt];
                 min = diff;
+                
+                if(diff == 0) break;
             }
-            
+
             if(a + b > 0) rt--;
             else lt++;
         }
