@@ -32,3 +32,50 @@
 
  <p>첫째 줄에 각 사람이 돈을 인출하는데 필요한 시간의 합의 최솟값을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr);
+        
+        int tmp = 0, ans = 0;
+        for(int i=0; i<n; i++) {
+            tmp += arr[i];
+            ans += tmp;
+        }
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+문제를 그리디하게 이해하는게 중요했던 문제
+
+---
+
+![image](https://github.com/user-attachments/assets/1d1263aa-5a55-4eca-9899-6d1e639a1ae0)
+
+
+![image](https://github.com/user-attachments/assets/01848412-76c9-4b2c-9349-0300166ae836)
