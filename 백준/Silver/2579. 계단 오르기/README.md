@@ -50,3 +50,44 @@
 
  <p>첫째 줄에 계단 오르기 게임에서 얻을 수 있는 총 점수의 최댓값을 출력한다.</p>
 
+---
+
+dp
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] stair = new int[n+1];
+        int[] dp = new int[n+1];
+        
+        for(int i=1; i<=n; i++) stair[i] = Integer.parseInt(br.readLine());
+        
+        dp[1] = stair[1];
+        if(n>1) dp[2] = stair[1] + stair[2];
+        if(n>2) dp[3] = Math.max(stair[1], stair[2]) + stair[3];
+        
+        for(int i=4; i<=n; i++) {
+            dp[i] = Math.max(dp[i-3] + stair[i-1], dp[i-2]) + stair[i];
+        }
+        
+        System.out.print(dp[n]);
+        
+    }
+    
+}
+```
+ 첫 번째, 두 번째, 세 번째 계단을 연속해서 모두 밟을 수는 없는게 핵심
+
+---
+참고 블로그: https://luz315.tistory.com/181
+
+![image](https://github.com/user-attachments/assets/12b3de49-7d90-4bd1-870d-0bd657b1633d)
