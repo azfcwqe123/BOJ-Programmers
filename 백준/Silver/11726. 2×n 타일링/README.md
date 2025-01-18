@@ -30,3 +30,43 @@
 
  <p>첫째 줄에 2×n 크기의 직사각형을 채우는 방법의 수를 10,007로 나눈 나머지를 출력한다.</p>
 
+---
+
+dp 기초
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] dp = new int[1001]; // 런타임 에러 났던 이유 -> int[] dp = new int[n+1]로 했었는데, n=1이면 dp[2]=2가 성립 자체를 못함.
+        
+        dp[1] = 1;
+        dp[2] = 2;
+        
+        for(int i=3; i<=n; i++) dp[i] = (dp[i-2] + dp[i-1]) % 10007; // 10007로 나눠줘야 오버플로우 발생 x
+        
+        System.out.print(dp[n]);
+    }
+    
+}
+
+
+```
+
+1x2 타일을 dp[i-1] 왼쪽 타일들에 붙이고, 2x1 타일을 dp[i-2] 타일들에 붙이면 규칙 완성
+
+---
+
+![image](https://github.com/user-attachments/assets/ac30fbae-9c63-437e-a350-a08e971976f1)
+
+![image](https://github.com/user-attachments/assets/afe1d3a8-288d-491b-8c92-e84057291837)
+
