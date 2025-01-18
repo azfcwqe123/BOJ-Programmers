@@ -38,3 +38,52 @@
 
  <p>각 테스트 케이스마다, n을 1, 2, 3의 합으로 나타내는 방법의 수를 출력한다.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[11];
+        
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 4;
+        
+        for(int i=4; i<11; i++) dp[i] = dp[i-3] + dp[i-2] + dp[i-1];
+        
+        
+        while(T-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            
+            sb.append(dp[k]);
+            sb.append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+규칙 찾는게 중요
+
+![image](https://github.com/user-attachments/assets/0f2fd79b-d9e7-47e5-a88b-7c4cd9cd2201)
+
+---
+
+![image](https://github.com/user-attachments/assets/74be57de-271a-46b9-8a84-dc1fb8eec546)
+
