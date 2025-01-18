@@ -34,3 +34,48 @@
 
  <p>첫째 줄에 S의 최솟값을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] A = new int[n];
+        int[] B = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) A[i] = Integer.parseInt(st.nextToken());
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) B[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(A);
+        Arrays.sort(B);
+        
+        int ans = 0;
+        
+        for(int i=B.length-1; i>=0; i--) {
+            ans += B[i] * A[n-i-1]; // 핵심 코드
+        }
+        
+        System.out.print(ans);
+        
+    }
+}
+```
+
+A에서 가장 작은것과 B에서 가장 큰것을 크로스 체킹하면서 곱해주면 끝
+
+---
+
