@@ -30,3 +30,44 @@
 
  <p>첫째 줄에 K원을 만드는데 필요한 동전 개수의 최솟값을 출력한다.</p>
 
+---
+
+그리디 알고리즘 기본
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+        
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
+        
+        int ans = 0;
+        for(int i=arr.length-1; i>=0; i--) {
+            ans += k / arr[i];
+            k %= arr[i];
+            
+            if(k == 0) break;
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/ba7b5cd4-4b1d-49d3-9023-a3e0f27efedf)
