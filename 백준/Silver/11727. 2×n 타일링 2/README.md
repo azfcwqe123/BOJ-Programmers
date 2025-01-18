@@ -30,3 +30,38 @@
 
  <p>첫째 줄에 2×n 크기의 직사각형을 채우는 방법의 수를 10,007로 나눈 나머지를 출력한다.</p>
 
+---
+
+dp 기초, 규칙만 찾으면 쉽게 풀 수 있음
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] dp = new int[1001];
+        
+        dp[1] = 1;
+        dp[2] = 3;
+        
+        for(int i=3; i<=n; i++) dp[i] = (dp[i-1] + dp[i-2]*2) % 10007;
+        
+        System.out.print(dp[n]);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/73c4b8cc-db0c-4b74-92f0-bb29cd486893)
