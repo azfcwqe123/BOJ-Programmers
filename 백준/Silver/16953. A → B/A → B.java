@@ -5,48 +5,32 @@ class Main {
     
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static StringTokenizer st;
-    
-    public static long A, B;
     public static void main(String[] args) throws IOException {
         
         st = new StringTokenizer(br.readLine());
         
-        A = Integer.parseInt(st.nextToken());
-        B = Integer.parseInt(st.nextToken());
+        long A = Long.parseLong(st.nextToken());
+        long B = Long.parseLong(st.nextToken());
         
-        long k = BFS(A);
+        int cnt = 0;
         
-        System.out.print(k == -1 ? -1 : k);
-    }
-    
-    public static int BFS(long A) {
-        Queue<Long> Q = new LinkedList<>();
-        Q.offer(A);
-        
-        int ans = 0;
-        
-        while(!Q.isEmpty()) {
-            long len = Q.size();
-            
-            for(int i=0; i<len; i++) {
-                long cur = Q.poll();
-                
-                if(cur == B) return ans + 1;
-                
-                long a = cur * 2;
-                long b = Long.parseLong(String.valueOf(cur) + "1");
-                
-                if(a <= B) {
-                    Q.offer(a);
-                }
-                
-                if(b <= B) {
-                    Q.offer(b);
-                }
+        while(A < B) {
+            if(B % 2 == 0) {
+                B /= 2;
+                cnt++;
             }
-            ans++;
+            
+            else if(B % 10 == 1) {
+                B /= 10;
+                cnt++;
+            }
+            
+            else break;
         }
-        return -1;
+        
+        if(A == B) System.out.print(cnt + 1);
+        else System.out.print(-1);
+        
     }
     
 }
