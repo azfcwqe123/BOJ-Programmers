@@ -33,3 +33,113 @@
 
  <p>A를 B로 바꾸는데 필요한 연산의 최솟값에 1을 더한 값을 출력한다. 만들 수 없는 경우에는 -1을 출력한다.</p>
 
+---
+
+BFS, 240ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    
+    public static long A, B;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        A = Integer.parseInt(st.nextToken());
+        B = Integer.parseInt(st.nextToken());
+        
+        long k = BFS(A);
+        
+        System.out.print(k == -1 ? -1 : k);
+    }
+    
+    public static int BFS(long A) {
+        Queue<Long> Q = new LinkedList<>();
+        Q.offer(A);
+        
+        int ans = 0;
+        
+        while(!Q.isEmpty()) {
+            long len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                long cur = Q.poll();
+                
+                if(cur == B) return ans + 1;
+                
+                long a = cur * 2;
+                long b = Long.parseLong(String.valueOf(cur) + "1");
+                
+                if(a <= B) {
+                    Q.offer(a);
+                }
+                
+                if(b <= B) {
+                    Q.offer(b);
+                }
+            }
+            ans++;
+        }
+        return -1;
+    }
+    
+}
+
+
+```
+
+---
+
+그리디 알고리즘, 100ms
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        long A = Long.parseLong(st.nextToken());
+        long B = Long.parseLong(st.nextToken());
+        
+        int cnt = 0;
+        
+        while(A < B) {
+            if(B % 2 == 0) {
+                B /= 2;
+                cnt++;
+            }
+            
+            else if(B % 10 == 1) {
+                B /= 10;
+                cnt++;
+            }
+            
+            else break;
+        }
+        
+        if(A == B) System.out.print(cnt + 1);
+        else System.out.print(-1);
+        
+    }
+    
+}
+```
+그리디하게
+
+---
+
+ 런타임 에러가 계속 났던 이유는, long으로 써야하는데 int으로 썼기때문
+![image](https://github.com/user-attachments/assets/374b4057-cc00-4c08-b78b-9ed7680a3f0f)
+
