@@ -36,3 +36,54 @@
 
  <p>표준 출력으로 제일 왼쪽 도시에서 제일 오른쪽 도시로 가는 최소 비용을 출력한다. </p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        long[] dis = new long[n-1];
+        long[] cost = new long[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n-1; i++) dis[i] = Integer.parseInt(st.nextToken());
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) cost[i] = Integer.parseInt(st.nextToken());
+        
+        long ans = 0;
+        long minCost = cost[0];
+        
+        for(int i=0; i<n-1; i++) {
+            
+            if(minCost > cost[i]) minCost = cost[i];
+            
+            ans += minCost * dis[i];
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+참고 블로그: https://st-lab.tistory.com/192
+
+![image](https://github.com/user-attachments/assets/bb65f330-0c79-4724-a573-4b24d80672c6)
