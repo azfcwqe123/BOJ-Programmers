@@ -30,3 +30,78 @@
 
  <p>각 테스트 케이스에 대해서 진영 주식회사가 선발할 수 있는 신입사원의 최대 인원수를 한 줄에 하나씩 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Person {
+        int G; // 성적 등수
+        int I; // 인터뷰 등수
+        
+        Person(int G, int I) {
+            this.G = G;
+            this.I = I;
+        }
+    }
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            
+            ArrayList<Person> list = new ArrayList<>();
+            for(int i=0; i<n; i++) {
+                st = new StringTokenizer(br.readLine());
+                int G = Integer.parseInt(st.nextToken());
+                int I = Integer.parseInt(st.nextToken());
+                list.add(new Person(G, I));
+            }
+            
+            Collections.sort(list, (a, b) -> a.G - b.G);
+            
+            int ans = 1, min = list.get(0).I;
+            
+            for(int i=1; i<n; i++) { // 핵심 코드
+                if(list.get(i).I < min) {
+                    min = list.get(i).I;
+                    ans++;
+                }
+            }
+            
+            sb.append(ans).append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+성적 등수로 오름차순 정렬 한다. 그렇다면 1등부터 n등까지 차례로 정렬될테니, 인터뷰 면접 등수만 체크해주면 된다.
+
+이때 인터뷰 면접 등수 체크를 자신보다 성적 등수가 높은 사람과 비교한다. 자신보다 성적이 낮은 사람들은 체크할 필요가 없기 때문이다(이미 성적에서 우위를 점하고 있음).
+&nbsp;
+
+자신보다 성적이 높은 사람들 중에서, 자신보다 높은 면접 점수를 가지고 있으면 성적 점수와 인터뷰 점수 모두 떨어지는 사람이기때문에 탈락한다.
+그리고 인터뷰 면접을 높은 성적을 가진 사람으로 계속 최신화 해준다.
+
+![image](https://github.com/user-attachments/assets/fb818b6c-4537-4228-ac45-1ca0b7243796)
+
+---
+
+![image](https://github.com/user-attachments/assets/e0e6d645-2990-4312-a445-ba37781bb9ef)
+
