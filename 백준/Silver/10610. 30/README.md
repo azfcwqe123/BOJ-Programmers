@@ -28,3 +28,49 @@
 
  <p>미르코가 만들고 싶어하는 수가 존재한다면 그 수를 출력하라. 그 수가 존재하지 않는다면, -1을 출력하라.</p>
 
+---
+
+그리디 알고리즘, 정수론
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        char[] arr = br.readLine().toCharArray();
+        
+        Arrays.sort(arr);
+        
+        int sum = 0;
+        for(int i = arr.length-1; i>=0; i--) {
+            sum += arr[i] - '0';
+            sb.append(arr[i]);
+        }
+        
+        if(sum % 3 == 0 && arr[0] == '0') {
+            System.out.print(sb);
+            return;
+        }
+        
+        System.out.print(-1);
+    }
+    
+}
+
+
+```
+
+30의 배수가 되려면, 각 자리의 숫자 합이 3의 배수이고 마지막 숫자가 0이면은 30의 배수가 된다.
+
+---
+
+참고블로그: https://myeongju00.tistory.com/102
+
+![image](https://github.com/user-attachments/assets/f3964b28-9675-4c3c-a1bb-d81c46318e5d)
