@@ -28,3 +28,51 @@
 
  <p>첫째 줄에 기타줄을 적어도 N개 사기 위해 필요한 돈의 최솟값을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        int pack = 1001, each = 1001;
+        
+        while(m-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            pack = Math.min(pack, Integer.parseInt(st.nextToken()));
+            each = Math.min(each, Integer.parseInt(st.nextToken()));
+        }
+        
+        int ans = 0;
+        
+        ans = Math.min((n / 6 + 1) * pack, n * each); // 패키지 구매 vs 낱개 구매 
+        
+        ans = Math.min((n / 6) * pack + (n % 6) * each, ans); // 혼합 구매 vs (패키지 구매 or 낱개 구매)
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+핵심: 1. 패키지 구매 2. 낱개 구매 3. 혼합 구매 케이스를 모두 고려해야 풀 수 있는 문제다.
+
+첫번째 틀렸던 이유는, 1번과 3번만 고려해서 틀렸다. 당연히 낱개로 전체를 구매하는건 비쌀거라는 오판을 해버렸기에 틀렸었다.
+
+![image](https://github.com/user-attachments/assets/46e79cae-5be1-4f40-83b9-eda7e7b236c5)
