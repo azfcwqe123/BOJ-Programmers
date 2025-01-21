@@ -11,25 +11,29 @@ class Main {
         
         int n = Integer.parseInt(br.readLine());
         
-        if(n == 1 || n == 3) {
-            System.out.print(-1);
-            System.exit(0);
-        }
-        
         int cnt = 0;
         
         while(true) {
             
             if(n % 5 == 0) {
                 cnt += n / 5;
+                System.out.print(cnt);
                 break;
             }
             
-            n -= 2;
-            cnt++;
+            else {
+                n -= 2;
+                cnt++;
+            }
+            
+            if(n < 0) {
+                System.out.print(-1);
+                break;
+            }
+            
         }
         
-        System.out.print(cnt);
+        
     }
     
 }
