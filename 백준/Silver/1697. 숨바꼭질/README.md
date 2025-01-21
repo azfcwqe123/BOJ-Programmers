@@ -93,6 +93,74 @@ class Main {
 
 ```
 
+재풀이(리팩토링)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static int n, k;
+    public static boolean[] visited;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        
+        visited = new boolean[100001];
+        
+        System.out.print(BFS(n));
+    
+    }
+    
+    public static int BFS(int n) {
+        Queue<Integer> Q = new LinkedList<>();
+        Q.offer(n);
+        visited[n] = true;
+        
+        int cnt = 0;
+        
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                int cur = Q.poll();
+                
+                if(cur == k) return cnt; // n과 k 같을때도 해결해버림
+                
+                int[] move = {cur-1, cur+1, cur*2};
+                
+                for(int j=0; j<3; j++) {
+                    int nx = move[j];
+                    
+                    if(rangeCheck(nx) && !visited[nx]) { // 범위 체크 & 방문 체크
+                        Q.offer(nx);
+                        visited[nx] = true;
+                    }
+                }
+            }
+            cnt++;
+        }
+        
+        return -1;
+    }
+    
+    public static boolean rangeCheck(int nx) {
+        return nx >= 0 && nx <= 100000;
+    }
+}
+
+
+```
+
+
 ---
 
 \- 첫번째 틀린 이유 : 범위 체크를 안 함 -> 런타임 에러
