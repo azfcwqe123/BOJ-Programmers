@@ -34,3 +34,57 @@
 
  <p>첫째 줄에 항승이가 필요한 테이프의 개수를 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
+    private static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken());
+        int L = Integer.parseInt(st.nextToken());
+        
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
+         
+        Arrays.sort(arr); // 정렬 필수
+        
+        int ans = 1, pos = arr[0]; // 처음 위치를 잡고, 테이프 하나를 추가해준다.
+        
+        for(int i=1; i<N; i++) {
+            
+            if(arr[i] - pos < L) continue; // 탐색한다. 탐색 위치 - 현재 위치 < 테이프 길이가 나오면 탐색 위치를 테이프로 덮을 수 있다.
+            
+            else { // 덮으려는 길이가 테이프의 길이를 초과해버린 상태.
+                pos = arr[i]; // 현재 위치 재설정
+                ans++; // 테이프 추가
+            }
+            
+        }
+        
+        System.out.print(ans);
+    }
+    
+}
+
+```
+
+![image](https://github.com/user-attachments/assets/30a524a2-784d-4c6e-a6f0-4b98e2c504b9)
+
+규칙만 잘 찾으면 수월하게 풀 수 있는 문제인듯하다
+
+---
+
+![image](https://github.com/user-attachments/assets/e342372e-8cd4-46b9-a602-41ac3bdee265)
