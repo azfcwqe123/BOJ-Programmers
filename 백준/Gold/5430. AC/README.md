@@ -40,3 +40,153 @@
 
  <p>각 테스트 케이스에 대해서, 입력으로 주어진 정수 배열에 함수를 수행한 결과를 출력한다. 만약, 에러가 발생한 경우에는 error를 출력한다.</p>
 
+---
+
+첫번째 풀이(오답), 시간초과
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            String func = br.readLine();
+            int n = Integer.parseInt(br.readLine());
+            
+            String str = br.readLine().replace("[", "").replace("]", "");
+            
+            boolean check = true;
+            
+            for(char x : func.toCharArray()) {
+                
+                if(str.length() == 0) {
+                    check = false;
+                    break;
+                }
+                
+                else if(x == 'R') str = R(str);
+                
+                else if(x == 'D') str = D(str);
+            }
+            
+            if(check) sb.append("[" + str + "]");
+            else sb.append("error");
+            
+            sb.append('\n');
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    static String R(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+    
+    static String D(String str) {
+        int k = str.indexOf(",");
+        
+        if(k == -1) return ""; // 배열의 원소가 하나밖에 없는 경우
+        
+        return str.substring(k+1);
+    }
+}
+
+```
+테스트케이스는 잘 작동하지만 시간초과가 발생한다. 덱을 사용해서 풀어야함
+
+이 문제를 풀면서 고민했던건,
+
+1. [1, 2, 3, 4, 5]와 같이 한자리 자연수만 나오는게 아니고 [10, 20, 30] 같은 배열도 나올 수 있다는걸 눈치채야한다. 이 배열을 뒤집으면 03 ,02 ,01 같은 의도치 않은 값으로 만들어버릴 위험이 있음.
+
+2. 내가 쓴 풀이는 숫자 하나밖에 없는 경우도 따져줘야한다. 덱으로 풀면 'D'가 나왔을때, 그냥 요소를 지워버리면 끝이기 때문에 간단함
+
+---
+
+두번째 풀이, 덱 사용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            Deque<Integer> deque = new LinkedList<>();
+            
+            String func = br.readLine();
+            int n = Integer.parseInt(br.readLine());
+            
+            String str = br.readLine();
+            for(String s : str.substring(1, str.length() - 1).split(",")) {
+                if(!s.equals("")) deque.add(Integer.valueOf(s));
+            }
+            
+            sb.append(solution(deque, func)).append('\n');
+            
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    static String solution(Deque<Integer> deque, String func) {
+        
+        boolean reverse = false;
+        
+        for(char x : func.toCharArray()) {
+            
+            if(x == 'R') reverse = !reverse; // 핵심
+            
+            else if(x == 'D') {
+                
+                if(deque.size() == 0) return "error";
+                
+                if(reverse) deque.removeLast();
+                
+                else deque.removeFirst();
+            }
+        }
+        
+        StringBuilder tmp = new StringBuilder("[");
+        
+        while(!deque.isEmpty()) {
+            tmp.append(reverse ? deque.removeLast() : deque.removeFirst());
+            
+            if(deque.size() != 0) tmp.append(",");
+        }
+        
+        tmp.append("]");
+        
+        return tmp.toString();
+    }
+    
+}
+
+```
+덱의 사용법과 원리를 안다면 쉽게 풀 수 있는 문제인듯하다. 블로그 풀이가 직관적이고 마음에 들었다.
+
+참고: https://girawhale.tistory.com/9
+
+---
+
+![image](https://github.com/user-attachments/assets/f3da647b-62e2-4b9e-af35-4f85a7f27920)
