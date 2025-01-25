@@ -30,3 +30,95 @@
 
  <p>첫째 줄에 최소 비교 횟수를 출력한다.</p>
 
+---
+
+그리디 알고리즘 + 우선순위큐, 최소힙
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>();
+        
+        while(n-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            pQ.offer(k);
+        }
+        
+        int sum = 0, tmp = 0;
+        
+        while(!pQ.isEmpty()) {
+            
+            if(pQ.size() == 1) break;
+            
+            if(pQ.size() > 1) {
+                tmp = pQ.poll() + pQ.poll();
+                sum += tmp;
+                pQ.offer(tmp);
+            }
+        }
+        
+        System.out.print(sum);
+    }
+    
+}
+
+
+```
+
+주의해야할 것
+
+1. 두 묶음의 숫자가 있을때만 비교횟수가 늘어남, A와 B가 있으면 (A+B)번만큼 늘지만, 처음부터 A만 있다면 비교대상이 없기에 비교횟수가 0이 됨.
+   
+---
+
+리팩토링
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>();
+        
+        while(n-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            pQ.offer(k);
+        }
+        
+        int sum = 0, tmp = 0;
+        
+        while(pQ.size() > 1) {
+            tmp = pQ.poll() + pQ.poll();
+            sum += tmp;
+            pQ.offer(tmp);
+        }
+        
+        System.out.print(sum);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/fd81dbaf-d8a8-4077-af8f-0737d693dddc)
