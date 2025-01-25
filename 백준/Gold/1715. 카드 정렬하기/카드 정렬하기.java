@@ -19,15 +19,10 @@ class Main {
         
         int sum = 0, tmp = 0;
         
-        while(!pQ.isEmpty()) {
-            
-            if(pQ.size() == 1) break;
-            
-            if(pQ.size() > 1) {
-                tmp = pQ.poll() + pQ.poll();
-                sum += tmp;
-                pQ.offer(tmp);
-            }
+        while(pQ.size() > 1) {
+            tmp = pQ.poll() + pQ.poll();
+            sum += tmp;
+            pQ.offer(tmp);
         }
         
         System.out.print(sum);
