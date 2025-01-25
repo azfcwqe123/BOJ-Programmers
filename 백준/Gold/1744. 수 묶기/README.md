@@ -88,7 +88,7 @@ class Main {
             a = Q.poll();
             b = Q.poll();
             
-            ans += Math.max(a * b, a + b);
+            ans += Math.max(a * b, a + b); // a * b가 무조건 최댓값 아닐까?라는 생각이 들 수 있지만, 반례가 있다. 둘 다 1이면 1 * 1 < 1 + 1이 되기 때문이다.
         }
     }
     
