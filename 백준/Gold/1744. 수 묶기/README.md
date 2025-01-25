@@ -32,3 +32,80 @@
 
  <p>수를 합이 최대가 나오게 묶었을 때 합을 출력한다. 정답은 항상 2<sup>31</sup>보다 작다.</p>
 
+---
+
+그리디 알고리즘 + 우선순위 큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int ans = 0;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> mQ = new PriorityQueue<>();
+        
+        while(n-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            
+            if(k > 0) pQ.offer(k);
+            else mQ.offer(k);
+        }
+        
+        solution(pQ);
+        solution(mQ);
+        
+        int a = 0, b = 0;
+
+        // 마지막 처리
+        if(!pQ.isEmpty() && !mQ.isEmpty()) {
+            a = pQ.poll();
+            b = mQ.poll();
+            
+            ans += Math.max(a * b, a + b);
+        }
+        
+        else if(!pQ.isEmpty()) ans += pQ.poll();
+        else if(!mQ.isEmpty()) ans += mQ.poll();
+        
+        System.out.print(ans);
+        
+    }
+    
+    static void solution(PriorityQueue<Integer> Q) {
+        
+        int a = 0, b = 0;
+        
+        while(Q.size() > 1) {
+            a = Q.poll();
+            b = Q.poll();
+            
+            ans += Math.max(a * b, a + b);
+        }
+    }
+    
+}
+
+
+```
+
+1. 1 이상인 양수만 담을 수 있는 큐(최대 힙)와, 0이하 음수만 담을 수 있는 큐(최소 힙)를 두 개 만든다. // 양수 큐: 5 4 3 2 1 | 음수 큐: -3 -2 -1 0 같은 느낌으로 
+
+2. 0을 음수 큐에 넣는 이유는, 수열의 합을 최대로 만들기 위해서는 0과 음수를 곱해버리는게 최댓값을 만드는데 기여하기 때문에, 양수 큐에 넣지 않고 음수 큐에 넣는 것이다.
+
+3. 각각의 큐에서 두개의 요소씩 꺼내서 곱한다. 남는것들은 마지막에 처리한다.
+
+
+
+---
+
+![image](https://github.com/user-attachments/assets/9783005f-32ee-44db-987a-f086a9ad39a5)
+
