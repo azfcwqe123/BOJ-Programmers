@@ -21,36 +21,59 @@ class Main {
         int sum = 0;
         
         for(int i=0; i<m; i++) {
-            int A = 0, T = 0, G = 0, C = 0;
+            int[] ACGT = new int[4];
             
             for(int j=0; j<n; j++) {
                 
                 switch(DNA[j].charAt(i)) {
                     
                     case 'A' : 
-                        A++;
-                        break;
-                        
-                    case 'T' :
-                        T++;
-                        break;
-                        
-                    case 'G' :
-                        G++;
+                        ACGT[0]++;
                         break;
                         
                     case 'C' :
-                        C++;
+                        ACGT[1]++;
+                        break;
+                        
+                    case 'G' :
+                        ACGT[2]++;
+                        break;
+                        
+                    case 'T' :
+                        ACGT[3]++;
                         break;
                 }
             }
             
-            int max = Math.max(Math.max(A, T), Math.max(G, C));
+            int max = ACGT[0], idx = 0;
+            
+            for(int k=1; k<4; k++) {
+                if(max < ACGT[k]) {
+                    max = ACGT[k];
+                    idx = k;
+                }
+            }
+            
             sum += n - max;
             
-            char ch = max == A ? 'A' : max == C ? 'C' : max == G ? 'G' : 'T';
+            switch(idx) {
+                case 0 :
+                    sb.append('A');
+                    break;
+                
+                case 1 :
+                    sb.append('C');
+                    break;
+                
+                case 2 :
+                    sb.append('G');
+                    break;
+                    
+                case 3 :
+                    sb.append('T');
+                    break;
+            }
             
-            sb.append(ch);
         }
         
         System.out.println(sb);
