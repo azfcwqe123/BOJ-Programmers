@@ -50,3 +50,78 @@
 
  <p>출력은 표준 출력을 사용한다. 입력받은 데이터에 대해, 한 줄에 1개씩 초기 상태에서 목표 상태를 만들기 위한 작업의 최소 횟수를 구한다.</p>
 
+---
+
+그리디 알고리즘, 문자열
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            
+            String a = br.readLine();
+            String b = br.readLine();
+            
+            int W = 0, B = 0;
+            
+            for(int i=0; i<n; i++) {
+                if(a.charAt(i) != b.charAt(i)) {
+                    if(a.charAt(i) == 'W')  W++;
+                    else B++;
+                }
+            }
+            
+            int change = Math.min(W, B); // 자리 교체
+            int reverse = Math.abs(W - B); // 뒤집기
+            
+            sb.append(change + reverse).append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+// 다른곳이 짝수개 && B와 W 개수 같음 -> 교체 가능
+
+// 다른곳이 홀수개 && B와 W 개수 다름-> 뒤집어야함
+
+이런식으로 생각을 했었는데, 이렇게하면 너무 케이스도 많아지고 고려해야할것도 많고 풀이법을 잘못 접근하고 있는것 같다고 생각이 들어서 다른 사람의 풀이를 참고했다
+
+&nbsp;
+
+결국 핵심은, W와 B의 최솟값은 교체해야하는 개수이고, W - B의 절댓값은 뒤집어야 하는 개수이다.  
+
+W = 3, B = 0일때, B = 0이 최솟값이기에 교체를 0번하고, W를 3번 뒤집어서 정답은 3이된다.
+.
+
+W = 4, B = 2일때, B = 2이 최솟값이기에 2번 교체를 하면, B로 교체할 수 있는건 끝난다. 그럼 W 2개만 남는다. W - B의 절댒값은 2이고, 이건 뒤집는 개수니까 정답 4가 된다.
+.
+
+W = 1, B = 5일때, W = 1이 최솟값이기에 1번 교체를하면 B만 4개 남는다. B와 W 서로 교체할 수 있는데 없으니, B 4개를 뒤집는다. -> 정답: 5
+.
+
+W = 1, B = 1일때, 둘 다 최솟값이기도 하고, 서로 한번만 교체하면 끝난다. W - B = 0은 즉, 뒤집을 수 있는게 없다는 뜻. -> 정답 1
+
+---
+
+참고: https://blog.naver.com/occidere/220871581916
+
+![image](https://github.com/user-attachments/assets/9cea4646-a93d-4745-b432-e5656b8eef45)
+
