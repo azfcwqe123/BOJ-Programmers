@@ -30,3 +30,44 @@
 
  <p>첫째 줄에 며칠에 이장님을 초대할 수 있는지 출력한다. 답이 여러 가지인 경우에는 가장 작은 값을 출력한다. 묘목을 구입한 날이 1일이다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Integer[] arr = new Integer[n];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.sort(arr, (a, b) -> b - a);
+        
+        int ans = -1;
+        
+        for(int i=0; i<n; i++) {
+            ans = Math.max(ans, arr[i] + i + 1);
+        }
+        
+        System.out.print(ans + 1);
+    }
+    
+}
+
+```
+
+참고: https://tussle.tistory.com/933
+
+---
+
+![image](https://github.com/user-attachments/assets/144d157d-f5ff-46d7-bd1b-85e571123970)
