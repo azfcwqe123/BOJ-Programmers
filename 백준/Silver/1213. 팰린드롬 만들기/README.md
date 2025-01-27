@@ -32,3 +32,85 @@
 
  <p>첫째 줄에 문제의 정답을 출력한다. 만약 불가능할 때는 "I'm Sorry Hansoo"를 출력한다. 정답이 여러 개일 경우에는 사전순으로 앞서는 것을 출력한다.</p>
 
+---
+
+문자열
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int[] alpha = new int[26];
+        
+        String str = br.readLine();
+        
+        for(int i=0; i<str.length(); i++) {
+            char ch = str.charAt(i);
+            alpha[ch - 65]++;
+        }
+        
+        int cnt = 0;
+        
+        for(int i=0; i<26; i++) {
+            if(alpha[i] % 2 == 1) cnt++;
+            
+            if(cnt > 1) { // 홀수가 2개 이상이면 끝낸다.
+                System.out.print("I'm Sorry Hansoo");
+                System.exit(0);
+            }
+        }
+        
+        
+        for(int i=0; i<26; i++) {
+            
+            if(alpha[i] == 0) continue; // 표기가 안 된 알파벳은 PASS
+            
+            else { // 짝수든 홀수는 2로 나눈 몫을 문자열에 추가해준다.
+                char ch = (char) (i + 65);
+                sb.append(String.valueOf(ch).repeat(alpha[i] / 2)); 
+            } // A 하나면 추가가 안 되고, AAA면 A 하나가 추가 된다. BB면 1개, BBBB면 2개임. 대칭성을 맞추기 위함이다.
+        }
+        
+        
+        String tmp = new StringBuilder(sb).reverse().toString();
+        
+        // 마지막 홀수 하나를 찾아서 더해주고,
+        for(int i=0; i<26; i++) {
+            if(alpha[i] % 2 == 1) {
+                sb.append((char) (i+65));
+                break;
+            }
+        }
+        
+        sb.append(tmp); // 뒤집어놨던 문자열을 덧붙여준다.
+        
+        System.out.print(sb);
+        
+    }
+}
+
+/*
+// 홀수가 2개 이상 나오면 안됨.
+A - > 가능(홀수 1)
+AB -> 불가능 (홀수 2)
+AAAB -> 불가능(홀수 2)
+AAABB -> 가능(홀수 1, 짝수 1)
+AAABBB -> 불가능 (홀수3)
+BBAAC - > ABCBA 가능 (홀수1, 짝수2)
+BBAACCD -> ABCDCBA 가능(홀수1, 짝수3)
+BBBBA -> BBABB 가능(홀수1, 짝수2)*/
+
+```
+그리디 알고리즘보다는 문자열 구현에 더 가까웠던 문제
+
+---
+
+![image](https://github.com/user-attachments/assets/74c0a6fb-7c78-4587-ad21-318d1e837277)
