@@ -36,3 +36,100 @@
 
  <p>각 테스트케이스 별로 최대 이익을 나타내는 정수 하나를 출력한다. 답은 부호있는 64bit 정수형으로 표현 가능하다.</p>
 
+---
+
+그리디 알고리즘
+
+첫번째 풀이(시간 초과)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            int[] price = new int[n];
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<n; i++) price[i] = Integer.parseInt(st.nextToken());
+            
+            sb.append(solution(n, price)).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static int solution(int n, int[] price) {
+        
+        int ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<i; j++) {
+                if(price[j] < price[i]) {
+                    ans += price[i] - price[j];
+                    price[j] = price[i];
+                }
+            }
+        }
+        
+        return ans;
+    } 
+}
+```
+
+---
+
+두번째 풀이, 역탐색
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            int[] arr = new int[n];
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+            
+            long ans = 0, max = 0;
+            
+            for(int j=arr.length-1; j>=0; j--) {
+                if(max < arr[j]) max = arr[j];
+                else ans += max - arr[j];
+            }
+            
+            sb.append(ans).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+}
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/534aea89-4271-4d48-b9aa-1ba4adcb472a)
