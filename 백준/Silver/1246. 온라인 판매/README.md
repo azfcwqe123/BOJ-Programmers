@@ -32,3 +32,99 @@
 
  <p>첫째 줄에 경래가 책정한 가격과 이 가격으로 올릴 수 있는 수익을 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+첫번째 풀이
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        int[] P = new int[m];
+        
+        for(int i=0; i<m; i++) P[i] = Integer.parseInt(br.readLine());
+        
+        Arrays.sort(P);
+        
+        int ans = Integer.MIN_VALUE, idx = 0, tmp = 0;
+        
+        for(int i=0; i<m; i++) {
+            int k = m - i;
+            
+            if(k <= n) tmp = P[i] * k;
+            else tmp = P[i] * n;
+            
+            if(tmp > ans) {
+                ans = tmp;
+                idx = i;
+            }
+        }
+        
+        System.out.print(P[idx] + " " + ans);
+    }
+}
+
+
+```
+
+---
+
+두번째 풀이, 리팩토링
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        int[] P = new int[m];
+        
+        for(int i=0; i<m; i++) P[i] = Integer.parseInt(br.readLine());
+        
+        Arrays.sort(P);
+        
+        int ans = Integer.MIN_VALUE, idx = 0, tmp = 0;
+        
+        for(int i=0; i<m; i++) {
+            int cur = P[i] * Math.min(m-i, n);
+            
+            if(cur > ans) {
+                ans = cur;
+                idx = i;
+            }
+        }
+        
+        System.out.print(P[idx] + " " + ans);
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/eb9831f5-112a-43a3-8ead-bc26a97e2850)
