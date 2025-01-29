@@ -32,3 +32,87 @@
 
  <p>첫째 줄에 불만도의 합을 최소로 할 때, 그 불만도를 출력한다.</p>
 
+---
+
+그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
+        
+        Arrays.sort(arr);
+        
+        long ans = 0;
+        
+        for(int i=0; i<n; i++) {
+            ans += Math.abs(arr[i] - (i + 1));
+        }
+        
+        System.out.print(ans);
+        
+    }
+}
+
+
+```
+
+---
+
+배열 대신 우선순위 큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        PriorityQueue<Integer> pQ = new PriorityQueue<>();
+        
+        for(int i=0; i<n; i++) pQ.offer(Integer.parseInt(br.readLine()));
+        
+        long ans = 0;
+        
+        for(int i=1; i<=n; i++) {
+            ans += Math.abs(pQ.poll() - i);
+        }
+        
+        System.out.print(ans);
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/83911d6f-40c2-4797-9428-ce628d7a924d)
+
+---
+
+첫번째 틀린 이유: 
+
+예상 등수가 모두 1일때, |500,000 - 1| x 500,000 하면 int형의 범위를 초과해서 long으로 잡아줘야함. 범위 체크 안하고 int로 해서 틀려버림
+
+![image](https://github.com/user-attachments/assets/df8bc8ef-28c6-4fd7-b1b8-63d3fc385b0e)
+
