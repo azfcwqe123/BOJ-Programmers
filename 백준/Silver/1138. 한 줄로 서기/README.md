@@ -32,3 +32,85 @@
 
  <p>첫째 줄에 줄을 선 순서대로 키를 출력한다.</p>
 
+---
+
+직접 구현, 그리디 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) {
+            int k = Integer.parseInt(st.nextToken()); // k와 i를 매칭시킴. i=1 k=2, i=2 k=1, i=3 k=1, i=4 k=0
+            int cnt = 0; // 왼쪽부터 자신보다 큰 사람의 수.
+            
+            for(int j=0; j<n; j++) {
+                if(arr[j] != 0) continue; // 자리가 있는 곳은 PASS
+                
+                if(arr[j] == 0) { // 자신보다 큰 사람이 있을 자리
+                    cnt++;
+                    if(k+1 == cnt) arr[j] = i; // 자신보다 큰 사람의 수 + 1이 되면 그땐 빈자리라 착석
+                }
+            }
+            
+        }
+        
+        for(int x : arr) sb.append(x + " ");
+        
+        System.out.print(sb);
+    }
+}
+
+
+```
+
+---
+
+배열리스트 이용
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n+1];
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int i=n; i>0; i--) {
+            list.add(arr[i], i);
+        }
+        
+        for(int x : list) System.out.print(x + " ");
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/1c6873f0-78bb-4caa-9736-f843a91630bd)
