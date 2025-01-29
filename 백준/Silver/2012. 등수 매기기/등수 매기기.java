@@ -11,14 +11,14 @@ class Main {
         
         int n = Integer.parseInt(br.readLine());
         int[] arr = new int[n];
-        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(br.readLine());
+        PriorityQueue<Integer> pQ = new PriorityQueue<>();
         
-        Arrays.sort(arr);
+        for(int i=0; i<n; i++) pQ.offer(Integer.parseInt(br.readLine()));
         
         long ans = 0;
         
-        for(int i=0; i<n; i++) {
-            ans += Math.abs(arr[i] - (i + 1));
+        for(int i=1; i<=n; i++) {
+            ans += Math.abs(pQ.poll() - i);
         }
         
         System.out.print(ans);
