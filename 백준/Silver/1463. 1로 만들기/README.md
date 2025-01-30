@@ -34,3 +34,48 @@
 
  <p>첫째 줄에 연산을 하는 횟수의 최솟값을 출력한다.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[n+1];
+        
+        dp[0] = dp[1] = 0;
+        
+        for(int i=2; i<=n; i++) {
+            dp[i] = dp[i-1] + 1;
+            
+            if(i % 2 == 0) dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+            
+            if(i % 3 == 0) dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+        }
+        
+        System.out.print(dp[n]);
+        
+    }
+    
+}
+
+
+
+```
+
+---
+
+참고 블로그: https://stdio-han.tistory.com/109
+
+![image](https://github.com/user-attachments/assets/45419fdb-81ed-40a6-b474-55a86ac5c64b)
