@@ -55,3 +55,56 @@
 
  <p>각 테스트 케이스마다 0이 출력되는 횟수와 1이 출력되는 횟수를 공백으로 구분해서 출력한다.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            int n = Integer.parseInt(br.readLine());
+            
+            int[][] dp = new int[41][2];
+            
+            // 0일때 0은 1번, 1은 0번 나옴 
+            dp[0][0] = 1;
+            dp[0][1] = 0;
+            
+            // 1일때 0은 0번, 1은 1번 나옴
+            dp[1][0] = 0;
+            dp[1][1] = 1;
+        
+            for(int i=2; i<=n; i++) {
+                dp[i][0] = dp[i-1][0] + dp[i-2][0];
+                dp[i][1] = dp[i-1][1] + dp[i-2][1];
+            }
+            
+            sb.append(dp[n][0] + " " + dp[n][1]).append('\n'); 
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+참고블로그: https://iseunghan.tistory.com/340
+
+![image](https://github.com/user-attachments/assets/384b98c1-34c8-4a5a-9405-4e61a87f6251)
