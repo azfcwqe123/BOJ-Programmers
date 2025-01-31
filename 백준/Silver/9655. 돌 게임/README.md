@@ -30,3 +30,46 @@
 
  <p>상근이가 게임을 이기면 SK를, 창영이가 게임을 이기면 CY을 출력한다.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[1001];
+        
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 1;
+        
+        for(int i=4; i<=1000; i++) {
+            dp[i] = Math.min(dp[i-3], dp[i-1]) + 1;
+        }
+        
+        String ans = dp[n] % 2 == 0 ? "CY" : "SK"; // 짝수면 창영 WIN, 홀수면 상근 WIN
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+---
+
+참고블로그: https://propercoding.tistory.com/21
+
+![image](https://github.com/user-attachments/assets/bb322891-39fb-46e8-b35e-6ba1a4f5c657)
