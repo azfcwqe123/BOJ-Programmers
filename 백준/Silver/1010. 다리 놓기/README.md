@@ -30,3 +30,106 @@
 
  <p>각 테스트 케이스에 대해 주어진 조건하에 다리를 지을 수 있는 경우의 수를 출력한다.</p>
 
+---
+
+메모이제이션 + Top-Down + dp + 조합론
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int[][] dp = new int[30][30]; // 메모이제이션
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            int r = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
+            
+            sb.append(combi(n, r)).append("\n");
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    static int combi(int n, int r) {
+        
+        if(dp[n][r] > 0) return dp[n][r];
+        
+        if(n == r || r == 0) return dp[n][r] = 1;
+        
+        return dp[n][r] = combi(n-1, r-1) + combi(n-1, r);
+    }
+    
+}
+
+
+```
+
+---
+
+Bottom-Up + dp + 조합론
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int[][] dp = new int[30][30];
+    
+    public static void main(String[] args) throws IOException {
+        
+        for(int i=0; i<30; i++) {
+            dp[i][i] = 1;
+            dp[i][0] = 1;
+        }
+        
+        for(int i=2; i<30; i++) {
+            for(int j=1; j<30; j++) {
+                
+                if(j-1 > i-1 || j > i-1) continue; // 조합 성질에 위배되는것은 PASS
+                
+                dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+            }
+        }
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            int r = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
+            
+            sb.append(dp[n][r]).append("\n");
+        }
+        
+        System.out.print(sb);
+        
+    }
+}
+
+
+```
+
+---
+
+참고: https://st-lab.tistory.com/194
+
+아주 좋은 문제인듯
+
+![image](https://github.com/user-attachments/assets/6298f157-de05-4101-ac26-e4ec2763fbe9)
