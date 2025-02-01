@@ -34,3 +34,61 @@
 
  <p>각 테스트 케이스마다 류재명이 있을 수 있는 위치의 수를 출력한다. 만약 류재명이 있을 수 있는 위치의 개수가 무한대일 경우에는 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>−</mo><mn>1</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$-1$</span></mjx-container> 출력한다.</p>
 
+---
+
+기하
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int r1 = Integer.parseInt(st.nextToken());
+            
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+            int r2 = Integer.parseInt(st.nextToken());
+            
+            int distance = (int) (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            
+            if(x1 == x2 && y1 == y2 && r1 == r2) sb.append(-1); // 무한
+            
+            else if(Math.pow(r1 + r2, 2) < distance) sb.append(0); // 원 외부 + 교차X
+            
+            else if(Math.pow(r1 - r2, 2) > distance) sb.append(0); // 원 내부 + 교차X, 이 부분을 잘못생각해서 계속 틀렸음
+            
+            else if(Math.pow(r1 + r2, 2) == distance) sb.append(1); // 외접
+            
+            else if(Math.pow(r1 - r2, 2) == distance) sb.append(1); // 내접
+            
+            else sb.append(2); // 2개 교차
+            
+            sb.append("\n");
+        }
+        
+        System.out.print(sb);
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/a620d6f2-bc7e-4926-a1e6-8bc0ed179345)
+
