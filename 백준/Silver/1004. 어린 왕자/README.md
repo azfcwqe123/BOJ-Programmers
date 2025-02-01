@@ -32,3 +32,62 @@
 
  <p>각 테스트 케이스에 대해 어린 왕자가 거쳐야 할 최소의 행성계 진입/이탈 횟수를 출력한다.</p>
 
+---
+
+기하
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            int cnt = 0;
+            
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+            
+            int n = Integer.parseInt(br.readLine());
+            
+            for(int i=0; i<n; i++) {
+                st = new StringTokenizer(br.readLine());
+                int cx = Integer.parseInt(st.nextToken());
+                int cy = Integer.parseInt(st.nextToken());
+                int r = Integer.parseInt(st.nextToken());
+                
+                int dis1 = (int) (Math.pow(x1 - cx, 2) + Math.pow(y1 - cy, 2));
+                int dis2 = (int) (Math.pow(x2 - cx, 2) + Math.pow(y2 - cy, 2));
+            
+                int k = (int) Math.pow(r, 2); // 행성의 반지름
+            
+                if(dis1 < k ^ dis2 < k) cnt++; // 한 점은 행성 안에 있어야하고, 다른 한 점은 행성 밖에 있어야 성립
+            }
+            
+            sb.append(cnt).append("\n");
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+배타적 논리합(XOR)을 사용한 문제
+
+---
+
+![image](https://github.com/user-attachments/assets/2924b0ff-079a-42bd-986e-35aaf3510e62)
