@@ -102,9 +102,9 @@ class Main {
 
 ```
 
-계속 왜 틀리나 했더니, *2 순간이동을 먼저 하고 -1, +1 순으로 해야 코드가 올바르게 작동해서 정답이 된다. 자세한건 밑에 사이트를 참고하자
+계속 왜 틀리나 했더니, *2 순간이동을 먼저 하고 -1, +1 순으로 해야 코드가 올바르게 작동해서 정답이 된다.
 
--> https://www.acmicpc.net/board/view/144960
+![image](https://github.com/user-attachments/assets/4dee1488-a3ac-4535-93dd-2eb0c3cc26df)
 
 
 ---
