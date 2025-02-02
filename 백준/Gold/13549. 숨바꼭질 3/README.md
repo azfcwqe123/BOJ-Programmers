@@ -28,3 +28,86 @@
 
  <p>수빈이가 동생을 찾는 가장 빠른 시간을 출력한다.</p>
 
+---
+
+BFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int N, K;
+    static boolean[] visited = new boolean[100_001];
+    
+    static class Point {
+        int pos;
+        int time;
+        
+        Point(int pos, int time) {
+            this.pos = pos;
+            this.time = time;
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        N = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+        
+        int ans = BFS();
+        
+        System.out.print(ans);
+    }
+    
+    static int BFS() {
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(N, 0));
+        
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                Point cur = Q.poll();
+                visited[cur.pos] = true;
+                
+                if(cur.pos == K) return cur.time;
+                
+                int[] move = {cur.pos * 2, cur.pos - 1, cur.pos + 1};
+                
+                for(int d=0; d<move.length; d++) {
+                    
+                    if(!rangeCheck(move[d]) || visited[move[d]]) continue; // 범위에 맞지 않거나, 이미 방문한적 있다면 않으면 PASS
+                    
+                    if(d==0) Q.offer(new Point(move[d], cur.time)); // *2 순간이동
+                    else Q.offer(new Point(move[d], cur.time + 1)); // -1, +1 이동
+                }
+                
+            }
+        }
+        
+        return -1;
+    } 
+    
+    static boolean rangeCheck(int pos) {
+        return pos >= 0 && pos < 100_001;
+    }
+}
+
+
+```
+
+계속 왜 틀리나 했더니, *2 순간이동을 먼저 하고 -1, +1 순으로 해야 코드가 올바르게 작동해서 정답이 된다. 자세한건 밑에 사이트를 참고하자
+
+-> https://www.acmicpc.net/board/view/144960
+
+
+---
+런타임에러는 범위체크 안해서 틀린것
+
+![image](https://github.com/user-attachments/assets/fa82946c-bfe7-4904-9105-ba4c10db3d56)
