@@ -30,3 +30,89 @@
 
 <p>둘째 줄에 어떻게 이동해야 하는지 공백으로 구분해 출력한다.</p>
 
+---
+
+BFS, 역추적
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int n, k, time = 0;
+    static boolean[] visited = new boolean[100_001];
+    static int[] parent = new int[100_001];
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        
+        BFS();
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        int idx = k;
+        stack.push(k);
+
+        // 선입후출인 스택을 사용
+        while(idx != n) {
+            stack.push(parent[idx]);
+            idx = parent[idx];
+        }
+        
+        sb.append(time).append("\n");
+        
+        while(!stack.isEmpty()) {
+            sb.append(stack.pop() + " ");
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static void BFS() {
+        Queue<Integer> Q = new LinkedList<>();
+        Q.offer(n);
+        
+        while(!Q.isEmpty()) {
+            int len = Q.size();
+            
+            for(int i=0; i<len; i++) {
+                int cur = Q.poll();
+                
+                if(cur == k) return;
+                
+                int[] move = {cur * 2, cur + 1, cur - 1};
+                
+                for(int d=0; d<3; d++) {
+                    if(rangeCheck(move[d]) && !visited[move[d]]) {
+                        visited[move[d]] = true;
+                        Q.offer(move[d]);
+                        parent[move[d]] = cur; // 부모 저장
+                    }
+                }
+            }
+            
+            time++;
+        }
+        
+    }
+    
+    static boolean rangeCheck(int cur) {
+        return 0 <= cur && cur <=100_000;
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/3bd5525c-233f-4cba-9a88-e7220ce49c6f)
+
