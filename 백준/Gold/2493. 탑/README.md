@@ -30,3 +30,53 @@
 
  <p>첫째 줄에 주어진 탑들의 순서대로 각각의 탑들에서 발사한 레이저 신호를 수신한 탑들의 번호를 하나의 빈칸을 사이에 두고 출력한다. 만약 레이저 신호를 수신하는 탑이 존재하지 않으면 0을 출력한다.</p>
 
+---
+
+스택
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        Stack<int[]> stack = new Stack<>();
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) {
+            int top = Integer.parseInt(st.nextToken());
+            
+            while(!stack.isEmpty()) {
+                if(stack.peek()[1] <= top) stack.pop(); // 현재 탑보다 작은 탑들은 의미 없기에 지워버림
+                else break; // 자신보다 큰 탑은 의미가 있기에 지우지 않음
+            }
+            
+            if(stack.isEmpty()) sb.append("0 "); // 레이저 신호가 어느 탑에도 수신 불가
+            else sb.append(stack.peek()[0] + " "); // 레이저 신호가 닿을때
+            
+            stack.push(new int[] {i, top});
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+
+```
+
+---
+
+참고: https://moonsbeen.tistory.com/204
+
+---
+
+![image](https://github.com/user-attachments/assets/aafcb5d2-542f-4da3-9038-1a6b961ea3c8)
