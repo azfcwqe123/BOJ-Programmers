@@ -28,3 +28,66 @@
 
  <p>1로 시작하는 입력에 대해서 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$a$</span></mjx-container>와 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$b$</span></mjx-container>가 같은 집합에 포함되어 있으면 "<code>YES</code>" 또는 "<code>yes</code>"를, 그렇지 않다면 "<code>NO</code>" 또는 "<code>no</code>"를 한 줄에 하나씩 출력한다.</p>
 
+---
+
+Union&Find 
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    static int[] unf;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        unf = new int[n+1];
+        
+        for(int i=0; i<=n; i++) unf[i] = i;
+        
+        while(m-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            int ch = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            
+            if(ch == 0) Union(a, b);
+            
+            else {
+                if(Find(a) == Find(b)) sb.append("YES");
+                else sb.append("NO");
+                sb.append("\n");
+            }
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static void Union(int a, int b) {
+        int fa = Find(a);
+        int fb = Find(b);
+        
+        if(fa != fb) unf[fa] = fb;
+    }
+    
+    static int Find(int v) {
+        if(unf[v] == v) return v;
+        else return unf[v] = Find(unf[v]);
+    }
+}
+```
+서로소 집합을 구분할때 유용하게 쓰이는 알고리즘
+
+---
+
+![image](https://github.com/user-attachments/assets/979abb81-3472-4205-8c7b-10467b67bb84)
