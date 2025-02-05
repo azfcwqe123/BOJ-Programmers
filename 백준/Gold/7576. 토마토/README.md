@@ -220,6 +220,9 @@ class Main {
 ```
 
 ---
+참고하면 좋은 풀이: https://stdio-han.tistory.com/m/91
+- 내 풀이는 boolean ch을 이용해서 날짜를 셌는데, 위 블로그의 풀이는 토마토 지나간 위치에 1씩 더하면서 날짜를 센다.
 
+블로그의 풀이가 더 직관적이고 다른 BFS 문제를 풀때도 유용한 풀이인거같다
 
 ![image](https://github.com/user-attachments/assets/e601f354-3b8c-4ba0-9171-dba0e5fd0582)
