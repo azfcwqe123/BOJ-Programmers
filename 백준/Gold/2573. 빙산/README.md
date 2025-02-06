@@ -188,3 +188,139 @@
 
  <p>첫 줄에 빙산이 분리되는 최초의 시간(년)을 출력한다. 만일 빙산이 다 녹을 때까지 분리되지 않으면 0을 출력한다.</p>
 
+---
+
+BFS(빙하 녹이기) + DFS(탐색)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static int[][] map;
+    public static boolean[][] visited;
+    public static int n, m;
+    public static int[] dx = {0, -1, 0, 1};
+    public static int[] dy = {1, 0, -1, 0};
+    
+    static class Point {
+        int x;
+        int y;
+        int cnt;
+        
+        Point(int x, int y, int cnt) {
+            this.x = x;
+            this.y = y;
+            this.cnt = cnt;
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<m; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        int ans = 0;
+        
+        while(true) {
+            
+            visited = new boolean[n][m];
+            
+            int cnt = 0;
+            for(int i=0; i<n; i++) {
+                for(int j=0; j<m; j++) {
+                    if(map[i][j] != 0 && !visited[i][j]) {
+                        DFS(i, j);
+                        cnt++;
+                    }
+                }
+            }
+            
+            if(cnt >= 2) { // 섬이 2개이상 생겼다면 성공
+                System.out.print(ans);
+                System.exit(0);
+            }
+            
+            if(cnt == 0) { // 섬이 2개이상 생기지 않고 다 녹아버리면 실패
+                System.out.print(0);
+                System.exit(0);
+            }
+            
+            else melt(); // 섬 녹이기
+            
+            ans++; // 빙하가 녹는데 걸린 시간
+        }
+        
+    }
+    
+    public static void melt() { // 빙하가 녹이기
+        
+        Queue<Point> Q = new LinkedList<>();
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(map[i][j] != 0) {
+                    int cnt = 0;
+                    
+                    for(int d=0; d<4; d++) {
+                        int nx = i + dx[d];
+                        int ny = j + dy[d];
+                        
+                        if(rangeCheck(nx, ny) && map[nx][ny] == 0 && cnt < map[i][j]) {
+                            cnt++;
+                        }
+                    }
+                    if(cnt != 0) Q.offer(new Point(i, j, cnt)); // 빙하 주변에 0이 없는 곳은 녹을것도 없기에 큐에 넣지 않는다.
+                }
+            }
+        }
+        
+        while(!Q.isEmpty()) { // 큐를 꺼내서, 빙하에 인접한 0 개수만큼 빙하를 녹여준다. (큐에 넣어서 한번에 처리하는게 핵심. 큐에 넣지않고 순서대로 빙하를 지우면 빙하에 0이 2개만 인접해있었는데 3개로 늘어나는 경우도 생김)
+            Point cur = Q.poll();
+            map[cur.x][cur.y] -= cur.cnt;
+        }
+    }
+    
+    public static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && ny >= 0 && nx < n && ny < m;
+    }
+    
+    public static void DFS(int i, int j) { // 탐색
+        
+        visited[i][j] = true;
+        
+        for(int d=0; d<4; d++) {
+            int nx = i + dx[d];
+            int ny = j + dy[d];
+            
+            if(rangeCheck(nx, ny) && map[nx][ny] != 0 && !visited[nx][ny]) {
+                visited[nx][ny] = true;
+                DFS(nx, ny);
+            }
+        }
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/ce779d6b-43d0-4d5d-b16e-c2c9d64c486e)
