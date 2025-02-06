@@ -70,3 +70,125 @@
 
  <p>첫째 줄에 얻을 수 있는 안전 영역의 최대 크기를 출력한다.</p>
 
+
+---
+
+백트래킹 완전 탐색 + BFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int[][] board;
+    static boolean[][] visited;
+    static int n, m, ans = 0;
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, -1, 0, 1};
+    
+    static class Virus {
+        int x;
+        int y;
+        
+        Virus(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        board = new int[n][m];
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<m; j++) {
+                board[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        DFS(0);
+        
+        System.out.print(ans);
+    }
+    
+    // 백트래킹, 완전탐색
+    static void DFS(int depth) {
+        
+        if(depth == 3) {
+            ans = Math.max(ans, BFS());
+            return;
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(board[i][j] == 0) {
+                    board[i][j] = 1;
+                    DFS(depth + 1);
+                    board[i][j] = 0;
+                }
+            }
+        }
+    }
+    
+    static int BFS() {
+        Queue<Virus> Q = new LinkedList<>();
+        
+        visited = new boolean[n][m];
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(board[i][j] == 2) Q.offer(new Virus(i, j)); // 바이러스 추가
+                if(board[i][j] != 0) visited[i][j] = true; // 벽이든, 바이러스든 true 방문 체크(나중에 false로 체크하는 것들이 전염 안된부분)
+            }
+        }
+        
+        while(!Q.isEmpty()) {
+            Virus cur = Q.poll();
+            
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+                
+                if(rangeCheck(nx, ny) && board[nx][ny] == 0 && !visited[nx][ny]) { // 방문하지 않았고, 0인곳은 전염시킴
+                    visited[nx][ny] = true;
+                    Q.offer(new Virus(nx, ny));
+                } 
+            }
+        }
+         
+        int cnt = 0; // false로 된곳은 바이러스 전염 안된곳
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<m; j++) {
+                if(!visited[i][j]) cnt++;
+            }
+        }
+        
+        return cnt;
+        
+    }
+    
+    static boolean rangeCheck(int nx, int ny) {
+        return nx >= 0 && ny >= 0 && nx < n && ny < m;
+    }
+}
+
+
+```
+완전 탐색을 해야하는 문제라서 어떻게 완전탐색을 할까 생각을 하다가, 배열로 2차원 배열을 브루트포스 알고리즘으로 완전탐색 하기엔 아닌것같아서 블로그를 찾아봤다.
+
+https://stdio-han.tistory.com/280 백트래킹으로 완전 탐색하는건 여기서 참고했고, 나머지는 내가 코드를 짜며 완성하였다
+
+---
+![image](https://github.com/user-attachments/assets/0a5c08a8-bf03-434b-a233-ca3997cce1a3)
+
