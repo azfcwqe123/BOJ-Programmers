@@ -8,6 +8,7 @@ class Main {
     static StringBuilder sb = new StringBuilder();
     static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
     static int[] dist;
+    static boolean[] visited;
     static int INF = (20000 - 1) * 10 + 1;
     
     static class Node implements Comparable<Node> {
@@ -34,6 +35,7 @@ class Main {
         int start = Integer.parseInt(br.readLine());
         
         dist = new int[n+1];
+        visited = new boolean[n+1];
         Arrays.fill(dist, INF);
         
         for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
@@ -67,11 +69,14 @@ class Main {
         while(!pQ.isEmpty()) {
             Node cur = pQ.poll();
             
-            for(Node next : graph.get(cur.v)) {
-                if(dist[next.v] > dist[cur.v] + next.cost) {
-                    dist[next.v] = dist[cur.v] + next.cost;
-                    pQ.offer(new Node(next.v, dist[next.v]));
-                }
+            if(!visited[cur.v]) {
+                visited[cur.v] = true;
+                   for(Node next : graph.get(cur.v)) {
+                    if(dist[next.v] > dist[cur.v] + next.cost) {
+                        dist[next.v] = dist[cur.v] + next.cost;
+                        pQ.offer(new Node(next.v, dist[next.v]));
+                    }
+                }    
             }
         }
     }
