@@ -28,3 +28,101 @@
 
  <p>첫째 줄에 출발 도시에서 도착 도시까지 가는데 드는 최소 비용을 출력한다.</p>
 
+---
+
+다익스트라 알고리즘(중요)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int[] dist;
+    static boolean[] visited;
+    static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
+    static int INF = (1000 - 1) * 100000 + 1;
+    
+    static class Node implements Comparable<Node>{
+        int v;
+        int cost;
+        
+        Node(int v, int cost) {
+            this.v = v;
+            this.cost = cost;
+        }
+        
+        public int compareTo(Node ob) {
+            return this.cost - ob.cost;
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+        
+        visited = new boolean[n+1];
+        dist = new int[n+1];
+        Arrays.fill(dist, INF);
+        
+        for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+        
+        for(int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            
+            graph.get(s).add(new Node(e, cost));
+        }
+        
+        st = new StringTokenizer(br.readLine());
+            
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+        
+        dijkst(start);
+        
+        System.out.print(dist[end]);
+    }
+    
+    static void dijkst(int start) {
+        PriorityQueue<Node> pQ = new PriorityQueue<>();
+        dist[start] = 0;
+        pQ.offer(new Node(start, 0));
+        
+        while(!pQ.isEmpty()) {
+            Node cur = pQ.poll();
+            
+            if(!visited[cur.v]) { // 방문여부가 없으면 시간초과가 발생한다.
+                visited[cur.v] = true;
+                
+                for(Node next : graph.get(cur.v)) {
+                    if(dist[next.v] > dist[cur.v] + next.cost) {
+                        dist[next.v] = dist[cur.v] + next.cost;
+                        pQ.offer(new Node(next.v, dist[next.v]));
+                    }
+                }
+            }
+            
+        }
+    }
+    
+}
+
+
+```
+
+그 전에 다익스트라 알고리즘을 2문제 정도 풀었었는데, 이번 문제를 계기로 다익스트라 알고리즘이 어떤 원리로 돌아가는지 제대로 알 수 있는 기회를 가졌다.
+
+다른 다익스트라 알고리즘들은 방문 여부를 쓰지 않아도 문제가 풀렸는데, 따로 다시 풀어봐야겠다
+
+참고: https://dy-coding.tistory.com/entry/%EB%B0%B1%EC%A4%80-1916%EB%B2%88-%EC%B5%9C%EC%86%8C%EB%B9%84%EC%9A%A9-%EA%B5%AC%ED%95%98%EA%B8%B0-java 
+
+---
+
+![image](https://github.com/user-attachments/assets/da85fb1a-9ca8-4fef-8902-e15d123b54bf)
