@@ -133,6 +133,94 @@ class Main {
 
 ---
 
+방문여부추가
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int[] dist;
+    static boolean[] visited;
+    static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
+    static int INF = 50000 * 1000 + 1;
+    
+    static class Node implements Comparable<Node> {
+        int v;
+        int cost;
+        
+        Node(int v, int cost) {
+            this.v = v;
+            this.cost = cost;
+        }
+        
+        @Override
+        public int compareTo(Node ob) {
+            return this.cost - ob.cost;
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        visited = new boolean[n+1];
+        dist = new int[n+1];
+        Arrays.fill(dist, INF);
+        
+        for(int i=0; i<=n; i++) graph.add(new ArrayList<>());
+        
+        for(int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            
+            graph.get(s).add(new Node(e, cost));
+            graph.get(e).add(new Node(s, cost));
+        }
+        
+        dijkst();
+        
+        System.out.print(dist[n]);
+        
+    }
+    
+    static void dijkst() {
+        PriorityQueue<Node> pQ = new PriorityQueue<>();
+        pQ.offer(new Node(1, 0));
+        dist[1] = 0;
+        
+        while(!pQ.isEmpty()) {
+            Node cur = pQ.poll();
+            
+            if(!visited[cur.v]) {
+                visited[cur.v] = true;
+                   for(Node next : graph.get(cur.v)) {
+                        if(dist[next.v] > dist[cur.v] + next.cost) {
+                            dist[next.v] = dist[cur.v] + next.cost;
+                            pQ.offer(new Node(next.v, dist[next.v]));
+                        }
+                }
+            }   
+        }
+        
+    }
+    
+}
+
+
+```
+
+---
+
 이론 참고: https://velog.io/@zirryo/Algorithm-%EB%8D%B0%EC%9D%B4%ED%81%AC%EC%8A%A4%ED%8A%B8%EB%9D%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
 
 풀이 참고: https://jaewoo2233.tistory.com/71
