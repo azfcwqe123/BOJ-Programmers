@@ -8,7 +8,7 @@ class Main {
     static StringBuilder sb = new StringBuilder();
     static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
     static int[] dist;
-    static int INF = 20000 * 10 + 1;
+    static int INF = (20000 - 1) * 10 + 1;
     
     static class Node implements Comparable<Node> {
         int v;
