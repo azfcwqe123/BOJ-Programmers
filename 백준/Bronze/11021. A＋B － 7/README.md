@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14600 KB, 시간: 116 ms
+메모리: 2020 KB, 시간: 4 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 10월 8일 22:34:30
+2025년 2월 9일 01:01:58
 
 ### 문제 설명
 
@@ -28,68 +28,3 @@
 
  <p>각 테스트 케이스마다 "Case #x: "를 출력한 다음, A+B를 출력한다. 테스트 케이스 번호는 1부터 시작한다.</p>
 
-
----
-
-첫번째 풀이
-
-```java
-import java.io.*;
-import java.util.*;
-
-class Main {
-	public static void main (String[] args) throws IOException { 
-	    
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-	    int n = Integer.parseInt(br.readLine());
-	    
-	    StringBuilder sb = new StringBuilder();
-	    
-	    for(int i=0; i<n; i++) {
-	        StringTokenizer st = new StringTokenizer(br.readLine());
-	        int a = Integer.parseInt(st.nextToken());
-	        int b = Integer.parseInt(st.nextToken());
-	        
-	        sb.append("Case #" + (i+1) + ": " + (a+b)).append("\n");
-	    }
-	    
-	    System.out.print(sb);
-	    
-	}
-}   
-
-
-```
-
-두번째 풀이 (String.format() 이)
-
-```java
-import java.io.*;
-import java.util.*;
-
-class Main {
-	public static void main (String[] args) throws IOException {
-	    
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-	    int n = Integer.parseInt(br.readLine());
-	    
-	    StringBuilder sb = new StringBuilder();
-	    
-	    for(int i=0; i<n; i++) {
-	        StringTokenizer st = new StringTokenizer(br.readLine());
-	        int a = Integer.parseInt(st.nextToken());
-	        int b = Integer.parseInt(st.nextToken());
-	        
-	        String str = String.format("Case #%d: %d",i+1, a+b);
-	        sb.append(str).append('\n');
-	    }
-	    
-	    System.out.print(sb);
-	    
-	}
-}   
-
-
-```
