@@ -123,7 +123,17 @@ class Main {
 
 참고: https://kloong.tistory.com/entry/%EC%95%BC%EB%A7%A4-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-Kruskal-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-MST-%EC%B0%BE%EA%B8%B0-%EB%B0%B1%EC%A4%80-1197-%EC%B5%9C%EC%86%8C-%EC%8A%A4%ED%8C%A8%EB%8B%9D-%ED%8A%B8%EB%A6%AC
 
-블로그가 설명 정말 잘해놓았음
+블로그가 설명 굳
+
+![image](https://github.com/user-attachments/assets/6f4f2dcc-2adf-485b-a231-31094fb549e8)
+
+스패닝 트리란? -> 그래프 내의 모든 정점을 포함하지만 사이클이 없는 트리로, 신장 트리라고도 한다
+
+최소 스패닝 트리란? -> 모든 정점을 연결하는 트리 중에서 간선들의 가중치 합이 최소가 되는 트리
+
+&nbsp;
+
+\+ 패닝 트리든 최소 스패닝 트리든, 간선의 수는 항상 v-1개이다. (v는 정점의 개수)
 
 ---
 
