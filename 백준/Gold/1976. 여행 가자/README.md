@@ -28,3 +28,69 @@
 
  <p>첫 줄에 가능하면 YES 불가능하면 NO를 출력한다.</p>
 
+---
+
+유니온 파인드
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int[] unf;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+        unf = new int[n+1];
+        
+        for(int i=1; i<=n; i++) unf[i] = i;
+        
+        for(int i=1; i<=n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=1; j<=n; j++) {
+                int ch = Integer.parseInt(st.nextToken());
+                if(ch == 1) Union(i, j);
+            }
+        }
+        
+        st = new StringTokenizer(br.readLine());
+        int start = Find(Integer.parseInt(st.nextToken())); // 시작점
+        for(int i=1; i<m; i++) {
+            int now = Integer.parseInt(st.nextToken()); // 시작점과 모두 연결돼있어야함
+            
+            if(start != Find(now)) {
+                System.out.print("NO");
+                System.exit(0);
+            }
+        }
+        
+        System.out.print("YES");
+        
+    } 
+    
+    static void Union(int i, int j) {
+        
+        int fa = Find(i);
+        int fb = Find(j);
+        
+        if(fa != fb) unf[fa] = fb;
+    }
+    
+    static int Find(int v) {
+        if(unf[v] == v) return v;
+        else return unf[v] = Find(unf[v]);
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/8f5358d9-477b-400e-8003-e6bd0ff25925)
