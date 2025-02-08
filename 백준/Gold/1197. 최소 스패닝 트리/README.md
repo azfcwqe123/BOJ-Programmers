@@ -30,3 +30,101 @@
 
  <p>첫째 줄에 최소 스패닝 트리의 가중치를 출력한다.</p>
 
+---
+
+크루스칼 알고리즘
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Node implements Comparable<Node> {
+        int node1;
+        int node2;
+        long cost;
+        
+        Node(int node1, int node2, long cost) {
+            this.node1 = node1;
+            this.node2 = node2;
+            this.cost = cost;
+        }
+        
+        @Override
+        public int compareTo(Node ob) {
+            if(this.cost > ob.cost) return 1;
+            else if(this.cost < ob.cost) return -1;
+            else return 0;
+        }
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int[] unf;
+
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int v = Integer.parseInt(st.nextToken());
+        int e = Integer.parseInt(st.nextToken());
+        
+        unf = new int[v+1];
+        for(int i=1; i<=v; i++) unf[i] = i;
+        
+        PriorityQueue<Node> pQ = new PriorityQueue<>();
+        
+        while(e-- > 0) {
+            
+            st = new StringTokenizer(br.readLine());
+            int node1 = Integer.parseInt(st.nextToken());
+            int node2 = Integer.parseInt(st.nextToken());
+            long cost = Long.parseLong(st.nextToken());
+            
+            pQ.offer(new Node(node1, node2, cost));
+        }
+        
+        int cnt = 0;
+        long ans = 0;
+        
+        while(!pQ.isEmpty()) {
+            Node cur = pQ.poll();
+            
+            if(Find(cur.node1) != Find(cur.node2)) { // 같은 집합에 연결하면 사이클이 돌아버림.
+                Union(cur.node1, cur.node2); // 같은 집합이 아니라면 노드를 연결시켜준다.
+                ans += cur.cost;
+                cnt++;
+                
+                if(cnt == v-1) break; // 최소 스패닝 트리의 성질 이용(간선이 정점의 v-1개여야 사이클이 돌지않는다. v개면 사이클이 돌 수 있다.)
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+    static void Union(int node1, int node2) {
+        int fa = Find(node1);
+        int fb = Find(node2);
+        
+        if(fa != fb) unf[fa] = fb;
+    }
+    
+    static int Find(int e) {
+        if(unf[e] == e) return e;
+        else return unf[e] = Find(unf[e]);
+    }
+}
+
+
+```
+
+참고: https://kloong.tistory.com/entry/%EC%95%BC%EB%A7%A4-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-Kruskal-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-MST-%EC%B0%BE%EA%B8%B0-%EB%B0%B1%EC%A4%80-1197-%EC%B5%9C%EC%86%8C-%EC%8A%A4%ED%8C%A8%EB%8B%9D-%ED%8A%B8%EB%A6%AC
+
+블로그가 설명 정말 잘해놓았음
+
+---
+
+
