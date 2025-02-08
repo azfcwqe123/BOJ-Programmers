@@ -137,4 +137,102 @@ class Main {
 
 ---
 
+프림 알고리즘
 
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Node implements Comparable<Node> {
+ 
+        int to;
+        long cost;
+        
+        Node(int to, long cost) {
+            this.to = to;
+            this.cost = cost;
+        }
+        
+        @Override
+        public int compareTo(Node ob) {
+            if(this.cost > ob.cost) return 1;
+            else if(this.cost < ob.cost) return -1;
+            else return 0;
+        }
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
+    static boolean[] visited;
+    static long ans = 0;
+    static int v, e, cnt = 0;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        v = Integer.parseInt(st.nextToken());
+        e = Integer.parseInt(st.nextToken());
+        
+        visited = new boolean[v+1];
+        for(int i=0; i<=v; i++) graph.add(new ArrayList<>());
+        
+        for(int i=0; i<e; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            long cost = Long.parseLong(st.nextToken());
+            
+            graph.get(a).add(new Node(b, cost));
+            graph.get(b).add(new Node(a, cost));
+        }
+        
+        prim(1);
+        
+        System.out.print(ans);
+    }
+    
+    static void prim(int start) {
+        PriorityQueue<Node> pQ = new PriorityQueue<>();
+        
+        pQ.offer(new Node(start, 0));
+        
+        while(!pQ.isEmpty()) {
+            Node cur = pQ.poll();
+            
+            int node = cur.to;
+            long cost = cur.cost;
+            
+            if(visited[node]) continue;
+            
+            visited[node] = true;
+            ans += cost;
+            
+            /*cnt++;
+            if(cnt == v) break;*/ // 모든 정점을 돌았을때. 최소 스패닝 트리는 v-1개이지만, 이건 간선이 아니기 때문에 v로 놓았음
+            // 이 코드가 추가돼도 정답은 똑같다.
+            
+            for(Node next : graph.get(node)) {
+                if(!visited[next.to]) {
+                    pQ.offer(next);
+                }
+            }
+        }
+    }
+}
+
+```
+
+프림 알고리즘 : https://www.weeklyps.com/entry/%ED%94%84%EB%A6%BC-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-Prims-algorithm
+
+다익스트라 알고리즘과 비슷하지만, 차이가 있다.
+
+&nbsp;
+
+프림 알고리즘: 그래프의 모든 노드를 연결하는 최소 신장 트리를 구할 때 사용
+
+다익스트라 알고리즘: 한 지점에서 다른 지점으로 가는 최소 비용을 구할때 사용
