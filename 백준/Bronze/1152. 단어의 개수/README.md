@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 20136 KB, 시간: 244 ms
+메모리: 1968 KB, 시간: 8 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 10월 12일 18:22:36
+2025년 2월 9일 01:24:44
 
 ### 문제 설명
 
@@ -26,49 +26,3 @@
 
  <p>첫째 줄에 단어의 개수를 출력한다.</p>
 
----
-
-첫번째 풀이, trim() 이용
-
-```java
-import java.io.*;
-import java.util.*;
-
-class Main {
-	public static void main (String[] args) throws IOException {
-	 
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-	    String str = br.readLine().trim();
-	    
-	    if(str.length() == 0) System.out.print(0); // 공백만 입력하면 결과가 1이 나오는 현상이 발생하기 때문에, 0을 따로 처리해줘야함
-	    else System.out.print(str.split(" ").length);
-	    
-	    
-	}
-}   
-
-```
-
----
-
-두번째 풀이, st.countTokens() 이용
-```java
-import java.io.*;
-import java.util.*;
-
-class Main {
-	public static void main (String[] args) throws IOException {
-	 
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-	    StringTokenizer st = new StringTokenizer(br.readLine());
-	    
-	    System.out.print(st.countTokens());
-	    
-	}
-	
-}   
-```
-
-실행 시간: 1번 풀이(272ms) > 2번 풀이(242ms) 
