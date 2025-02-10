@@ -168,7 +168,7 @@ class Main {
 }
 
 class Stack {
-    int[] arr = new int[100001];
+    int[] arr = new int[10001];
     
     int cnt = 0;
     
