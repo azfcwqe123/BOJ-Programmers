@@ -131,6 +131,75 @@ class Main {
 
 ---
 
+복습 겸 재풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        Stack stack = new Stack();
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        while(n-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            
+            String ch = st.nextToken();
+            
+            if(ch.equals("push")) stack.push(Integer.parseInt(st.nextToken()));
+            else if(ch.equals("pop")) sb.append(stack.pop() + "\n");
+            else if(ch.equals("size")) sb.append(stack.size() + "\n");
+            else if(ch.equals("empty")) sb.append(stack.empty() + "\n");
+            else if(ch.equals("top")) sb.append(stack.top() + "\n");
+
+        }
+        
+        System.out.print(sb);
+    }
+    
+}
+
+class Stack {
+    int[] arr = new int[100001];
+    
+    int cnt = 0;
+    
+    void push(int value) {
+        arr[cnt++] = value;
+    }
+    
+    int pop() {
+        if(cnt == 0) return -1;
+        else return arr[--cnt];
+    }
+    
+    int size() {
+        return cnt;
+    }
+    
+    int empty() {
+        return cnt == 0 ? 1 : 0;
+    }
+    
+    int top() {
+        if(cnt == 0) return -1;
+        else return arr[cnt-1];
+    }
+}
+
+
+```
+
+---
+
 참고 블로그 : https://st-lab.tistory.com/175
 
 ![image](https://github.com/user-attachments/assets/4f478c74-dba6-4f72-a617-939a8edd1f16)
