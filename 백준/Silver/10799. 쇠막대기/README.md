@@ -49,3 +49,49 @@
 
  <p>잘려진 조각의 총 개수를 나타내는 정수를 한 줄에 출력한다.</p>
 
+---
+
+스택
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        
+        Stack<Character> stack = new Stack<>();
+        
+        int ans = 0;
+        
+        for(int i=0; i<str.length(); i++) {
+            
+            if(str.charAt(i) == '(') stack.push('('); // 막대기 투입
+            
+            else if(str.charAt(i) == ')') { // 레이저인지, 막대기의 끝 부분인지 판단
+                stack.pop(); // 일단 뺀다
+                if(str.charAt(i-1) == '(') ans += stack.size(); // ()이면 레이저
+                else ans +=1; // ))이면 막대기 끝부분
+            }
+        }
+        
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/a30a4da8-3124-488c-a1b4-72bd3bba81a9)
+
