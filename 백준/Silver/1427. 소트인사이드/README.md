@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14276 KB, 시간: 108 ms
+메모리: 1116 KB, 시간: 0 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 12월 21일 17:29:54
+2025년 2월 11일 21:21:44
 
 ### 문제 설명
 
@@ -25,40 +25,4 @@
 ### 출력 
 
  <p>첫째 줄에 자리수를 내림차순으로 정렬한 수를 출력한다.</p>
-
----
-
-정말 간단한 문제
-
-```java
-import java.util.*;
-import java.io.*;
-
-class Main {
-    
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringTokenizer st;
-    public static void main(String[] args) throws IOException {
-        
-        String str = br.readLine();
-        
-        ArrayList<Integer> list = new ArrayList<>();
-        
-        for(char x : str.toCharArray()) list.add(x - '0');
-        
-        list.sort((a,b) -> b - a);
-        
-        for(int x : list) System.out.print(x); 
-        
-    }
-}
-
-
-
-
-```
-
----
-
-![image](https://github.com/user-attachments/assets/6cd67b7b-335e-4db3-a199-b93c6423d8cd)
 
