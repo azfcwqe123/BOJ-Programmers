@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 23884 KB, 시간: 460 ms
+메모리: 2404 KB, 시간: 20 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 12월 21일 15:57:27
+2025년 2월 11일 19:57:20
 
 ### 문제 설명
 
@@ -33,39 +33,3 @@
 
  <p>조건에 따라 정렬하여 단어들을 출력한다.</p>
 
----
-
-```java
-import java.util.*;
-import java.io.*;
-
-class Main {
-    
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringTokenizer st;
-    public static void main(String[] args) throws IOException {
-        
-        int n = Integer.parseInt(br.readLine());
-        
-        HashSet<String> set = new HashSet<>();
-        
-        while(n-- > 0) set.add(br.readLine());
-        
-        ArrayList<String> list = new ArrayList<>(set); // 배열리스트 생성과 동시에 해시셋 요소 넣기
-        
-        Collections.sort(list, (a, b) -> {
-            if(a.length() == b.length()) return a.compareTo(b);
-            return a.length() - b.length();
-        });
-        
-        for(String x : list) System.out.println(x);
-        
-    }
-}
-
-
-```
-
-첫번째 틀린 이유는 중복 제거를 안 했음. 문제를 똑바로 읽지 않았다.
-
-![image](https://github.com/user-attachments/assets/f762f090-d8f0-4461-a18d-529e061705f0)
