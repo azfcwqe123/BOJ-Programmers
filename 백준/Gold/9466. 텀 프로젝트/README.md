@@ -59,3 +59,81 @@
 
  <p>각 테스트 케이스마다 한 줄에 출력하고, 각 줄에는 프로젝트 팀에 속하지 못한 학생들의 수를 나타내면 된다.</p>
 
+---
+
+그래프 + DFS
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    static int[] arr;
+    static boolean[] visited;
+    static boolean[] finished;
+    static int ans;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            int k = Integer.parseInt(br.readLine());
+            
+            visited = new boolean[k+1]; // 재방문 체크용
+            finished = new boolean[k+1]; // 탐색 여부
+            arr = new int[k+1];
+            ans = 0;
+            
+            st = new StringTokenizer(br.readLine());
+            for(int i=1; i<=k; i++) {
+                arr[i] = Integer.parseInt(st.nextToken());
+            }
+            
+            for(int i=1; i<=k; i++) {
+                DFS(i);
+            }
+            
+            System.out.println(k - ans); // 전체인원 - 사이클에 포함된 인원
+        }
+    }
+    
+    static void DFS(int x) {
+        
+        if(finished[x]) return; // 탐색이 이미 끝났다면 리턴
+        
+        if(visited[x]) { // 재방문 한다면 (사이클이 있다는 뜻) 
+            finished[x] = true;
+            ans++;
+        }    
+        
+        visited[x] = true; // 방문
+        DFS(arr[x]);
+        finished[x] = true; // 탐색 끝
+        
+    }
+    
+    
+}
+
+
+```
+생각보다 어렵다.
+
+문제를 풀다가 모르겠으면 스택을 그려가면서도 풀어보자.
+
+
+
+---
+
+![image](https://github.com/user-attachments/assets/73b68513-a0f3-434f-99c0-201b44aa3d34)
+
+---
+
+![image](https://github.com/user-attachments/assets/80116a0e-d973-4d75-bcbf-3baf1db79238)
+
