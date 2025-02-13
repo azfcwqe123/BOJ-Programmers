@@ -34,3 +34,116 @@
 
  <p>첫째 줄에 최단 거리를 출력한다. 불가능할 때는 -1을 출력한다.</p>
 
+---
+
+BFS, 최단경로
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Point {
+        int x;
+        int y;
+        int time;
+        int destoryed;
+        boolean sun;
+        
+        Point(int x, int y, int time, int destoryed, boolean sun) {
+            this.x = x;
+            this.y = y;
+            this.time = time;
+            this.destoryed = destoryed;
+            this.sun = sun;
+        }
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int n, m, k;
+    static int[][] map;
+    static boolean[][][] visited;
+    
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, -1, 0, 1};
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        
+        map = new int[n][m];
+        visited = new boolean[n][m][k+1];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<m; j++) {
+                map[i][j] = str.charAt(j) - '0';
+            }
+        }
+        
+        System.out.print(BFS());
+    }
+    
+    static int BFS() {
+        Queue<Point> pQ = new LinkedList<>();
+        pQ.offer(new Point(0, 0, 1, 0, true));
+        visited[0][0][0] = true;
+        
+        while(!pQ.isEmpty()) {
+            Point cur = pQ.poll();
+            
+            if(cur.x == n-1 && cur.y == m-1) return cur.time;
+            
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+                
+                if(!rangeCheck(nx, ny)) continue;
+                
+                // 밤, 밤에는 벽 파괴 불가능
+                if(!cur.sun) {
+                    if(map[nx][ny] == 1) { // 밤인데 벽이 있으면 제자리
+                        pQ.offer(new Point(cur.x, cur.y, cur.time + 1, cur.destoryed, true)); // 제자리 + 아침으로 바꿔준다
+                    }
+                    else if(map[nx][ny] == 0 && !visited[nx][ny][cur.destoryed]) { // 벽이 없으면 이동 
+                        pQ.offer(new Point(nx, ny, cur.time + 1, cur.destoryed, true));
+                        visited[nx][ny][cur.destoryed] = true;
+                    }
+                }
+                
+                // 낮, 낮에는 벽 파괴 가능
+                else {
+                    if(map[nx][ny] == 1 && cur.destoryed < k && !visited[nx][ny][cur.destoryed + 1]) { // 벽이 있고, 벽을 지나간적 없다면 부순다. (최단경로 성질에 의해, 벽을 부순곳 탐색하는건 시간낭비)
+                        pQ.offer(new Point(nx, ny, cur.time + 1, cur.destoryed + 1, false));
+                        visited[nx][ny][cur.destoryed + 1] = true;
+                    }
+                    else if(map[nx][ny] == 0 && !visited[nx][ny][cur.destoryed]) { // 벽이 없으면 이동
+                        pQ.offer(new Point(nx, ny, cur.time + 1, cur.destoryed, false));
+                        visited[nx][ny][cur.destoryed] = true;
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    static boolean rangeCheck(int nx, int ny) {
+        return nx>=0 && ny>=0 && nx<n && ny<m;
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/cf71a7b2-0975-4454-9c49-e25b2d1eba9d)
+
