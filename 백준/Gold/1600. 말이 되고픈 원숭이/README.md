@@ -70,3 +70,263 @@
 
  <p>첫째 줄에 원숭이의 동작수의 최솟값을 출력한다. 시작점에서 도착점까지 갈 수 없는 경우엔 -1을 출력한다.</p>
 
+---
+
+BFS, 최단경로
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Point {
+        int x;
+        int y;
+        int jump;
+        int time;
+        
+        Point(int x, int y, int jump, int time) {
+            this.x = x;
+            this.y = y;
+            this.jump = jump;
+            this.time = time;
+        }
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int w, h, k;
+    static int[][] map;
+    static boolean[][][] visited;
+    
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, -1, 0, 1};
+    
+    static int[] hdx = {-2, -2, -1, -1, 1, 1, 2, 2};
+    static int[] hdy = {-1, 1, -2, 2, -2, 2, -1, 1};
+    
+    public static void main(String[] args) throws IOException {
+        
+        k = Integer.parseInt(br.readLine());
+        
+        st = new StringTokenizer(br.readLine());
+        w = Integer.parseInt(st.nextToken());
+        h = Integer.parseInt(st.nextToken());
+        
+        map = new int[h][w];
+        visited = new boolean[h][w][k+1];
+        
+        for(int i=0; i<h; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<w; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        System.out.println(BFS());
+        
+    }
+    
+    static int BFS() {
+        Queue<Point> pQ = new LinkedList<>();
+        pQ.offer(new Point(0, 0, 0, 0));
+        visited[0][0][0] = true;
+        
+        while(!pQ.isEmpty()) {
+            Point cur = pQ.poll();
+            
+            if(cur.x == h-1 && cur.y == w-1) return cur.time;
+            
+            // 제자리에서 사방면 이동
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+                    
+                if(!rangeCheck(nx, ny)) continue;
+                    
+                if(map[nx][ny] == 0 && !visited[nx][ny][cur.jump]) {
+                    pQ.offer(new Point(nx, ny, cur.jump, cur.time + 1));
+                    visited[nx][ny][cur.jump] = true;
+                }
+            }
+            
+            // 점프 횟수가 남은 원숭이는 제자리에서 팔방면도 이동
+            if(cur.jump < k) {
+                
+                for(int d=0; d<8; d++) {
+                    int nx = cur.x + hdx[d];
+                    int ny = cur.y + hdy[d];
+                    
+                    if(!rangeCheck(nx, ny)) continue;
+                    
+                    if(map[nx][ny] == 0 && !visited[nx][ny][cur.jump + 1]) {
+                        pQ.offer(new Point(nx, ny, cur.jump + 1, cur.time + 1));
+                        visited[nx][ny][cur.jump + 1] = true;
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+    
+    static boolean rangeCheck(int nx, int ny) {
+        return nx>=0 && ny>=0 && nx<h && ny<w;
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/6d02b3ff-100a-402d-bc04-04f692523572)
+
+---
+
+오답 코드
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Point {
+        int x;
+        int y;
+        int jump;
+        int time;
+        
+        Point(int x, int y, int jump, int time) {
+            this.x = x;
+            this.y = y;
+            this.jump = jump;
+            this.time = time;
+        }
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int w, h, k;
+    static int[][] map;
+    static boolean[][][] visited;
+    
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, -1, 0, 1};
+    
+    static int[] hdx = {-2, -2, -1, -1, 1, 1, 2, 2};
+    static int[] hdy = {1, -1, 2, -2, 2, -2, 1, -1};
+    
+    public static void main(String[] args) throws IOException {
+        
+        k = Integer.parseInt(br.readLine());
+        
+        st = new StringTokenizer(br.readLine());
+        w = Integer.parseInt(st.nextToken());
+        h = Integer.parseInt(st.nextToken());
+        
+        map = new int[h][w];
+        visited = new boolean[h][w][k+1];
+        
+        for(int i=0; i<h; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<w; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        System.out.print(BFS());
+    }
+    
+    static int BFS() {
+        Queue<Point> pQ = new LinkedList<>();
+        pQ.offer(new Point(0, 0, 0, 0));
+        visited[0][0][0] = true;
+        
+        while(!pQ.isEmpty()) {
+            Point cur = pQ.poll();
+            
+            if(cur.x == h-1 && cur.y == w-1) return cur.time;
+            
+            if(cur.jump < k) { // 점프 가능한 원숭이는 제자리에서 '팔방면'만 이동
+                
+                for(int d=0; d<8; d++) {
+                    int nx = cur.x + hdx[d];
+                    int ny = cur.y + hdy[d];
+                    
+                    if(!rangeCheck(nx, ny)) continue;
+                    
+                    if(map[nx][ny] == 0 && !visited[nx][ny][cur.jump + 1]) {
+                        pQ.offer(new Point(nx, ny, cur.jump + 1, cur.time + 1));
+                        visited[nx][ny][cur.jump + 1] = true;
+                    }
+                }
+            }
+            
+            else { // 팔방면을 이동한 원숭이는 제자리에서 사방면을 이동하지 못하게됨.
+                for(int d=0; d<4; d++) {
+                    int nx = cur.x + dx[d];
+                    int ny = cur.y + dy[d];
+                    
+                    if(!rangeCheck(nx, ny)) continue;
+                    
+                    if(map[nx][ny] == 0 && !visited[nx][ny][cur.jump]) {
+                        pQ.offer(new Point(nx, ny, cur.jump, cur.time + 1));
+                        visited[nx][ny][cur.jump] = true;
+                    }
+                }
+            }
+            
+        }
+        
+        return -1;
+    }
+    
+    static boolean rangeCheck(int nx, int ny) {
+        return nx>=0 && ny>=0 && nx<h && ny<w;
+    }
+}
+
+
+```
+
+오답 코드 같은 경우, 아래와 같은 케이스에서 시작점에서부터 아예 움직이지 못하게된다.
+
+
+```
+2
+8 12
+0 0 0 0 0 0 0 0
+0 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 0
+0 1 1 0 0 0 0 0
+0 1 1 0 1 1 1 1
+0 1 1 0 1 1 1 1
+0 1 1 0 0 0 0 0
+0 1 1 0 1 1 1 0
+0 1 1 1 1 1 1 0
+1 1 0 0 0 0 1 1
+1 1 1 1 1 1 1 1
+1 1 1 0 1 1 0 0
+```
+
+오답 코드 같은 경우, 아래와 같은 케이스는 통과된다. 이유는 팔방면으로만 이동하기 때문
+
+```
+30
+7 10
+0 1 1 1 0 1 1
+1 1 0 1 1 1 0
+1 1 1 1 1 1 1
+1 1 1 1 1 0 1
+1 1 1 0 1 1 1
+1 0 1 1 1 1 1
+1 1 1 1 1 1 1
+1 1 0 1 1 1 1
+1 1 1 1 0 1 1
+1 1 1 1 1 1 0
+```
