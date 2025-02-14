@@ -38,3 +38,156 @@
 
  <p>첫째 줄에 가장 짧은 다리의 길이를 출력한다.</p>
 
+---
+
+BFS, 최단경로
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static class Point {
+        int x;
+        int y;
+        int time;
+        
+        // 최단 경로 탐색용
+        Point(int x, int y, int time) {
+            this.x = x;
+            this.y = y;
+            this.time = time;
+        }
+        
+        // 섬 번호 부여용
+        Point(int x, int y) {
+            this(x, y, 0);
+        }
+        
+    }
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static int n, ans = 10000000;
+    static int[][] map;
+    static boolean[][] visited;
+    static int setLandNum = 1; // 섬의 번호
+    
+    static int[] dx = {0, -1, 0, 1};
+    static int[] dy = {1, 0, -1, 0};
+    
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        map = new int[n][n];
+        visited = new boolean[n][n];
+        
+        // 맵 입력
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        // 섬에 번호 부여하기 
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(map[i][j] == 1 && !visited[i][j]) {
+                    setLand(i, j, setLandNum); // 섬의 번호를 1번부터 부여 시작
+                }
+            }
+        }
+        
+        // 다리 만들기
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(map[i][j] != 0) {
+                    visited = new boolean[n][n];
+                    makeBridge(i, j, map[i][j]); // map[i][j] = 현재 섬의 번호
+                }
+            }
+        }
+        
+        System.out.println(ans);
+    }
+    
+    static void setLand(int x, int y, int num) {
+        Queue<Point> pQ = new LinkedList<>();
+        pQ.offer(new Point(x, y));
+        map[x][y] = num;
+        visited[x][y] = true;
+        
+        while(!pQ.isEmpty()) {
+            Point cur = pQ.poll();
+            
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+                
+                if(!rangeCheck(nx, ny)) continue;
+                
+                if(map[nx][ny] == 1 && !visited[nx][ny]) {
+                    map[nx][ny] = num;
+                    visited[nx][ny] = true;
+                    pQ.offer(new Point(nx, ny));
+                }
+            }
+        }
+        setLandNum++; // 섬의 번호 다 부여했으면 다음 번호로
+    }
+    
+    static void makeBridge(int x, int y, int land) {
+        Queue<Point> pQ = new LinkedList<>();
+        pQ.offer(new Point(x, y));
+        
+        while(!pQ.isEmpty()) {
+            Point cur = pQ.poll();
+            
+            for(int d=0; d<4; d++) {
+                int nx = cur.x + dx[d];
+                int ny = cur.y + dy[d];
+                
+                if(!rangeCheck(nx, ny)) continue;
+                
+                // 다른 섬 발견
+                if(map[nx][ny] != 0 && map[nx][ny] != land) { 
+                    ans = Math.min(ans, cur.time); // 최솟값 갱신
+                    return; // 리턴
+                }
+                
+                // 다리 건설중
+                if(map[nx][ny] == 0 && !visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    pQ.offer(new Point(nx, ny, cur.time + 1));
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    static boolean rangeCheck(int nx, int ny) {
+        return nx>=0 && ny>=0 && nx<n && ny<n;
+    }
+    
+}
+
+
+```
+
+1. 초기에 모든 섬이 1로 주어진다. 이러면 각각의 섬을 탐색하기에 어려움이 생기니 고유의 섬 번호를 부여해주는게 좋다.
+
+2. 섬 번호 부여 -> 다리 만들기 순으로 알고리즘을 생각해낸다.
+---
+
+![image](https://github.com/user-attachments/assets/9fdbdc05-5a75-4861-847f-e03b4c1e66cb)
+
+---
+
+태그에 브루트포스 알고리즘이 없길래, 어떻게하지 고민하다가, 결국엔 브루트포스 알고리즘과 유사한 느낌을 내는 문제였다는걸 알았다.
+
+태그에 없는 알고리즘이어도 시도는 꼭 해보자
