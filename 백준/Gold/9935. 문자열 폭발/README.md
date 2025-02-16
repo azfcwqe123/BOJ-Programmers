@@ -42,3 +42,73 @@
 
  <p>첫째 줄에 모든 폭발이 끝난 후 남은 문자열을 출력한다.</p>
 
+---
+
+스택 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        String TNT = br.readLine();
+        
+        Stack<Character> stack = new Stack<>();
+        int TNT_Size = TNT.length();
+        
+        for(char x : str.toCharArray()) {
+            
+            stack.push(x);
+            
+            // 탐색 시작
+            if(stack.size() >= TNT_Size) {
+                
+                boolean flag = true;
+                
+                // 스택 끝에 모여있는 문자들과, TNT 문자열이 같은지 확인
+                for(int j=0; j<TNT.length(); j++) {
+                    if(stack.get(stack.size() - TNT_Size + j) != TNT.charAt(j)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                
+                // 같으면 제거(폭발)
+                if(flag) {
+                    for(int j=0; j<TNT_Size; j++) {
+                        stack.pop();
+                    }
+                }
+            }
+        }
+        
+        for(char x : stack) sb.append(x);
+        
+        System.out.print(sb.length() == 0 ? "FRULA" : sb);
+    }
+    
+}
+
+
+```
+풀이방법이 생각나지 않았다.
+
+근데 블로그 풀이를 보니 stack 자료구조에서 get()을 사용할 수 있다는 것이었다.
+
+여태까지 스택같은 자료구조에는 get() 메서드가 안 되는줄 알았는데, 좋은거 하나 배워갔다.
+
+
+---
+
+![image](https://github.com/user-attachments/assets/40b12826-c51c-4857-a2d9-aed27ddd2f67)
+
+
+참고: https://loosie.tistory.com/317
