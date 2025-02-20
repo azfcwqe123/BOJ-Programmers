@@ -38,3 +38,96 @@
 
  <p>10,000보다 작거나 같은 셀프 넘버를 한 줄에 하나씩 증가하는 순서로 출력한다.</p>
 
+---
+
+내 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        boolean[] arr = new boolean[10100];
+        
+        for(int i=1; i<10000; i++) {
+            arr[check(i)] = true;
+            if(!arr[i]) sb.append(i).append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static int check(int n) {
+        int sum = n;
+        
+        while(n > 0) {
+            sum += (n % 10);
+            n /= 10;
+        }
+        
+        return sum;
+    }
+    
+}
+
+
+```
+
+배열을 10100으로 설정한 이유: 9999은 9999 + 9 + 9 + 9 + 9의 생성자이므로, 최대범위가 10035이기 때문에 설정함.
+
+어차피 10000 넘어가는건 무시하면 되니 일단 담고 봤음. 아래와 같이 if문을 통해서 처리할 수도 있다.
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        boolean[] arr = new boolean[10001];
+        
+        for(int i=1; i<10000; i++) {
+            int tmp = check(i);
+            
+            if(tmp < 10000) arr[check(i)] = true;
+            
+            if(!arr[i]) sb.append(i).append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static int check(int n) {
+        int sum = n;
+        
+        while(n > 0) {
+            sum += (n % 10);
+            n /= 10;
+        }
+        
+        return sum;
+    }
+    
+}
+
+
+```
+
+---
+
+셀프넘버만 체크하기 위해서는 boolean 배열을 사용하는게 간편할것같다고 생각했다.
+
+다른사람들도 boolean 배열을 사용해서 푸는거 옳게 푼 것 같다.
+![image](https://github.com/user-attachments/assets/64718308-e6e4-4db0-b924-6c3b5066ed09)
