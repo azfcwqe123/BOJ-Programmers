@@ -3,7 +3,7 @@
 [문제 링크](https://www.acmicpc.net/problem/4673) 
 
 ### 성능 요약
-
+ 
 메모리: 14024 KB, 시간: 100 ms
 
 ### 분류
