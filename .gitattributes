@@ -1,2 +1,2 @@
-*.java linguist-language=Java
-*.sql linguist-language=SQL
+*.java linguist-vendored
+*.sql linguist-vendored
