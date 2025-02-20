@@ -128,3 +128,28 @@ Empty
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+---
+
+MYSQL
+
+```SQL
+SELECT NAME
+FROM ANIMAL_INS
+ORDER BY DATETIME
+LIMIT 1;
+```
+
+ORACLE
+
+```SQL
+SELECT NAME
+FROM (SELECT * FROM ANIMAL_INS ORDER BY DATETIME)
+WHERE ROWNUM = 1
+```
+
+인라인뷰를 사용한 이유는, ROWNUM을 통하여 원하는 값을 구하기 위해서임
+
+ORACLE에서는 입력된 순서대로 ROWNUM이 부여되기 때문에, 정렬을 하고 ROWNUM을 통하여 원하는 값을 구할 수 없다(섞여버린다는 뜻).
+
+그렇기 때문에 인라인뷰를 통해서 ROWNUM을 사용하는게 맞음.
