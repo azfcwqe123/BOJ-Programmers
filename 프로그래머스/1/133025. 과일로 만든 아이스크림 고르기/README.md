@@ -218,3 +218,29 @@ Empty
       </table>
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+---
+
+ON 
+
+```SQL
+SELECT *
+FROM FIRST_HALF A LEFT JOIN ICECREAM_INFO B ON A.FLAVOR = B.FLAVOR
+```
+
+![image](https://github.com/user-attachments/assets/b0bb5d3c-2a9b-46d7-962a-4389310ded00)
+
+---
+
+USING
+
+```SQL
+SELECT *
+FROM FIRST_HALF A LEFT JOIN ICECREAM_INFO B USING(FLAVOR)
+```
+
+![image](https://github.com/user-attachments/assets/9d8e6fd3-5e49-4f99-b3f8-d256a3209578)
+
+---
+
+USING 함수를 사용하면 동일 컬럼 중복을 제외할 수 있다.
