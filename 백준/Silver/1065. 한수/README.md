@@ -26,3 +26,147 @@
 
  <p>첫째 줄에 1보다 크거나 같고, N보다 작거나 같은 한수의 개수를 출력한다.</p>
 
+---
+
+내 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int ans = 0;
+        
+        for(int i=1; i<=n; i++) {
+            if(i < 10) ans++;
+            else if(check(String.valueOf(i))) ans++;
+        }
+        
+        System.out.print(ans);
+    }
+    
+    static boolean check(String tmp) {
+        
+        char[] arr = tmp.toCharArray();
+        
+        int a = arr[0]; // 첫째항
+        int d = (arr[1] - '0') - (arr[0] - '0'); // 등차
+        
+        for(int i=0; i<arr.length; i++) {
+            if(arr[i] != a + d * i) return false;
+        }
+        
+        return true;
+    }
+    
+}
+
+
+
+```
+
+---
+
+참고 풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int ans = 0;
+        
+        if(n < 100) { // 100 이하는 모두 각자리수가 등차수열을 이룬다.
+            System.out.print(n);
+            System.exit(0);
+        } else { // 문제의 조건은 1000이하의 자연수니, 백의 자릿수~일의 자릿수를 처리해준다.
+            ans = 99;
+            
+            for(int i=100; i<=n; i++) {
+                
+                int a = i / 100; // 백의 자릿수
+                int b = (i / 10) % 10; // 십의 자릿수
+                int c = i % 10; // 일의 자릿수
+                
+                if(b - a == c - b) ans++;
+            }
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+
+
+```
+
+---
+
+내풀이 + 참고풀이
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        int ans = 0;
+        
+        if(n < 100) {
+            System.out.print(n);
+            System.exit(0);
+        } else {
+            ans = 99;
+            for(int i=100; i<=n; i++) {
+                if(check(String.valueOf(i))) ans++;
+            }
+        }
+        
+        System.out.print(ans);
+    }
+    
+    static boolean check(String tmp) {
+        
+        char[] arr = tmp.toCharArray();
+        
+        int a = arr[0];
+        int d = (arr[1] - '0') - (arr[0] - '0');
+        
+        for(int i=0; i<arr.length; i++) {
+            if(arr[i] != a + d * i) return false;
+        }
+        
+        return true;
+    }
+    
+}
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/d3d8c4f9-9e96-4aec-872c-d128d48a873a)
+
+
