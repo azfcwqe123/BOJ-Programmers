@@ -32,3 +32,63 @@
 
 <p>수열은 사전 순으로 증가하는 순서로 출력해야 한다.</p>
 
+
+---
+
+백트래킹
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static int n, m;
+    static boolean[] visited;
+    static int[] arr;
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        visited = new boolean[n]; // 방문 여부
+        arr = new int[m]; // 깊이 우선 탐색 활용
+        
+        DFS(0);
+        
+        System.out.print(sb);
+    }
+    
+    static void DFS(int depth) {
+        
+        if(depth == m) {
+            for(int x : arr) {
+                sb.append(x + " ");
+            }
+            sb.append("\n");
+            return;
+        }
+        
+        for(int i=0; i<n; i++) {
+            if(!visited[i]) {
+                visited[i] = true;
+                arr[depth] = i+1;
+                DFS(depth + 1);
+                visited[i] = false;
+            }
+        }
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/a24c82ac-1b83-48f2-84af-e876ceffd4eb)
