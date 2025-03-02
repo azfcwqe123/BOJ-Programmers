@@ -26,3 +26,78 @@
 
  <p>첫째 줄에 A를 B번 곱한 수를 C로 나눈 나머지를 출력한다.</p>
 
+---
+
+분할정복, 재귀, O(logN)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        System.out.print(dfs(a, b, m));
+    }
+    
+    public static long dfs(int a, int b, int mod) {
+        
+        if(b==0) return 1;
+        long n = dfs(a, b/2, mod);
+        if(b % 2 == 0) return n * n % mod;
+        else return (n * n % mod) * a % mod;
+    }
+}
+```
+
+---
+
+틀린 풀이(메모리 초과), O(N)
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int sum = 0, A, B, C;
+    public static void main(String[] args) throws IOException {
+        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        A = Integer.parseInt(st.nextToken());
+        B = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        
+        dfs(B);
+    }
+    
+    public static void dfs(int n) {
+        
+        if(n==0) {
+            System.out.print(A);
+            return;
+        }
+        
+        A *= A;
+        A %= C;
+        dfs(n-1);
+    }
+}
+```
+
+---
+
+https://st-lab.tistory.com/237
+
+![image](https://github.com/user-attachments/assets/52dcca65-a305-4566-bbfc-9e1c556761bc)
+
