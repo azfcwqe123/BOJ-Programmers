@@ -39,3 +39,50 @@
 
 <p>두 번째 줄부터 수행 과정을 출력한다. 두 번째 줄부터 K개의 줄에 걸쳐 두 정수 A B를 빈칸을 사이에 두고 출력하는데, 이는 A번째 탑의 가장 위에 있는 원판을 B번째 탑의 가장 위로 옮긴다는 뜻이다.</p>
 
+---
+
+재귀
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        hanoi(1, 3, n);
+        System.out.println((1<<n) - 1);
+        System.out.println(sb);
+    }
+    
+    static void hanoi(int a, int b, int n) {
+        
+        if(n==1) {
+            sb.append(a + " " + b).append('\n');
+            return;
+        }
+        
+        // 1번에 있는 n-1개의 원판을 2번으로 옮긴다.
+        hanoi(a, 6-a-b, n-1);
+        // n번 원판을 3번으로 옮긴다.
+        sb.append(a + " " + b).append('\n');
+        // 2번에 있는 n-1개의 원판을 3번으로 옮긴다.
+        hanoi(6-a-b, b, n-1);
+    }
+}
+```
+
+---
+
+참고: https://www.youtube.com/watch?v=8vDDJm5EewM
+
+같이 참고하면 좋음: https://st-lab.tistory.com/96
+
+![image](https://github.com/user-attachments/assets/0cc91973-60bc-4e31-b222-54cc424dfd3b)
+
