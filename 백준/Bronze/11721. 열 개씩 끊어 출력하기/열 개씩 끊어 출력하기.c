@@ -10,9 +10,9 @@ int main() {
     
     for(int i=0; i<len; i++) {
         
-        if(i % 10 == 0 && i != 0) printf("\n");
-        
         printf("%c", arr[i]);
+        
+        if(i % 10 == 9) printf("\n");
     }
     
 }
