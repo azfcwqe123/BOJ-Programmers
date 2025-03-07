@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 14200 KB, 시간: 112 ms
+메모리: 1116 KB, 시간: 0 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 10월 22일 11:59:11
+2025년 3월 7일 14:34:10
 
 ### 문제 설명
 
@@ -28,42 +28,3 @@
 
  <p>첫째<span class="s1"> </span>줄부터<span class="s1"> N</span>번째<span class="s1"> </span>줄까지<span class="s1"> </span>차례대로<span class="s1"> </span>별을<span class="s1"> </span>출력한다<span class="s1">.</span></p>
 
----
-
-```java
-import java.io.*;
-import java.util.*;
-
-class Main {
-    
-	public static void main (String[] args) throws IOException {
-	 
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    
-	    int n = Integer.parseInt(br.readLine());
-	    
-	    StringBuilder sb = new StringBuilder();
-	    
-	    for(int i=0; i<n; i++) {
-	        
-	        for(int j=0; j<i; j++) { // 0 1 2 3 4 
-	            sb.append(" ");
-	        }
-	        
-	        for(int k=i; k<n; k++) { // 4 3 2 1 0
-	            sb.append("*");
-	        }
-	        
-	        sb.append("\n");
-	    }
-	    
-	    System.out.print(sb);
-	    
-	}
-	    
-}
-	
-
-
-
-```
