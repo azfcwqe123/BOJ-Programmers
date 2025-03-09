@@ -35,3 +35,55 @@
 
  <p>첫째 줄에 N자리 이친수의 개수를 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static final int mod = 10007;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        long[] dp = new long[91];
+        
+        dp[1] = 1;
+        dp[2] = 1;
+        
+        // dp[i-2] 숫자 목록 모두에 00을 붙인다.
+        
+        // dp[i-1] 숫자 목록 중에 0으로 끝나는 숫자는 1을 붙이고
+        // 1로 끝나는 숫자에는 0을 붙인다.
+        
+        // 규칙 발견
+        for(int i=3; i<=n; i++) {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        
+        System.out.print(dp[n]);
+    }
+}
+
+```
+n=1 -> {1}
+
+n=2 -> {10}
+
+n=3 -> {100, 101}
+
+n=4 -> {1000, 1001, 1010}
+
+...
+
+---
+
+long형 범위를 쓰지 않아서 틀렸음
+
+![image](https://github.com/user-attachments/assets/bf707a43-a4a1-4286-b08a-9f0e8df2fad3)
