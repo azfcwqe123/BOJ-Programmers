@@ -30,3 +30,64 @@
 
  <p>첫째 줄에 정답을 1,000,000,000으로 나눈 나머지를 출력한다.</p>
 
+---
+
+DP
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static final int mod = 1000000000;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        // row는 자리수, column은 시작수
+        int[][] dp = new int[n+1][10];
+        
+        for(int i=0; i<10; i++) {
+            dp[1][i] = 1;
+        }
+        
+        // 규칙을 찾아 배열에 대입
+        for(int i=2; i<=n; i++) {
+            
+            for(int j=0; j<=9; j++) {
+                // 0으로 시작하는 수는 계산에 불필요하지만, 규칙을 찾는데에는 필요함.
+                if(j == 0) dp[i][0] = dp[i-1][1] % mod;
+                
+                // 시작수가 9일때
+                else if(j == 9) dp[i][9] = dp[i-1][8] % mod;
+                
+                // 시작수가 2~8일때
+                else dp[i][j] = (dp[i-1][j-1] % mod + dp[i-1][j+1] % mod) % mod;
+            }
+        }
+        
+        
+        int ans = 0;
+        for(int i=1; i<=9; i++) {
+            ans += dp[n][i];
+            ans %= mod; // 오버플로우 방지
+        }
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+---
+
+참고블로그 : https://yinq.tistory.com/72
+
+![image](https://github.com/user-attachments/assets/860b2e0b-5131-4855-a0de-f94f9ef3761e)
