@@ -21,7 +21,10 @@ class Main {
         
         for(int i=2; i<=n; i++) {
             for(int j=0; j<=9; j++) {
-                for(int k=j; k<=9; k++) dp[i][j] += dp[i-1][k] % mod;
+                for(int k=j; k<=9; k++) {
+                    dp[i][j] += dp[i-1][k] % mod;
+                    dp[i][j] %= mod;
+                }
             }
         }   
         
