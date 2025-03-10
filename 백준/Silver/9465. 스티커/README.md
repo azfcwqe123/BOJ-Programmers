@@ -34,3 +34,62 @@
 
  <p>각 테스트 케이스 마다, 2n개의 스티커 중에서 두 변을 공유하지 않는 스티커 점수의 최댓값을 출력한다.</p>
 
+---
+
+DP, 규칙찾기
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int T = Integer.parseInt(br.readLine());
+        
+        while(T-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            
+            int[][] arr = new int[2][n+1];
+            int[][] dp = new int[2][n+1];
+            
+            for(int i=0; i<2; i++) {
+                st = new StringTokenizer(br.readLine());
+                for(int j=1; j<=n; j++) {
+                    arr[i][j] = Integer.parseInt(st.nextToken());
+                }
+            }
+            
+            dp[0][1] = arr[0][1];
+            dp[1][1] = arr[1][1];
+            
+            for(int i=2; i<=n; i++) {
+                dp[0][i] = Math.max(dp[1][i-2], dp[1][i-1]) + arr[0][i];
+                
+                dp[1][i] = Math.max(dp[0][i-1], dp[0][i-2]) + arr[1][i];
+            }
+            
+            
+            System.out.println(Math.max(dp[0][n], dp[1][n]));
+        } 
+        
+    }
+    
+}
+
+
+```
+처음엔 구현으로 풀려고 했는데 코드가 장황해지고 반례 케이스들을 못잡는 경우가 많이 생겼다.
+
+DP 접근 방식으로 풀면 더 깔끔하고 규칙성있게 풀 수 있는 문제다.
+
+---
+
+![image](https://github.com/user-attachments/assets/992f6da2-9158-4242-aeeb-a61db3eaf649)
+
+![image](https://github.com/user-attachments/assets/e58decaa-6c71-406c-83c0-9e3222ca4034)
