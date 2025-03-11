@@ -30,3 +30,49 @@
 
  <p>첫째 줄에 수열 A의 가장 긴 증가하는 부분 수열의 길이를 출력한다.</p>
 
+---
+LIS
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n];
+        int[] dp = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        Arrays.fill(dp, 1); // 모든 수들은 길이가 1부터 시작하기 때문에, 1로 꼭 설정해줘야함.
+        
+        int ans = 1; // 생각없이 ans = 0 했다가 틀림. 부분 수열 최소 길이가 1이기 때문에 1로 설정해야함.
+        
+        for(int i=1; i<n; i++) {
+            for(int j=i-1; j>=0; j--) {
+                if(arr[i] > arr[j] && dp[i] <= dp[j]) dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+            
+            ans = Math.max(dp[i], ans);
+        }
+        
+        System.out.print(ans);
+        
+    }
+    
+}
+
+```
+
+![B1Pr5obfBxqXvhXDJQiupw_250311_211824](https://github.com/user-attachments/assets/bc241494-ac4f-49a4-b1f5-4a99cd599861)
+
+---
+
+![image](https://github.com/user-attachments/assets/82a5d9f9-af95-4505-8672-75403bccba12)
