@@ -35,3 +35,50 @@
 
  <p>첫째 줄에 최대로 마실 수 있는 포도주의 양을 출력한다.</p>
 
+---
+
+DP
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] wine = new int[n+1];
+        int[] dp = new int[n+1];
+        for(int i=1; i<=n; i++) wine[i] = Integer.parseInt(br.readLine());
+        
+        for(int i=1; i<=n; i++) {
+            
+            if(i==1) dp[i] = wine[i]; // 잔이 1개만 있을때
+            else if(i==2) dp[i] = wine[i] + wine[i-1]; // 잔이 2개만 있을때
+            else dp[i] = Math.max(dp[i-1], Math.max(dp[i-2] + wine[i], dp[i-3] + wine[i-1] + wine[i]));
+            // dp[i-1] : i번째 잔 안 마심
+            // dp[i-2] + wine[i] : i-1번째 잔을 안 마시고, i번째 잔을 마시는 경우
+            // dp[i-3] + wine[i-1] + wine[i] : i-2번째 잔을 안 마시고, i-1번째, i번째 잔을 마시는 경우
+        }
+        
+        System.out.println(dp[n]);
+    }
+    
+}
+
+
+```
+
+---
+
+![1Be2NrRGAPf7V1qMjeQL1x_250311_200324](https://github.com/user-attachments/assets/0bd25e37-f8ed-4d17-95ad-bf6d5fe6077c)
+
+
+![image](https://github.com/user-attachments/assets/d0503a52-4bb4-4079-b765-12b742430b53)
+
+
