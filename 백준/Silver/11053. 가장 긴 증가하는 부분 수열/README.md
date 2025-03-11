@@ -58,7 +58,7 @@ class Main {
         for(int i=1; i<n; i++) {
             for(int j=i-1; j>=0; j--) {
                 if(arr[i] > arr[j] && dp[i] <= dp[j]) dp[i] = Math.max(dp[i], dp[j] + 1);
-            }
+            } // dp[i] <= dp[j] 조건이 없어도 코드는 정상적으로 돌아가지만, 불필요한 계산이 추가된다.
             
             ans = Math.max(dp[i], ans);
         }
