@@ -30,3 +30,57 @@
 
  <p>첫째 줄에 수열 A의 합이 가장 큰 증가하는 부분 수열의 합을 출력한다.</p>
 
+---
+
+LIS
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n];
+        int[] dp = new int[n];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        
+        dp[0] = arr[0]; // 첫번째 원소는 그 자체로 수열의 합
+        int max = arr[0];
+        
+        for(int i=1; i<n; i++) 
+            dp[i] = arr[i]; // dp[i]는 최소한 arr[i]부터 시작하는 수열의 합 
+            for(int j=i-1; j>=0; j--) {
+                if(arr[i] > arr[j]) dp[i] = Math.max(dp[i], dp[j] + arr[i]);
+            }
+            max = Math.max(max, dp[i]);
+        }
+        
+        System.out.print(max);
+        
+    }
+    
+}
+
+
+```
+
+![xUUXbUIpsKqiaRNhXshpF4_250312_011449](https://github.com/user-attachments/assets/54404fad-d1af-4245-a83f-68f5ebd97c39)
+
+---
+
+![image](https://github.com/user-attachments/assets/22846ff5-33ad-46be-8f05-06ae79f0654f)
+
+
+컴파일 에러 이유: 변수를 이상하게 설정함
+
+
+틀렸습니다 이유: dp[i] = arr[i];을 추가하지 않았다. dp[i]는 최소한 arr[i]부터 시작하는 수열의 합이란걸 깨달았어야 했다.
+
