@@ -28,3 +28,44 @@
 
  <p>주어진 자연수를 제곱수의 합으로 나타낼 때에 그 제곱수 항의 최소 개수를 출력한다.</p>
 
+---
+
+dp
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[n+1];
+        
+        for(int i=1; i<=n; i++) {
+            dp[i] = i; // 제곱수들의 개수는, 해당 숫자의 크기를 초과할 수 없는 성질을 이용
+            for(int j=1; j*j<=i; j++) {
+                // 제곱수를 이용하여 최소 개수를 찾아낸다.
+                if(dp[i] > dp[i - j * j] + 1) dp[i] = dp[i - j * j] + 1;
+            }
+        }
+        
+        System.out.print(dp[n]);
+    }
+    
+}
+
+
+```
+
+---
+
+![7BAqS1502hON6BdaRlmyt5_250313_132519](https://github.com/user-attachments/assets/4fecca8e-e76f-4717-827b-1bb841296956)
+
+![image](https://github.com/user-attachments/assets/358358ca-3d7a-4a78-9d72-4f297e03ebec)
+
