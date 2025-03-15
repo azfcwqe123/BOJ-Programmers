@@ -53,3 +53,42 @@
 
  <p>첫째 줄에 민규가 카드 N개를 갖기 위해 지불해야 하는 금액의 최댓값을 출력한다.</p>
 
+---
+
+DP
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] card = new int[n+1];
+        int[] dp = new int[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) card[i] = Integer.parseInt(st.nextToken());
+        
+        for(int i=1; i<=n; i++) {
+            for(int j=1; j<=i; j++) {
+                dp[i] = Math.max(dp[i], dp[i-j] + card[j]);
+            } 
+        }
+        
+        System.out.print(dp[n]);
+    }
+    
+}
+
+```
+![IInuzlxChat3UVxosv9I1m_250315_163826](https://github.com/user-attachments/assets/b3775c45-a441-4819-af49-f873140945b1)
+
+---
+
+![image](https://github.com/user-attachments/assets/dc1ae6bb-7cd4-46f2-b332-1edf4df1f14c)
