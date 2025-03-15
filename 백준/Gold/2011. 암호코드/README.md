@@ -39,3 +39,57 @@
 
 <p>암호가 잘못되어 암호를 해석할 수 없는 경우에는 0을 출력한다.</p>
 
+---
+
+DP
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static final int mod = 1000000;
+    public static void main(String[] args) throws IOException {
+        
+        String str = br.readLine();
+        int len = str.length();
+        
+        if(str.charAt(0) == '0') {
+            System.out.print(0);
+            System.exit(0);
+        }
+        
+        int[] dp = new int[len + 1];
+        
+        dp[0] = 1; // dp[i-2]을 계산하기 위한것. 0으로 시작하는 암호는 애초에 에러긴함
+        dp[1] = 1;
+        
+        for(int i=2; i<=len; i++) {
+            int check = Integer.parseInt(str.substring(i-2, i));
+            
+            if(str.charAt(i-1) != '0') dp[i] += dp[i-1] % mod;
+            if(check >= 10 && check <= 26) dp[i] += dp[i-2] % mod;
+        }
+        
+        System.out.print(dp[len] % mod);
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![2zFyZdmW0KzgGxreKZFS26-1_250315_151103](https://github.com/user-attachments/assets/6cca21e9-d8fa-42d2-880b-df6dbc1b4628)
+
+
+
+![image](https://github.com/user-attachments/assets/819fa49a-8b50-49d7-a0e0-340a50c81049)
+
+
+
