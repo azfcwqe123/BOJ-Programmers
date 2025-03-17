@@ -28,3 +28,50 @@
 
  <p>첫째 줄부터 N개의 줄에 비내림차순으로 정렬한 결과를 한 줄에 하나씩 출력한다.</p>
 
+---
+
+카운팅 정렬
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static final int max = 1_000_000;
+    static int[] arr = new int[2 * max + 1];
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        for(int i=0; i<n; i++) {
+            int k = Integer.parseInt(br.readLine());
+            arr[k + max]++;
+        }
+        
+        for(int i=0; i<=2*max; i++) { // i=1로 처음에 잡는 바람에 한번 틀렸음. i=0인경우는 -1000000임.
+            if(arr[i] == 0) continue;
+            else run(i);
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static void run(int i) {
+        while(arr[i] > 0) {
+            sb.append(i - max).append('\n');
+            arr[i]--;
+        }
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/128ff12d-c370-4a53-98a2-4a7c24ace53c)
