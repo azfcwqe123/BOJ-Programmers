@@ -435,3 +435,7 @@ class Main {
 2 1 x : 3 y : 2
 
 이 성보다 앞에 와있어야 하는데, 우선순위큐 정렬에 의해서 꼬여버리는것을 확인할 수 있다.
+
+---
+
+참고 : https://passionfruit200.tistory.com/976
