@@ -34,3 +34,59 @@
 
  <p>첫째 줄부터 N번째 줄까지 별을 출력한다.</p>
 
+---
+
+분할정복
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    static String[][] map;
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        map = new String[n][n];
+        
+        for(int i=0; i<n; i++) Arrays.fill(map[i], " ");
+        star(0, 0, n);
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                sb.append(map[i][j]);
+            }
+            sb.append('\n');
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+    static void star(int x, int y, int n) {
+        
+        if(n==1) {
+            map[x][y] = "*";
+            return;
+        }
+        
+        for(int i=0; i<3; i++) {
+            for(int j=0; j<3; j++) {
+                if(!(i==1 && j==1)) star(x + i * (n / 3), y + j * (n / 3), n / 3);
+            }
+        }
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/6ee698c7-5e6b-4928-a7b5-9e9b08ff7cfd)
+
+참고 : https://yeons4every.tistory.com/129
