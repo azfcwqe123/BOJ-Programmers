@@ -36,3 +36,109 @@
 
 <p>둘째 줄에는 N을 1로 만드는 방법에 포함되어 있는 수를 공백으로 구분해서 순서대로 출력한다. 정답이 여러 가지인 경우에는 아무거나 출력한다.</p>
 
+---
+
+dp, 역추적
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[n+1];
+        
+        for(int i=2; i<=n; i++) {
+            dp[i] = dp[i-1] + 1;
+            
+            if(i % 2 == 0) dp[i] = Math.min(dp[i], dp[i / 2] + 1);
+            if(i % 3 == 0) dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+        }
+        
+        System.out.println(dp[n]);
+        
+        while(n > 0) {
+            sb.append(n + " ");
+            
+            if(n == 1) break;
+            
+            if(n % 3 == 0 && dp[n / 3] == dp[n] - 1) n /= 3;
+            else if(n % 2 == 0 && dp[n / 2] == dp[n] - 1) n /= 2;
+            else n -= 1;
+        }
+        
+        System.out.print(sb);
+        
+    }
+}
+
+
+```
+
+---
+
+풀이2
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] dp = new int[n+1];
+        int[] trace = new int[n+1];
+        
+        for(int i=2; i<=n; i++) {
+            dp[i] = dp[i-1] + 1;
+            trace[i] = i - 1;
+            
+            if(i % 2 == 0 && dp[i / 2] + 1 < dp[i]) {
+                dp[i] = dp[i / 2] + 1;
+                trace[i] = i / 2;
+            }
+            if(i % 3 == 0 && dp[i / 3] + 1 < dp[i])  {
+                dp[i] = dp[i / 3] + 1;
+                trace[i] = i / 3;
+            }
+        }
+        
+        System.out.println(dp[n]);
+        
+        while(n > 0) {
+            sb.append(n + " ");
+            n = trace[n];
+        }
+        
+        System.out.print(sb);
+        
+    }
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/d07a1ede-5f7f-4fa2-ada6-e82d0039f257)
+
+참고 블로그 : 
+
+https://141227.tistory.com/333
+
+https://propercoding.tistory.com/392
