@@ -26,3 +26,70 @@
 
  <p>위에서 구하란 걸 구하면 된ㄷ.</p>
 
+---
+
+누적합
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        int[] arr = new int[n+1];
+        int[] sum = new int[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+        for(int i=1; i<=n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            sum[i] = sum[i-1] + arr[i];
+        }
+        
+        long ans = 0;
+        
+        for(int i=2; i<=n; i++) {
+            ans += arr[i] * sum[i-1];
+        }
+        
+        System.out.print(ans);
+    }
+    
+}
+
+
+```
+
+n이 4, xi가 1 2 3 4으로 값이 주어졌을때
+
+&nbsp;
+
+(1, 2) (1, 3) (1, 4)
+
+(2, 3) (2, 4)
+
+(3, 4)
+
+같은 규칙이 주어지고, 이를 대각선으로 묶으면
+
+2 * (1)
+
+3 * (1 + 2)
+
+4 * (1 + 2 + 3)
+
+으로 arr의 2번째 요소부터 시작하고, 누적합의 n-1번째까지 사용하는 규칙을 찾을수있다.
+
+---
+
+n이 10만이고 xi가 100이라면 int형 범위를 초과하기에, long ans으로 설정해야함
+
+![image](https://github.com/user-attachments/assets/2410c384-fea2-454a-bc74-0f8dccdc60bc)
+
