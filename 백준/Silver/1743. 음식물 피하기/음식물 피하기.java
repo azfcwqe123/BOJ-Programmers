@@ -16,7 +16,7 @@ class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     
-    static int n, m, k;
+    static int n, m, k, cnt;
     static boolean[][] map;
     static int[] dx = {-1, 0, 1, 0};
     static int[] dy = {0, -1, 0, 1};
@@ -42,39 +42,31 @@ class Main {
         int ans = 0;
         for(int i=0; i<n; i++) {
             for(int j=0; j<m; j++) {
-                if(map[i][j] == true) ans = Math.max(ans, BFS(i, j));
+                if(map[i][j] == true) {
+                    cnt = 0;
+                    DFS(i, j);
+                    ans = Math.max(ans, cnt);
+                }
             }
         }
         
         System.out.print(ans);
     }
     
-    static int BFS(int x, int y) {
-        Queue<Point> Q = new LinkedList<>();
-        Q.offer(new Point(x, y));
+    static void DFS(int x, int y) {
         map[x][y] = false;
+        cnt++;
         
-        int cnt = 0;
-        
-        while(!Q.isEmpty()) {
-            Point cur = Q.poll();
-            cnt++;
+        for(int d=0; d<4; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
             
-            for(int d=0; d<4; d++) {
-                int nx = cur.x + dx[d];
-                int ny = cur.y + dy[d];
-                
-                if(!rangeCheck(nx, ny)) continue;
-                
-                if(map[nx][ny] == true) {
-                    Q.offer(new Point(nx, ny));
-                    map[nx][ny] = false;
-                }
+            if(!rangeCheck(nx, ny)) continue;
+            
+            if(map[nx][ny]) {
+                DFS(nx, ny);
             }
         }
-        
-        return cnt;
-        
     }
     
     static boolean rangeCheck(int nx, int ny) {
