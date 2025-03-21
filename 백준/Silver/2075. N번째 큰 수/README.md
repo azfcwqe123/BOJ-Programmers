@@ -68,3 +68,45 @@
 
  <p>첫째 줄에 N번째 큰 수를 출력한다.</p>
 
+---
+
+우선순위큐
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        int n = Integer.parseInt(br.readLine());
+        
+        PriorityQueue<Integer> pQ = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<n; j++) {
+                int k = Integer.parseInt(st.nextToken());
+                pQ.offer(k);
+            }
+        }
+        
+        for(int i=0; i<n-1; i++) pQ.poll();
+        
+        System.out.print(pQ.poll());
+        
+    }
+    
+}
+
+
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/6539c318-5bb4-416b-b0de-addb08398263)
