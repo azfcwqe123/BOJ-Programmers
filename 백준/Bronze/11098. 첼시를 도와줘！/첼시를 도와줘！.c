@@ -1,21 +1,18 @@
 #include <stdio.h>
 #include <string.h>
-#define max(a, b) (a > b ? a : b)
 
 int main() {
     int n, p;
+    int max, price;
+    char pick[20], name[20];
     
     scanf("%d", &n);
     
     while(n--) {
         scanf("%d", &p);
-        int maxPrice, max = -1;
-        char pick[20];
+        max = -1;
         
         while(p--) {
-            int price;
-            char name[20];
-            
             scanf("%d %s", &price, name);
             
             if(max < price) {
