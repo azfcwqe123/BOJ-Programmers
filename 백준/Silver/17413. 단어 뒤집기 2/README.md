@@ -36,3 +36,55 @@
 
  <p>첫째 줄에 문자열 S의 단어를 뒤집어서 출력한다.</p>
 
+---
+
+구현, 스택
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        Stack<Character> stack = new Stack<>();
+        
+        String str = br.readLine();
+        
+        boolean open = false;
+        
+        for(int i=0; i<str.length(); i++) {
+            char ch = str.charAt(i);
+            
+            if(ch == ' ' || ch == '<') { // 공백이나 '<'가 나오면 단어를 뒤집어준다.
+                while(!stack.isEmpty()) sb.append(stack.pop());
+                sb.append(ch);
+                if(ch == '<') open = true; 
+                continue;
+            }
+            
+            if(open) sb.append(ch); // 괄호가 열려있는 상태는 뒤집지 않는다.
+            else stack.push(ch); // 괄호가 열려있지 않는 상태는 뒤집을 준비를 한다. 
+            
+            if(ch == '>') open = false; // 괄호를 닫는다.
+        }
+        
+        while(!stack.isEmpty()) sb.append(stack.pop());
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+스택 자료구조를 사용했지만 구현에 좀 더 초점을 둬야하는 문제
+
+![image](https://github.com/user-attachments/assets/19b3211e-1494-4f78-83b5-6331824742f1)
