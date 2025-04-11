@@ -33,11 +33,9 @@ void main() {
 		
 		cnt = 0;
 		
-		while (1) {
-			
-			isOdd(arr, n);
-			
-			if(isSuccess(arr, n)) break;
+		isOdd(arr, n);
+		
+		while (!isSuccess(arr, n)) {
 			
 			for (i = 0; i < n; i++) {
 				tmp[i] = arr[i] / 2;
@@ -52,7 +50,6 @@ void main() {
 			isOdd(arr, n);
 			
             cnt++;
-			if(isSuccess(arr, n)) break;
 		}
 
 		printf("%d\n", cnt);
