@@ -98,3 +98,9 @@ void main() {
 
 }
 ```
+천천히 풀면은 쉽게 풀 수 있는 문제
+
+---
+
+![image](https://github.com/user-attachments/assets/a6e7ca8a-9af3-4bc3-bc61-e35deb885de8)
+
