@@ -30,3 +30,71 @@
 
  <p>출력은 표준출력(standard output)을 통하여 출력한다. 각 테스트 케이스에 대하여 모든 아이가 같은 개수의 사탕을 가질 때까지 몇 순환이 걸리는지 출력하시오.</p>
 
+---
+
+구현
+
+```C
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+void isOdd(int arr[], int size) { // 홀수면 하나씩 더 준다.
+    int i;
+    for (i = 0; i < size; i++) {
+		if (arr[i] % 2 != 0) arr[i]++;
+	}
+}
+
+int isSuccess(int arr[], int size) { // 모든 인원의 사탕 수가 같으면 1을 리턴, 아니면 0을 리턴
+    int i;
+    for (i = 0; i < size - 1; i++) {
+		if (arr[i] != arr[i + 1]) return 0;
+	}
+	return 1;
+}
+
+void main() {
+	int T, n, i, cnt = 0;
+	int *arr, *tmp;
+	
+	scanf("%d", &T);
+
+	while (T--) {
+		scanf("%d", &n);
+		
+		arr = (int*)malloc(n * sizeof(int)); // 현재 인원이 가지고 있는 사탕의 수
+		tmp = (int*)malloc(n * sizeof(int)); // 절반으로 나눈 사탕을 담을 바구니
+		
+		for (i = 0; i < n; i++) scanf("%d", &arr[i]);
+		
+		cnt = 0; // 몇번 사이클이 돌았는지
+		
+		isOdd(arr, n);
+		
+		while (!isSuccess(arr, n)) { // 모든 인원의 사탕 수가 같을때까지
+			
+			for (i = 0; i < n; i++) {
+				tmp[i] = arr[i] / 2; // 현재 인원이 가지고 있는 사탕의 절반을 바구니에 담는다.
+				arr[i] /= 2; // 현재 인원의 사탕 수를 절반 뺀다.
+			}
+
+                        // n이 4라고 가정
+			for (i = 0; i < n; i++) { 
+				if (i == n - 1) arr[0] += tmp[i]; // 0번 -> 1번, 1번 -> 2번, 2번 -> 3번, 3번 -> 0번(이때를 위해 n-1을 따로 설정)
+				else arr[i + 1] += tmp[i]; // 나머지는 옆으로 전달
+			}
+			
+			isOdd(arr, n);
+			
+              cnt++;
+		}
+
+		printf("%d\n", cnt);
+
+		free(arr);
+		free(tmp);
+	}
+
+}
+```
