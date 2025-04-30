@@ -26,3 +26,44 @@
 
  <p>A÷B를 했을 때, 소숫점 아래 N번째 수를 출력한다.</p>
 
+---
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        
+        int res = 0;
+        
+        for(int i=0; i<n; i++) {
+            a = (a % b) * 10;
+            res = a / b;
+        }
+        
+        System.out.print(res);
+        
+    }
+    
+}
+
+```
+
+처음엔 a를 b로 나눈 값을 문자열로 담고, '.'을 기준으로 n만큼 떨어진곳을 탐색하면 될 줄 알았는데, 문자열로 실수의 소숫점 부분들을 모두 담을 수 없기에 런타임 에러가 계속해서 났다.
+
+해결방법은, 직접 손으로 나눗셈을 하면서 규칙을 찾아내는것이었다.
+
+---
+
+![image](https://github.com/user-attachments/assets/b1909169-be8a-4e48-afc4-e2dd2f239981)
