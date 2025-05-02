@@ -4,7 +4,7 @@ import java.io.*;
 class Main {
     
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    
+    static StringBuilder sb = new StringBuilder();
     static int[][] board;
     static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
     static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -28,15 +28,16 @@ class Main {
             for(int j=0; j<n; j++) {
                 check(i, j);
             }
-            System.out.println();
+            sb.append('\n');
         }
         
+        System.out.print(sb);
     }
     
     static void check(int x, int y) {
         
         if(board[x][y] != 0) { 
-            System.out.print('*');
+            sb.append('*');
             return;
         }
         
@@ -53,7 +54,7 @@ class Main {
         
         char tmp = (cnt >= 10) ? 'M' : (char) (cnt + '0');
         
-        System.out.print(tmp);
+        sb.append(tmp);
     }
 }
 
