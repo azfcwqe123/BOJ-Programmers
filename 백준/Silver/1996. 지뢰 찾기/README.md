@@ -32,3 +32,148 @@
 
  <p>N개의 줄에 걸쳐서 완성된 지뢰 찾기 map을 출력한다. 지뢰는 '*'로 출력하며. 10 이상인 경우는 'M'(Many)으로 출력하면 된다. map은 숫자 또는 'M' 또는 '*'로만 이루어져 있어야 한다.</p>
 
+---
+
+구현
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static int[][] board;
+    static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1}; // 팔방면 탐색
+    static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1}; // 팔방면 탐색
+    static int n; 
+    
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        board = new int[n][n]; // 지뢰판 생성
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<n; j++) {
+                if(str.charAt(j) == '.') continue; // 0이면 건너뜀. 의미 없음
+                board[i][j] = str.charAt(j) - '0'; // 숫자면 저장
+            }
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                check(i, j); // 탐색 시작
+            }
+            sb.append('\n');
+        }
+        
+        System.out.print(sb);
+    }
+    
+    static void check(int x, int y) {
+        
+        if(board[x][y] != 0) {  // 숫자 1~9라면 지뢰임. '*'을 기록해준다.
+            sb.append('*');
+            return;
+        }
+        
+        // 지뢰가 아니라면 해당 위치 주위에 지뢰의 개수를 count 해준다.
+        
+        int cnt = 0;
+        
+        for(int d=0; d<8; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            
+            if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue; // 범위 체크
+            
+            if(board[nx][ny] != 0) cnt += board[nx][ny]; // 지뢰가 존재한다면, 개수 갱신
+        }
+        
+        char tmp = (cnt >= 10) ? 'M' : (char) (cnt + '0'); // 지뢰가 10개 이상이라면 m, 아니면 지뢰 개수 그대로
+        
+        sb.append(tmp);
+    }
+}
+
+
+```
+
+---
+
+리팩토링 전
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    
+    static char[][] board; // 수정
+    static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+    static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+    static int n;
+    
+    public static void main(String[] args) throws IOException {
+        
+        n = Integer.parseInt(br.readLine());
+        
+        board = new char[n][n];
+        
+        for(int i=0; i<n; i++) {
+            String str = br.readLine();
+            for(int j=0; j<n; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+        
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                check(i, j);
+            }
+            System.out.println();
+        }
+        
+    }
+    
+    static void check(int x, int y) {
+        
+        if(Character.isDigit(board[x][y])) { 
+            System.out.print('*');
+            return;
+        }
+        
+        int cnt = 0;
+        
+        for(int d=0; d<8; d++) {
+            int nx = x + dx[d];
+            int ny = y + dy[d];
+            
+            if(!(nx >= 0 && nx < n && ny >= 0 && ny < n)) continue; // 수정
+            
+            if(Character.isDigit(board[nx][ny])) cnt += board[nx][ny] - '0';
+            
+        }
+        
+        char tmp = (cnt >= 10) ? 'M' : (char) (cnt + '0');
+        
+        System.out.print(tmp);
+    }
+}
+
+```
+
+지뢰판 자체를 char에서 int로 바꿔서 char을 int형으로 바꾸는 불필요한 계산을 줄였고,
+
+범위 체크도 좀 더 직관적으로 보이기 위해 겹겹이 쓰지 않게끔 바꿨다.
+
+---
+
+다른 사람 코드에 비해 왜 3500ms 이상이 차이났는데, StringBuilder을 사용하지 않아서 출력 시간이 길어졌던거였음.
+
+![image](https://github.com/user-attachments/assets/666272a5-8ab2-49bf-9b92-ed186f6b4964)
