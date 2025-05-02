@@ -4,9 +4,8 @@ import java.io.*;
 class Main {
     
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
     
-    static char[][] board;
+    static int[][] board;
     static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
     static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
     static int n;
@@ -15,12 +14,13 @@ class Main {
         
         n = Integer.parseInt(br.readLine());
         
-        board = new char[n][n];
+        board = new int[n][n];
         
         for(int i=0; i<n; i++) {
             String str = br.readLine();
             for(int j=0; j<n; j++) {
-                board[i][j] = str.charAt(j);
+                if(str.charAt(j) == '.') continue;
+                board[i][j] = str.charAt(j) - '0';
             }
         }
         
@@ -35,7 +35,7 @@ class Main {
     
     static void check(int x, int y) {
         
-        if(Character.isDigit(board[x][y])) { 
+        if(board[x][y] != 0) { 
             System.out.print('*');
             return;
         }
@@ -46,10 +46,9 @@ class Main {
             int nx = x + dx[d];
             int ny = y + dy[d];
             
-            if(!(nx >= 0 && nx < n && ny >= 0 && ny < n)) continue;
+            if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
             
-            if(Character.isDigit(board[nx][ny])) cnt += board[nx][ny] - '0';
-            
+            if(board[nx][ny] != 0) cnt += board[nx][ny];
         }
         
         char tmp = (cnt >= 10) ? 'M' : (char) (cnt + '0');
