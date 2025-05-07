@@ -30,3 +30,51 @@
 
  <p>첫 번째 줄부터 M개의 줄에 걸쳐 비밀번호를 찾으려는 사이트 주소의 비밀번호를 차례대로 각 줄에 하나씩 출력한다.</p>
 
+---
+
+해시맵 기초
+
+```java
+import java.util.*;
+import java.io.*;
+
+class Main {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException {
+        
+        st = new StringTokenizer(br.readLine());
+        
+        HashMap<String, String> map = new HashMap<>();
+        
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        for(int i=0; i<n; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            String site = st.nextToken(); // 사이트 이름
+            String password = st.nextToken(); // 비밀번호
+            
+            map.put(site, password); // 해시맵에 저장
+        }
+        
+        for(int i=0; i<m; i++) {
+            String tmp = br.readLine();
+            
+            sb.append(map.get(tmp)).append('\n'); // key에 해당하는 value 출력
+        }
+        
+        System.out.print(sb);
+        
+    }
+    
+}
+
+
+```
+
+![image](https://github.com/user-attachments/assets/409d2e84-cde3-4b94-9d41-385b38ad5264)
