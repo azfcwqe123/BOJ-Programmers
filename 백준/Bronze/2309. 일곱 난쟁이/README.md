@@ -30,3 +30,186 @@
 
  <p>일곱 난쟁이의 키를 오름차순으로 출력한다. 일곱 난쟁이를 찾을 수 없는 경우는 없다.</p>
 
+---
+
+순열 9C7
+
+```C++
+#include <bits/stdc++.h>
+using namespace std;
+
+int a[9];
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    
+    for(int i=0; i<9; i++) cin >> a[i];
+    
+    sort(a, a + 9);
+    
+    do {
+        int sum = 0;
+        
+        for(int i=0; i<7; i++) sum += a[i];
+        
+        if(sum == 100) break;
+        
+    } while(next_permutation(a, a + 9));
+    
+    for(int i=0; i<7; i++) cout << a[i] << "\n";
+    
+    return 0;
+}
+```
+
+---
+
+9C2
+
+```C++
+#include <bits/stdc++.h>
+using namespace std;
+
+int a[9], sum = 0;
+vector<int> v;
+pair<int, int> ret;
+
+void solve() { 
+    for(int i = 0; i < 9; i++) { // 핵심 코드
+        for(int j=0; j<i; j++) {
+            if(sum - a[i] - a[j] == 100) {
+                ret = {i, j};
+                return;
+            }
+        }
+    }    
+}
+
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    
+   for(int i=0; i<9; i++) {
+       cin >> a[i]; 
+       sum += a[i];
+   }
+   
+   solve();
+   
+   for(int i=0; i<9; i++) {
+       if(ret.first == i || ret.second == i) continue;
+       v.push_back(a[i]);
+   }
+   
+   sort(v.begin(), v.end());
+   
+   for(int x : v) cout << x << "\n";
+   
+   return 0;
+}
+```
+
+---
+
+재귀
+
+```C++
+#include <bits/stdc++.h>
+using namespace std;
+
+int a[9];
+int n = 9, r = 7;
+
+void check() {
+    int sum = 0;
+    for(int i=0; i<r; i++) {
+        sum += a[i];
+    }
+    if(sum == 100) {
+        sort(a, a + 7);
+        for(int i=0; i<r; i++) cout << a[i] << "\n";
+        exit(0);
+    }
+}
+
+void makePermutation(int n, int r, int depth) {
+    if(r == depth) {
+        check();
+        return;
+    }
+    
+    for(int i=depth; i<n; i++) {
+        swap(a[i], a[depth]);
+        makePermutation(n, r, depth + 1);
+        swap(a[i], a[depth]);
+    }
+    
+    return;
+}
+
+int main() {
+    for(int i=0; i<n; i++) cin >> a[i];
+    
+    makePermutation(n, r, 0);
+    
+    return 0;
+}
+```
+
+---
+오답 코드
+
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<int> v(9);
+    
+    for(int i=0; i<9; i++) {
+        cin >> v[i];
+    }
+    
+    sort(v.begin(), v.end());
+    
+    int sum = 0;
+    
+    for(int i=0; i<3; i++) {
+        for(int j=i+1; j<4; j++) {
+            for(int k=j+1; k<5; k++) {
+                for(int l=k+1; l<6; l++) {
+                    for(int m=l+1; m<7; m++) {
+                        for(int n=m+1; n<8; n++) {
+                            for(int o=n+1; o<9; o++) {
+                                sum = v[i] + v[j] + v[k] + v[l] + v[m] + v[n] + v[o];
+                                
+                                if(sum == 100) {
+                                    cout << v[i] << '\n';
+                                    cout << v[j] << '\n';
+                                    cout << v[k] << '\n';
+                                    cout << v[l] << '\n';
+                                    cout << v[m] << '\n';
+                                    cout << v[n] << '\n';
+                                    cout << v[o] << '\n';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+```
+뭔가 이렇게 풀면 딱봐도 틀릴것 같았지만, 마땅히 떠오르지않아 이런식으로 풀어봄. 좋은 경험이었다
+
+---
+
+![image](https://github.com/user-attachments/assets/b8da5938-2edf-4ebd-9b76-6cdcd00d9cf2)
+
