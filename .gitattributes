@@ -1,3 +1,4 @@
 *.java linguist-vendored=false
+*.cpp linguist-vendored=false
 *.sql linguist-vendored=false
 *.sql linguist-detectable=true
