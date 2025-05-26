@@ -5,13 +5,11 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     
-    int n, sum = 0;
+    int a, sum = 0;
     
-    for(int i=0; i<5; i++) {
-        cin >> n;
-        if(n < 40) sum += 40;
-        else sum += n;
+    while(cin >> a) {
+        sum += (a < 40) ? 40 : a;
     }
     
-    cout << sum / 5<< '\n';
+    cout << sum / 5;
 }
