@@ -6,16 +6,12 @@ int main() {
     cin.tie(NULL); cout.tie(NULL);
     
     int T, k;
-    
     cin >> T;
     
     while(T--) {
-        vector<int> v;
+        vector<int> v(5);
         
-        for(int i=0; i<5; i++) {
-            cin >> k;
-            v.push_back(k); 
-        }
+        for(int i=0; i<5; i++) cin >> v[i];
    
         sort(v.begin(), v.end());
         
