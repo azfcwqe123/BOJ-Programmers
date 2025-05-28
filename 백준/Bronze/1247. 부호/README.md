@@ -26,3 +26,40 @@
 
  <p>총 3개의 줄에 걸쳐 각 테스트 셋에 대해 N개의 정수들의 합 S의 부호를 출력한다. S=0이면 "0"을, S>0이면 "+"를, S<0이면 "-"를 출력하면 된다.</p>
 
+---
+오버플로우, 언더플로우
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    
+    for(int i=0; i<3; i++) {
+        int n, flow = 0; // flow -> 오버플로우, 언더플로우 확인 용도
+        cin >> n;
+        
+        ll tmp, sum = 0;
+        while(n--) {
+            cin >> tmp; // 현재 입력받는 값
+            
+            ll prevSum = sum; // 이전 sum
+            
+            sum += tmp;  // 현재 sum에 갱신
+            
+            if(tmp > 0 && prevSum > 0 && sum < 0) flow++; // 오버플로우
+            else if(tmp < 0 && prevSum < 0 && sum > 0) flow--; // 언더플로우
+        }
+        
+        if(flow == 0) cout << (sum == 0 ? '0' : (sum > 0 ? '+' : '-')) << '\n'; // 오버, 언더플로우 발생 X
+        else cout << (flow > 0 ? '+' : '-') << '\n'; // 발생 O
+    }
+}
+```
+
+---
+
+![image](https://github.com/user-attachments/assets/467a4e4b-b239-4a3f-a188-89eed7adfc0c)
