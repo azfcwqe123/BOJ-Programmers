@@ -5,7 +5,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     
-    int tmp, min_h = 2001, min_c = 2001;
+    int tmp, min_h = 2000, min_c = 2000;
     
     for(int i=0; i<3; i++) {
         cin >> tmp;
