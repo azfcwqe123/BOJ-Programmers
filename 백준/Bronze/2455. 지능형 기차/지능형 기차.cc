@@ -5,20 +5,15 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
     
-    int sum = 0, max, st, ed;
+    int sum = 0, ans = 0, st, ed;
     
-    cin >> st >> ed;
-    
-    sum = max = ed;
-    
-    for(int i=0; i<3; i++) {
+    for(int i=0; i<4; i++) {
         cin >> st >> ed;
         
-        sum -= st;
-        sum += ed;
+        sum += ed - st;
         
-        max = sum > max ? sum : max;
+        ans = max(ans, sum);
     }
     
-    cout << max;
+    cout << ans << '\n';
 }
