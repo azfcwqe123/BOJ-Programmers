@@ -38,3 +38,71 @@
 
  <p>첫째 줄에 전위 순회, 둘째 줄에 중위 순회, 셋째 줄에 후위 순회한 결과를 출력한다. 각 줄에 N개의 알파벳을 공백 없이 출력하면 된다.</p>
 
+---
+
+기본적인 트리 순회
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+pair<char, char> node[26];
+
+void VLR(char root) {
+    
+    if(root == '.') return;
+    
+    cout << root;
+    VLR(node[root - 'A'].first);
+    VLR(node[root - 'A'].second);
+}
+
+void LVR(char root) {
+    
+    if(root == '.') return;
+    
+    LVR(node[root - 'A'].first);
+    cout << root;
+    LVR(node[root - 'A'].second);
+}
+
+void LRV(char root) {
+    
+    if(root == '.') return;
+    
+    LRV(node[root - 'A'].first);
+    LRV(node[root - 'A'].second);
+    cout << root;
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+    
+    int n; cin >> n;
+
+    char parent, lt, rt;
+    
+    for(int i=0; i<n; i++ ) {
+        cin >> parent >> lt >> rt;
+        
+        node[parent - 'A'].first = lt;
+        node[parent - 'A'].second = rt;
+    }
+    
+    VLR('A'); 
+    cout << '\n';
+    LVR('A');
+    cout << '\n';
+    LRV('A');
+}
+```
+
+배열 인덱스와 pair을 이용하였고, 배열 인덱스 0은 부모 노드 A, 1은 부모 노드 B ... 
+
+트리를 배열로 표현하는 다른 방법 중에 부모는 i/2, 왼쪽 자식 2i, 오른쪽 자식 2i + 1인 성질을 이용해보려 했으나
+
+이때는 트리의 높이를 알아야해서, 트리의 높이를 구하려면 트리를 다 형성한 상태이기 때문에 굳이 하지 않았음.
+
+---
+
+![image](https://github.com/user-attachments/assets/ad3195f0-11c3-4458-bcd3-86445556836f)
