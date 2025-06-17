@@ -2,20 +2,13 @@
 using namespace std;
 
 int main() {
-    int k, tmp = 0, sum = 0;
+    int a, b, c, d;
+    int sum[2] = {0};
     
-    for(int i=0; i<4; i++) {
-        cin >> k;
-        sum += k;
+    for(int i=0; i<2; i++) {
+        cin >> a >> b >> c >> d;
+        sum[i] = a + b + c + d;
     }
     
-    tmp = sum;
-    sum = 0;
-    
-    for(int i=0; i<4; i++) {
-        cin >> k;
-        sum += k;
-    }
-    
-    cout << max(tmp, sum);
-}
+    cout << max(sum[0], sum[1]);
+} 
