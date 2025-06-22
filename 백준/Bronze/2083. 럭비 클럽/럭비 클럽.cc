@@ -5,15 +5,10 @@ int main() {
     string name;
     int age, weight;
     
-    while(true) {
-        cin >> name >> age >> weight;
+    while(cin >> name >> age >> weight) {
         
-        if(name == "#" && age == 0 && weight == 0) return 0;
+        if(name == "#") break;
         
-        cout << name << ' ';
-        
-        if(age > 17 || weight >= 80) cout << "Senior" << '\n';
-        else cout << "Junior" << '\n'; 
+        cout << name << (age > 17 || weight >= 80 ? " Senior" : " Junior") << '\n';
     }
-    
 }
