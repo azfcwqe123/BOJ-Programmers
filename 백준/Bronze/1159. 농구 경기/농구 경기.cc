@@ -9,7 +9,7 @@ int main() {
     
     int player[26] = {0};
     
-    string name;
+    string name, ans;
     for(int i=0; i<n; i++) {
         cin >> name;
         player[name[0] - 'a']++;
@@ -18,14 +18,9 @@ int main() {
     bool check = false;
     
     for(int i=0; i<26; i++) {
-        if(player[i] >= 5) {
-            check = true;
-            cout << (char) (i + 'a');
-        }
+        if(player[i] >= 5) ans += (char) (i + 'a');
+        
     }
     
-    if(!check) {
-        cout << "PREDAJA" << '\n';
-    }
-    
+    cout << (ans.size() == 0 ? "PREDAJA" : ans);
 }
