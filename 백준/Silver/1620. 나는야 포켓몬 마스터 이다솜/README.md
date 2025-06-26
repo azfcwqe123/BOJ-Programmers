@@ -4,15 +4,15 @@
 
 ### 성능 요약
 
-메모리: 61280 KB, 시간: 496 ms
+메모리: 25528 KB, 시간: 216 ms
 
 ### 분류
 
-자료 구조, 해시를 사용한 집합과 맵
+자료 구조, 집합과 맵, 해시를 사용한 집합과 맵
 
 ### 제출 일자
 
-2024년 12월 19일 13:14:46
+2025년 6월 26일 18:18:32
 
 ### 문제 설명
 
@@ -136,55 +136,3 @@
 
 <p>이게 오박사님이 나에게 새로 주시려고 하는 도감이야. 너무 가지고 싶다ㅠㅜ. 꼭 만점을 받아줬으면 좋겠어!! 파이팅!!!</p>
 
----
-
-해시맵 풀이, 양방향으로 키와 값을 찾는 방법
-
-```java
-import java.util.*;
-import java.io.*;
-
-class Main {
-    
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static StringTokenizer st;
-    private static StringBuilder sb = new StringBuilder();
-    
-    public static void main(String[] args) throws IOException {
-        
-        st = new StringTokenizer(br.readLine());
-        
-        HashMap<String, String> mapA = new HashMap<>();
-        HashMap<String, String> mapB = new HashMap<>();
-        
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        
-        for(int i=1; i<=n; i++) {
-            String tmp = br.readLine();
-            mapA.put(tmp, String.valueOf(i));
-            mapB.put(String.valueOf(i), tmp);
-        }
-        
-        while(m-- > 0) {
-            String ch = br.readLine();
-            
-            if(mapA.containsKey(ch)) sb.append(mapA.get(ch));
-            
-            else sb.append(mapB.get(ch));
-            
-            sb.append('\n');
-        }
-        
-        System.out.print(sb);
-        
-    }
-    
-}
-
-
-```
-
----
-
-![image](https://github.com/user-attachments/assets/3e2a9dc0-321e-4bae-bd66-22b2a224e50d)
